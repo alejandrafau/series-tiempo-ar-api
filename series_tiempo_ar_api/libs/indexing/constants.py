@@ -58,6 +58,21 @@ MAPPING = {
     "dynamic": "strict"
 }
 
+C_MAPPING = {
+    "properties": {
+        "id"  :         {"type": "keyword"},
+        "collection":   { "type": "keyword" },
+        "atributos": {
+                    "type": "nested",
+                    "properties": {
+                        "variable": { "type": "keyword" },
+                        "valor":    { "type": "keyword" }
+                    }
+                }
+            },
+    "dynamic": "strict"
+}
+
 
 INDEX_CREATION_BODY = {
     'mappings': {

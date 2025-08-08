@@ -9,6 +9,19 @@ from django_datajsonar import models as djar_models
 
 from .indicator_names import IndicatorNamesMixin
 
+class IndexCollectionTask(djar_models.AbstractTask):
+    class Meta:
+        verbose_name = "Indexación de colección"
+        verbose_name_plural = "Corridas de indexación de colecciones"
+
+    UPDATED_ONLY = 'updated'
+    ALL = 'all'
+    INDEXING_CHOICES = (
+        (UPDATED_ONLY, 'Sólo actualizados'),
+        (ALL, 'Todos (forzar indexación)')
+    )
+
+    indexing_mode = models.CharField(choices=INDEXING_CHOICES, default=UPDATED_ONLY, max_length=200)
 
 class IndexDataTask(djar_models.AbstractTask):
     class Meta:

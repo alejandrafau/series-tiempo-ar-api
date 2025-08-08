@@ -8,7 +8,9 @@ from pydatajson import DataJson
 from django_datajsonar.models import Distribution, Node
 from series_tiempo_ar_api.apps.management.models import IndexDataTask
 from series_tiempo_ar_api.libs.indexing.api_index_enqueue import api_index_enqueue
+from series_tiempo_ar_api.libs.indexing.collection_index_enqueue import collection_index_enqueue
 from series_tiempo_ar_api.libs.indexing.tasks import index_distribution
+from series_tiempo_ar_api.libs.indexing.tasks import index_collection
 from .strings import READ_ERROR
 
 
@@ -30,3 +32,20 @@ def index_catalog(node: Node, task, read_local=False, force=False):
                                                 dataset__catalog__identifier=node.catalog_id)
     for distribution in distributions:
         api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
+
+
+def process_collections(node: Node, task, read_local=False, force=False):
+   #Acá lo que podría pasar hipotéticamente es que busque en la tabla
+   #Distributions, las que son colecciones...
+
+   collections = Distribution.objects.filter(
+    present=True,
+    dataset__indexable=True,
+    dataset__catalog__identifier=node.catalog_id,
+    distribution_title__startswith="collection_data"
+)
+   for collection in collections:
+       collection_index_enqueue(index_collection,collection.identifier,node.id,task.id,read_local,force=force)
+
+
+

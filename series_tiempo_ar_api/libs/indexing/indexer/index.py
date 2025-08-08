@@ -4,6 +4,23 @@ from elasticsearch_dsl import Index
 from django.conf import settings
 from .. import constants
 
+def tscol_index(name: str) -> Index:
+    index = Index (name)
+    index.settings(max_result_window = settings.MAX_SERIES_VALUES)
+    if not index.exists():
+        index.create()
+        index.put_mapping(doc_type=settings.TS_DOC_TYPE,
+                           body = constants.C_MAPPING)
+        index.save()
+        mapping = index.get_mapping(doc_type=settings.TS_DOC_TYPE)
+
+        doc_properties = mapping[name]['mappings'][settings.TS_DOC_TYPE]['properties']
+        if not doc_properties.get('raw_value'):
+            index.put_mapping(doc_type=settings.TS_DOC_TYPE,
+                              body=constants.MAPPING)
+
+        return index
+
 
 def tseries_index(name: str) -> Index:
     index = Index(name)

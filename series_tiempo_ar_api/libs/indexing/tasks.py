@@ -16,6 +16,7 @@ from series_tiempo_ar_api.apps.management.models import IndexDataTask, Distribut
 from series_tiempo_ar_api.libs.datajsonar_repositories.distribution_repository import DistributionRepository
 from series_tiempo_ar_api.libs.indexing.indexer.data_frame import init_df, get_distribution_time_index_periodicity
 from series_tiempo_ar_api.libs.indexing.indexer.distribution_indexer import DistributionIndexer
+from series_tiempo_ar_api.libs.indexing.indexer.collection_indexer import CollectionIndexer
 from series_tiempo_ar_api.libs.indexing.indexer.metadata import calculate_enhanced_meta
 from series_tiempo_ar_api.libs.indexing.indexer.utils import remove_duplicated_fields
 from series_tiempo_ar_api.libs.indexing.popularity import update_popularity_metadata
@@ -23,6 +24,24 @@ from .report.report_generator import ReportGenerator
 from .distribution_validator import DistributionValidator, DataValidator
 
 logger = logging.getLogger(__name__)
+
+def index_collection(distribution_id,node_id,task_id):
+
+    index = settings.COL_INDEX
+    node = Node.objects.get(id=node_id)
+    task = IndexCollectionTask.objects.get(id=task_id)
+    distribution_model = Distribution.objects.get(identifier=distribution_id,
+                                                  dataset__catalog__identifier=node.catalog_id,
+                                                  present=True)
+    try:
+        download_url = distribution_model.download_url
+        response = requests.get(download_url)
+        response.raise_for_status()
+        data = response.json()
+        #Acá la validación
+        CollectionIndexer(index=index).reindex(data)
+    except Exception as e:
+        _handle_exception(distribution_model.dataset, distribution_id, e, node, task)
 
 
 def index_distribution(distribution_id, node_id, task_id,

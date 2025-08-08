@@ -174,6 +174,7 @@ APPS = (
     'series_tiempo_ar_api.apps.analytics',
     'series_tiempo_ar_api.apps.management.apps.ManagementConfig',
     'series_tiempo_ar_api.apps.metadata.apps.MetadataConfig',
+    'series_tiempo_ar_api.apps.collections'
     'series_tiempo_ar_api.apps.dump',
     'series_tiempo_ar_api.libs.indexing',
     'series_tiempo_ar_api.libs.custom_admins',
@@ -281,6 +282,7 @@ REDIS_SETTINGS = {
 
 # Colas de Redis. Existe una por tarea asincrónica a ejecutar.
 RQ_QUEUE_NAMES = [
+    'collection_index'
     'default',
     'upkeep',
     'dj_indexing',
