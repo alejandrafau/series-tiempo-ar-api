@@ -31,21 +31,22 @@ def index_catalog(node: Node, task, read_local=False, force=False):
                                                 dataset__indexable=True,
                                                 dataset__catalog__identifier=node.catalog_id)
     for distribution in distributions:
-        api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
-
+        #api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
+        index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
 
 def process_collections(node: Node, task, read_local=False, force=False):
-   #Acá lo que podría pasar hipotéticamente es que busque en la tabla
-   #Distributions, las que son colecciones...
 
-   collections = Distribution.objects.filter(
-    present=True,
-    dataset__indexable=True,
-    dataset__catalog__identifier=node.catalog_id,
-    distribution_title__startswith="collection_data"
-)
-   for collection in collections:
-       collection_index_enqueue(index_collection,collection.identifier,node.id,task.id,read_local,force=force)
+ catalog = node.catalog
+ collections = [
+     {**dist, "dataset": dataset.get("dataset_identifier")}
+     for dataset in catalog.get('dataset', [])
+     for dist in dataset.get('distribution', [])
+     if dist.get('title', '').startswith('collection_data')
+ ]
+ print(collections)
+
+ for collection in collections:
+       collection_index_enqueue(index_collection,collection,node.id,task.id,read_local,force=force)
 
 
 

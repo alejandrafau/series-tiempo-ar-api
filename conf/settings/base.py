@@ -174,7 +174,7 @@ APPS = (
     'series_tiempo_ar_api.apps.analytics',
     'series_tiempo_ar_api.apps.management.apps.ManagementConfig',
     'series_tiempo_ar_api.apps.metadata.apps.MetadataConfig',
-    'series_tiempo_ar_api.apps.collections'
+    'series_tiempo_ar_api.apps.collections',
     'series_tiempo_ar_api.apps.dump',
     'series_tiempo_ar_api.libs.indexing',
     'series_tiempo_ar_api.libs.custom_admins',
@@ -282,7 +282,7 @@ REDIS_SETTINGS = {
 
 # Colas de Redis. Existe una por tarea asincrónica a ejecutar.
 RQ_QUEUE_NAMES = [
-    'collection_index'
+    'collection_index',
     'default',
     'upkeep',
     'dj_indexing',
@@ -323,6 +323,7 @@ STAGES_TITLES = {
     'READ_DATAJSON_COMPLETE': 'Read Datajson (corrida completa)',
     'READ_DATAJSON_METADATA': 'Read Datajson (sólo metadatos)',
     'API_INDEX': 'Indexación de datos (sólo actualizados)',
+    'COLLECTION_INDEX': 'Indexación de colecciones  (sólo actualizados)',
     'API_INDEX_FORCE': 'Indexación de datos (forzar indexación)',
     'DUMPS_CSV': 'Generación de dumps CSV',
     'DUMPS_XLSX': 'Generación de dumps XLSX',
@@ -351,6 +352,11 @@ DATAJSONAR_STAGES = {
         'callable_str': 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_api_indexing',
         'queue': 'api_index',
         'task': 'series_tiempo_ar_api.apps.management.models.IndexDataTask',
+    },
+    STAGES_TITLES['COLLECTION_INDEX']: {
+        'callable_str': 'series_tiempo_ar_api.apps.management.tasks.col_indexation.schedule_collection_indexing',
+        'queue': 'collection_index',
+        'task': 'series_tiempo_ar_api.apps.management.models.IndexCollectionTask',
     },
     STAGES_TITLES['API_INDEX_FORCE']: {
         'callable_str': 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_force_api_indexing',
@@ -503,6 +509,11 @@ ADMIN_SHORTCUTS = [
                 'title': 'Indexación de datos',
                 'url_name': 'admin:management_indexdatatask_changelist',
                 'icon': 'lightbulb',
+            },
+            {
+                'title': 'Indexación de colecciones',
+                'url_name': 'admin:management_indexcollectiontask_changelist',
+                'icon': "database",
             },
             {
                 'title': 'Tareas programadas',

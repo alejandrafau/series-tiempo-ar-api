@@ -17,7 +17,7 @@ def schedule_api_indexing(node=None, force=False):
     if IndexDataTask.objects.filter(status=IndexDataTask.RUNNING):
         logger.info(u'Ya está corriendo una indexación')
         return
-
+    logger.info("Entró a schedule api indexing")
     indexing_mode = IndexDataTask.ALL if force else IndexDataTask.UPDATED_ONLY
     task = IndexDataTask(indexing_mode=indexing_mode)
     task.node = node
@@ -34,13 +34,14 @@ def schedule_api_indexing(node=None, force=False):
 @job('api_index')
 def schedule_force_api_indexing(node=None):
     schedule_api_indexing(node, force=True)
-
+    logger.info("Entró a schedule api indexing")
 
 @job('api_index')
 def read_datajson(task, read_local=False, force=False):
     """Tarea raíz de indexación. Itera sobre todos los nodos indexables (federados) e
     inicia la tarea de indexación sobre cada uno de ellos
     """
+    logger.info("Entró directo a read_datajson")
     node = task.node
     nodes = Node.objects.filter(indexable=True) if node is None else [node]
     task.status = task.RUNNING

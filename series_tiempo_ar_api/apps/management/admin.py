@@ -8,8 +8,16 @@ from scheduler.models import RepeatableJob
 
 from series_tiempo_ar_api.libs.singleton_admin import SingletonAdmin
 from .tasks.indexation import read_datajson
+from .tasks.col_indexation import read_collection
 from .tasks.integration_test import run_integration
-from .models import IndexDataTask, IntegrationTestTask, IntegrationTestConfig, APIIndexingConfig, DistributionValidatorConfig
+from .models import (
+    IndexDataTask,
+    IndexCollectionTask,
+    IntegrationTestTask,  # ← add this
+    IntegrationTestConfig,
+    APIIndexingConfig,
+    DistributionValidatorConfig,
+)
 
 
 class NodeAdmin(admin.ModelAdmin):
@@ -41,6 +49,13 @@ class DataJsonAdmin(AbstractTaskAdmin):
 
     callable_str = 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_api_indexing'
 
+class CollectionAdmin(AbstractTaskAdmin):
+    task = read_datajson
+
+    model = IndexCollectionTask
+
+    callable_str = 'series_tiempo_ar_api.apps.management.tasks.col_indexation.schedule_collection_indexing'
+
 
 @admin.register(IntegrationTestTask)
 class IntegrationTestTaskAdmin(AbstractTaskAdmin):
@@ -52,6 +67,7 @@ class IntegrationTestTaskAdmin(AbstractTaskAdmin):
 
 
 admin.site.register(IndexDataTask, DataJsonAdmin)
+admin.site.register(IndexCollectionTask, CollectionAdmin)
 admin.site.register(IntegrationTestConfig, SingletonAdmin)
 admin.site.unregister(RepeatableJob)
 admin.site.register(RepeatableJob, RepeatableJobAdmin)
