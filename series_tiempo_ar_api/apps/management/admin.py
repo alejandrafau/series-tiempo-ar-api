@@ -13,7 +13,7 @@ from .tasks.integration_test import run_integration
 from .models import (
     IndexDataTask,
     IndexCollectionTask,
-    IntegrationTestTask,  # ← add this
+    IntegrationTestTask,
     IntegrationTestConfig,
     APIIndexingConfig,
     DistributionValidatorConfig,
@@ -50,7 +50,7 @@ class DataJsonAdmin(AbstractTaskAdmin):
     callable_str = 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_api_indexing'
 
 class CollectionAdmin(AbstractTaskAdmin):
-    task = read_datajson
+    task = read_collection
 
     model = IndexCollectionTask
 

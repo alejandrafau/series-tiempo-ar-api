@@ -9,6 +9,7 @@ def tscol_index(name: str) -> Index:
     index.settings(max_result_window = settings.MAX_SERIES_VALUES)
     if not index.exists():
         index.create()
+        print("Se creó el indice exitosamente")
         index.put_mapping(doc_type=settings.TS_DOC_TYPE,
                            body = constants.C_MAPPING)
         index.save()
@@ -17,7 +18,7 @@ def tscol_index(name: str) -> Index:
         doc_properties = mapping[name]['mappings'][settings.TS_DOC_TYPE]['properties']
         if not doc_properties.get('raw_value'):
             index.put_mapping(doc_type=settings.TS_DOC_TYPE,
-                              body=constants.MAPPING)
+                              body=constants.C_MAPPING)
 
         return index
 

@@ -214,7 +214,7 @@ LOGGING = {
     },
     'handlers': {
         "rq_console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "rq.utils.ColorizingStreamHandler",
             "formatter": "rq_console",
             "exclude": ["%(asctime)s"],
@@ -262,7 +262,7 @@ LOGGING = {
         },
         "rq.worker": {
             "handlers": ["rq_console", ],
-            "level": "DEBUG"
+            "level": "INFO"
         },
     }
 }
@@ -323,6 +323,7 @@ STAGES_TITLES = {
     'READ_DATAJSON_COMPLETE': 'Read Datajson (corrida completa)',
     'READ_DATAJSON_METADATA': 'Read Datajson (sólo metadatos)',
     'API_INDEX': 'Indexación de datos (sólo actualizados)',
+    'COLLECTION_INDEX_FORCE':'Indexación de datos (forzar indexación)',
     'COLLECTION_INDEX': 'Indexación de colecciones  (sólo actualizados)',
     'API_INDEX_FORCE': 'Indexación de datos (forzar indexación)',
     'DUMPS_CSV': 'Generación de dumps CSV',
@@ -355,6 +356,11 @@ DATAJSONAR_STAGES = {
     },
     STAGES_TITLES['COLLECTION_INDEX']: {
         'callable_str': 'series_tiempo_ar_api.apps.management.tasks.col_indexation.schedule_collection_indexing',
+        'queue': 'collection_index',
+        'task': 'series_tiempo_ar_api.apps.management.models.IndexCollectionTask',
+    },
+    STAGES_TITLES['COLLECTION_INDEX_FORCE']: {
+        'callable_str': 'series_tiempo_ar_api.apps.management.tasks.col_indexation.schedule_force_collection_indexing',
         'queue': 'collection_index',
         'task': 'series_tiempo_ar_api.apps.management.models.IndexCollectionTask',
     },

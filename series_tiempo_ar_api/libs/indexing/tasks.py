@@ -1,7 +1,7 @@
 #! coding: utf-8
 import logging
 from traceback import format_exc
-
+import requests
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
@@ -12,7 +12,7 @@ from django_datajsonar.models import Node, Metadata, Field
 from django_datajsonar.models import Distribution
 
 from series_tiempo_ar_api.apps.management import meta_keys
-from series_tiempo_ar_api.apps.management.models import IndexDataTask, DistributionValidatorConfig
+from series_tiempo_ar_api.apps.management.models import IndexDataTask, DistributionValidatorConfig,IndexCollectionTask
 from series_tiempo_ar_api.libs.datajsonar_repositories.distribution_repository import DistributionRepository
 from series_tiempo_ar_api.libs.indexing.indexer.data_frame import init_df, get_distribution_time_index_periodicity
 from series_tiempo_ar_api.libs.indexing.indexer.distribution_indexer import DistributionIndexer
@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 def index_collection(collection,node_id,task_id):
 
     index = settings.COL_INDEX
+    print(f"El índice es:{index}")
     node = Node.objects.get(id=node_id)
     task = IndexCollectionTask.objects.get(id=task_id)
 

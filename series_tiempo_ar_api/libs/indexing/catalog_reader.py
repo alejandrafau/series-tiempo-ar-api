@@ -4,6 +4,7 @@ from __future__ import division
 import json
 
 from pydatajson import DataJson
+import logging
 
 from django_datajsonar.models import Distribution, Node
 from series_tiempo_ar_api.apps.management.models import IndexDataTask
@@ -13,12 +14,13 @@ from series_tiempo_ar_api.libs.indexing.tasks import index_distribution
 from series_tiempo_ar_api.libs.indexing.tasks import index_collection
 from .strings import READ_ERROR
 
+logger = logging.getLogger(__name__)
 
 def index_catalog(node: Node, task, read_local=False, force=False):
     """Ejecuta el pipeline de lectura, guardado e indexado de datos
     y metadatos sobre cada distribución del catálogo especificado
     """
-
+    logger.info("se esta corriendo indexación de catálogo")
     try:
         catalog = DataJson(node.catalog_url, catalog_format=node.catalog_format)
         node.catalog = json.dumps(catalog)
@@ -35,18 +37,19 @@ def index_catalog(node: Node, task, read_local=False, force=False):
         index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
 
 def process_collections(node: Node, task, read_local=False, force=False):
+    catalog = node.catalog
+    catalog = json.loads(catalog)
+    collections = []
+    datasets = catalog.get('dataset')
+    for dataset in datasets:
+        distributions = dataset.get('distribution')
+        for dist in distributions:
+            if dist['title'].endswith('collection_data'):
+               dist['dataset']=dataset['identifier']
+               collections.append(dist)
 
- catalog = node.catalog
- collections = [
-     {**dist, "dataset": dataset.get("dataset_identifier")}
-     for dataset in catalog.get('dataset', [])
-     for dist in dataset.get('distribution', [])
-     if dist.get('title', '').startswith('collection_data')
- ]
- print(collections)
-
- for collection in collections:
-       collection_index_enqueue(index_collection,collection,node.id,task.id,read_local,force=force)
+    for collection in collections:
+       collection_index_enqueue(index_collection,collection,node.id,task.id)
 
 
 

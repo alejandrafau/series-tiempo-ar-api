@@ -15,6 +15,7 @@ def get_info_view(request):
 
 @require_GET
 def get_series_view(request):
+    print("entro en get series")
     collection = request.GET.get('collection')
     variables = request.GET.getlist('variables')
     valores = request.GET.getlist('valores')

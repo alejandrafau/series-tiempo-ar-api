@@ -35,6 +35,14 @@ class SerieInCollection(DocType):
     class Meta:
         index = 'collections'
         doc_type = 'doc'
+    def serialize_serie(self):
+        return {
+            "id": self.id,
+            "collection": self.collection,
+            "atributos": self.atributos,
+        }
+
+
 
 
 class CollectionsIndexer:
@@ -63,7 +71,11 @@ class CollectionsIndexer:
             serie.id = id
             serie.collection = collection_id
             serie.atributos = atributos
-            actions.append(serie)
+            serie_dict = {}
+            serie_dict['_index']= self.index_name
+            serie_dict['_type'] = 'doc'
+            serie_dict['_source']= serie.serialize_serie()
+            actions.append(serie_dict)
         return actions
 
     def reindex(self, collection_data):

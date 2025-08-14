@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 @job('collection_index')
 def schedule_collection_indexing(node=None, force=False):
     if IndexCollectionTask.objects.filter(status=IndexCollectionTask.RUNNING):
-        logger.info(u'Ya está corriendo una indexación')
+        logger.info('Ya está corriendo una indexación')
         return
     logger.info("Se programó la tarea")
     indexing_mode = IndexCollectionTask.ALL if force else IndexCollectionTask.UPDATED_ONLY

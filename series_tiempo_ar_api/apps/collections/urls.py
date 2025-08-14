@@ -4,6 +4,6 @@ from . import views
 app_name = 'collections'
 
 urlpatterns = [
-    url(r'^get_series/$', views.get_series, name='get_series'),
-    url(r'^get_info/$', views.get_info, name='get_info'),
+    url(r'^get_series/$', views.get_series_view, name='get_series'),
+    url(r'^get_info/$', views.get_info_view, name='get_info'),
 ]
