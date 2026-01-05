@@ -40,7 +40,7 @@ def index_collection(collection,node_id,task_id):
         logger.info("Data de la colección obtenida exitosamente")
         CollectionsIndexer(index=index).reindex(data)
     except Exception as e:
-        _handle_exception(collection.get('dataset'), collection.get('identifier'), e, node, task)
+        _handle_collection_exception(collection.get('dataset'), collection.get('identifier'), e, node, task)
 
 
 def index_distribution(distribution_id, node_id, task_id,
@@ -118,6 +118,36 @@ def _handle_exception(dataset_model, distribution_id, exc, node, task):
         e_msg = format_exc()
     msg = msg.format(distribution_id, node.catalog_id, e_msg)
     IndexDataTask.info(task, msg)
+    logger.info(msg)
+
+    with transaction.atomic():
+        try:
+            distribution = Distribution.objects.get(identifier=distribution_id,
+                                                    dataset__catalog__identifier=node.catalog_id,
+                                                    present=True)
+            distribution.error_msg = msg
+            distribution.error = True
+            distribution.field_set.update(error=True)
+            distribution.save()
+        except Distribution.DoesNotExist:
+            pass
+
+    # No usamos un contador manejado por el indicator_loader para asegurarse que los datasets
+    # sean contados una única vez (pueden fallar una vez por cada una de sus distribuciones)
+    dataset_model.error = True
+    dataset_model.save()
+
+    dataset_model.catalog.error = True
+    dataset_model.catalog.save()
+
+def _handle_collection_exception(dataset_model, distribution_id, exc, node, task):
+    msg = u"Excepción en distrbución {} del catálogo {}: {}"
+    if exc:
+        e_msg = exc
+    else:
+        e_msg = format_exc()
+    msg = msg.format(distribution_id, node.catalog_id, e_msg)
+    IndexCollectionTask.info(task, msg)
     logger.info(msg)
 
     with transaction.atomic():
