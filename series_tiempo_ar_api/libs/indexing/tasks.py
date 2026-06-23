@@ -25,22 +25,18 @@ from .distribution_validator import DistributionValidator, DataValidator
 
 logger = logging.getLogger(__name__)
 
-def index_collection(collection,node_id,task_id):
-
+def index_collection(field_data, node_id, task_id):
     index = settings.COL_INDEX
-    print(f"El índice es:{index}")
     node = Node.objects.get(id=node_id)
     task = IndexCollectionTask.objects.get(id=task_id)
-
+    field_id = field_data.get('field_id')
     try:
-        download_url = collection.get('downloadURL')
-        response = requests.get(download_url)
-        response.raise_for_status()
-        data = response.json()
-        logger.info("Data de la colección obtenida exitosamente")
-        CollectionsIndexer(index=index).reindex(data)
+        CollectionsIndexer(index=index).reindex(field_data)
+        logger.info(f"Field {field_id} indexado exitosamente")
     except Exception as e:
-        _handle_collection_exception(collection.get('dataset'), collection.get('identifier'), e, node, task)
+        msg = f"Excepción en field {field_id} del catálogo {node.catalog_id}: {e}"
+        IndexCollectionTask.info(task, msg)
+        logger.info(msg)
 
 
 def index_distribution(distribution_id, node_id, task_id,
