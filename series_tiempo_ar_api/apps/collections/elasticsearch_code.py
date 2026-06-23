@@ -1,47 +1,47 @@
-from elasticsearch_dsl import Search,Q
-from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import Index
-from elasticsearch import Elasticsearch
+from elasticsearch_dsl import Search, Q
 
 
 def get_info(collection):
-    tuplas_disponibles = []
-    atributos_dict = {}
-
-    q1 = Q("term", collection=collection)
-    s = Search(index="collections", doc_type="doc").query(Q("bool", must=q1)).extra(size=1000)
+    dims_dict = {}
+    s = Search(index="collections", doc_type="doc").query(
+        Q("term", collection=collection)
+    ).extra(size=1000)
     response = s.execute()
 
     for hit in response:
-        for element in hit.atributos:
-            variable = element['variable']
-            valor = element['valor']
-            if variable not in atributos_dict:
-                atributos_dict[variable] = []
-            atributos_dict[variable].append(valor)
+        for dim in hit.dimensions:
+            name = dim['name']
+            value = dim['value']
+            if name not in dims_dict:
+                dims_dict[name] = []
+            if value is not None:
+                dims_dict[name].append(value)
 
-    for k in atributos_dict:
-        atributos_dict[k] = list(set(atributos_dict[k]))
+    for k in dims_dict:
+        dims_dict[k] = list(set(dims_dict[k]))
 
-    return atributos_dict
+    return dims_dict
 
 
+def get_series(collection_id, concept_id, dimensiones, valores, mode):
+    queries = [Q("term", collection=collection_id)]
 
-def get_series(collection,variables,valores,modo):
-    busquedas = []
-    try:
-      tuplas_a_buscar = list(zip(variables,valores))
-      q1 = Q("term", collection = collection)
-      busquedas.append(q1)
-      for element in tuplas_a_buscar:
-        query = Q("nested", path="atributos", query=Q("bool", must=[
-                Q("term", atributos__variable=element[0]),
-                Q("term", atributos__valor=element[1])
-            ]))
-        busquedas.append(query)
-      s = Search(index="collections", doc_type="doc").query(Q("bool", must=busquedas))
-      response = s.execute()
-      for hit in response:
-        return hit.id
-    except:
-        return "No se puedo pudo zippear variables y valores"
+    if concept_id:
+        queries.append(Q("term", concept=concept_id))
+
+    for dim, val in zip(dimensiones, valores):
+        if isinstance(val, list):
+            nested_q = Q("bool", must=[
+                Q("term", dimensions__name=dim),
+                Q("terms", dimensions__value=val),
+            ])
+        else:
+            nested_q = Q("bool", must=[
+                Q("term", dimensions__name=dim),
+                Q("term", dimensions__value=val),
+            ])
+        queries.append(Q("nested", path="dimensions", query=nested_q))
+
+    s = Search(index="collections", doc_type="doc").query(Q("bool", must=queries))
+    response = s.execute()
+    return [hit.id for hit in response]

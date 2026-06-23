@@ -12,6 +12,7 @@ from series_tiempo_ar_api.libs.indexing.api_index_enqueue import api_index_enque
 from series_tiempo_ar_api.libs.indexing.collection_index_enqueue import collection_index_enqueue
 from series_tiempo_ar_api.libs.indexing.tasks import index_distribution
 from series_tiempo_ar_api.libs.indexing.tasks import index_collection
+from series_tiempo_ar_api.libs.indexing.series_concept_validator import SeriesConceptValidator
 from .strings import READ_ERROR
 
 logger = logging.getLogger(__name__)
@@ -37,19 +38,28 @@ def index_catalog(node: Node, task, read_local=False, force=False):
         index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
 
 def process_collections(node: Node, task, read_local=False, force=False):
-    catalog = node.catalog
-    catalog = json.loads(catalog)
-    collections = []
-    datasets = catalog.get('dataset')
-    for dataset in datasets:
-        distributions = dataset.get('distribution')
-        for dist in distributions:
-            if dist['title'].endswith('collection_data'):
-               dist['dataset']=dataset['identifier']
-               collections.append(dist)
+    catalog = json.loads(node.catalog)
+    validator = SeriesConceptValidator()
+    for dataset in catalog.get('dataset', []):
+        for dist in dataset.get('distribution', []):
+            for field in dist.get('field', []):
+                if field.get('specialType') != 'time_series':
+                    continue
+                series_concept = field.get('specialTypeDetail')
+                field_id = field.get('id')
+                if not series_concept or not field_id:
+                    continue
 
-    for collection in collections:
-       collection_index_enqueue(index_collection,collection,node.id,task.id)
+                errors = validator.validate(field_id, series_concept)
+                if errors:
+                    for err in errors:
+                        logger.warning("Field '%s' skipped: %s", field_id, err)
+                    continue
 
-
+                collection_index_enqueue(
+                    index_collection,
+                    {'field_id': field_id, 'series_concept': series_concept},
+                    node.id,
+                    task.id,
+                )
 

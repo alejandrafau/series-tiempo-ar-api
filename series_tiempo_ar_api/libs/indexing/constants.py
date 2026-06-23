@@ -60,16 +60,17 @@ MAPPING = {
 
 C_MAPPING = {
     "properties": {
-        "id"  :         {"type": "keyword"},
-        "collection":   { "type": "keyword" },
-        "atributos": {
-                    "type": "nested",
-                    "properties": {
-                        "variable": { "type": "keyword" },
-                        "valor":    { "type": "keyword" }
-                    }
-                }
-            },
+        "id":         {"type": "keyword"},
+        "collection": {"type": "keyword"},
+        "concept":    {"type": "keyword"},
+        "dimensions": {
+            "type": "nested",
+            "properties": {
+                "name":  {"type": "keyword"},
+                "value": {"type": "keyword"}
+            }
+        }
+    },
     "dynamic": "strict"
 }
 
