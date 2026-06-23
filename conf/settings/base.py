@@ -462,6 +462,7 @@ ADMIN_REORDER = (
     'metadata',
     'dump',
     'analytics',
+    'collections',
     {'app': 'des', 'label': 'Configuración correo'},
     'scheduler',
     'sites',
@@ -500,7 +501,17 @@ ADMIN_SHORTCUTS = [
                 'title': 'Series',
                 'url_name': 'admin:django_datajsonar_field_changelist',
                 'icon': 'list'
-            }
+            },
+            {
+                'title': 'Collections',
+                'url_name': 'admin:collections_collection_changelist',
+                'icon': 'layer-group',
+            },
+            {
+                'title': 'Conceptos',
+                'url_name': 'admin:collections_concept_changelist',
+                'icon': 'tags',
+            },
         ]
     },
     {
