@@ -1,9 +1,12 @@
+import json
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
 from .elasticsearch_code import get_info, get_series
+from .models import Collection, Concept
+from series_tiempo_ar_api.apps.api.query.pipeline import QueryPipeline
 import pandas as pd
-from series_tiempo_ar_api.apps.api.views import query_view
 import yaml
 import os
 import io
@@ -43,16 +46,36 @@ def get_info_view(request):
 
 @require_GET
 def get_series_view(request):
-    #print("entro en get series")
-    collection = request.GET.get('collection')
-    variables = request.GET.getlist('variables')
-    valores = request.GET.getlist('valores')
-    modo = request.GET.get('modo')  # opcional
+    collection_id = request.GET.get('collection_id')
+    concept_id = request.GET.get('concept_id')
+    dimensiones = request.GET.getlist('dimensiones')
+    mode = request.GET.get('mode')
 
-    if not collection or not variables or not valores:
-        return JsonResponse({'error': 'Missing one or more parameters: collection, variables, valores'}, status=400)
+    if not collection_id:
+        return JsonResponse({'error': 'Missing required parameter: collection_id'}, status=400)
 
-    result = get_series(collection, variables, valores, modo)
+    # Cada valor puede ser un string simple o un JSON array para OR entre valores
+    valores = []
+    for v in request.GET.getlist('valores'):
+        try:
+            parsed = json.loads(v)
+            valores.append(parsed if isinstance(parsed, list) else v)
+        except (json.JSONDecodeError, ValueError):
+            valores.append(v)
+
+    result = get_series(collection_id, concept_id, dimensiones, valores, mode)
+
+    if mode == 'data':
+        if not result:
+            return JsonResponse({'result': []})
+        args = {'ids': ','.join(result)}
+        for param in ['start_date', 'end_date', 'collapse', 'collapse_aggregation',
+                      'representation_mode', 'limit', 'start']:
+            val = request.GET.get(param)
+            if val is not None:
+                args[param] = val
+        return QueryPipeline().run(args)
+
     return JsonResponse({'result': result})
 
 @csrf_exempt
@@ -106,12 +129,65 @@ def unstack_view(request):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
 
-def query_view(request):
-    query = QueryPipeline()
-  # Formateo argumentos a lowercase, excepto ids
-    ids = request.GET.get(constants.PARAM_IDS)
-    args = {key: value.lower() for key, value in request.GET.items()}
-    args[constants.PARAM_IDS] = ids
+@require_GET
+def all_collections_view(request):
+    collections = Collection.objects.values('id', 'nombre').order_by('id')
+    return JsonResponse({'collections': list(collections)})
 
-    response = query.run(args)
-    return response
+
+@require_GET
+def all_concepts_view(request):
+    collection_id = request.GET.get('collection_id')
+    qs = Concept.objects.select_related('collection').order_by('id')
+    if collection_id:
+        qs = qs.filter(collection_id=collection_id)
+    concepts = [
+        {'id': c.id, 'nombre': c.nombre, 'collection_id': c.collection_id}
+        for c in qs
+    ]
+    return JsonResponse({'concepts': concepts})
+
+
+@require_GET
+def get_collection_view(request):
+    collection_id = request.GET.get('id')
+    if not collection_id:
+        return JsonResponse({'error': 'Missing required parameter: id'}, status=400)
+    try:
+        col = Collection.objects.prefetch_related('concepts').get(id=collection_id)
+    except Collection.DoesNotExist:
+        return JsonResponse({'error': f'Collection "{collection_id}" not found'}, status=404)
+    return JsonResponse({
+        'id': col.id,
+        'nombre': col.nombre,
+        'descripcion': col.descripcion,
+        'concepts': [
+            {
+                'id': c.id,
+                'nombre': c.nombre,
+                'descripcion': c.descripcion,
+                'variables': c.variables,
+                'variables_compatibles': c.variables_compatibles,
+            }
+            for c in col.concepts.all()
+        ]
+    })
+
+
+@require_GET
+def get_concept_view(request):
+    concept_id = request.GET.get('id')
+    if not concept_id:
+        return JsonResponse({'error': 'Missing required parameter: id'}, status=400)
+    try:
+        c = Concept.objects.select_related('collection').get(id=concept_id)
+    except Concept.DoesNotExist:
+        return JsonResponse({'error': f'Concept "{concept_id}" not found'}, status=404)
+    return JsonResponse({
+        'id': c.id,
+        'nombre': c.nombre,
+        'descripcion': c.descripcion,
+        'collection_id': c.collection_id,
+        'variables': c.variables,
+        'variables_compatibles': c.variables_compatibles,
+    })
