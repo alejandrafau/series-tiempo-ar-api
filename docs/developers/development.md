@@ -1,81 +1,171 @@
 # Development
-A continuación se detallan los pasos a seguir para levantar una versión local de la aplicación, apuntado a futuros desarrolladores de la misma. Este documento asume un entorno Linux para el desarrollo, y fue probado bajo Ubuntu 16.04.
+
+Hay dos formas de levantar el entorno local:
+
+- **Opción A — Todo en Docker** (`docker-compose-full.yml`): la más simple, todos los servicios corren en contenedores.
+- **Opción B — Infra en Docker, app en crudo**: Elasticsearch, PostgreSQL, Redis y MinIO corren en Docker; la app Django y los workers corren en un virtualenv local. Útil para desarrollo activo con hot-reload.
 
 ## Requerimientos
 
-- Python 3.6.x
-- Virtualenv
-- Docker
-- Docker compose
+- Docker y Docker Compose (ambas opciones)
+- Python 3.6 y virtualenv (solo Opción B)
 
-## Setup
+---
 
-### Virtualenv (con Pyenv)
-Es recomendable instalar las dependencias de la aplicación en un _entorno virtual_ para evitar conflictos con otras aplicaciones de versionado de las librerías usadas. Este ejemplo instala un entorno virtual de Python 2.7.6 con el nombre `stiempo-api`, y todas las dependencias de la aplicación.
+## Opción A — Todo en Docker
+
+### 1. Configurar el entorno
+
+```bash
+cp conf/settings/.env.example_prod conf/settings/.env
+```
+
+Editar `conf/settings/.env` y completar los valores reales:
+
+- `DATABASE_PASSWORD` — contraseña de PostgreSQL
+- `SECRET_KEY` y `DJANGO_SECRET_KEY` — claves secretas de Django
+- `MINIO_ACCESS_KEY` / `MINIO_SECRET_KEY` — credenciales de MinIO
+- `STATIC_ROOT=/app/staticfiles`
+- `MEDIA_ROOT=/app/media`
+- `DJANGO_SETTINGS_MODULE=conf.settings.local`
+
+### 2. Construir la imagen
+
+```bash
+docker compose -f docker-compose-full.yml build
+```
+
+La primera vez tarda algunos minutos porque instala dependencias (incluyendo `django-datajsonar` desde el repo).
+
+### 3. Levantar infraestructura
+
+```bash
+docker compose -f docker-compose-full.yml up -d postgres redis elasticsearch minio
+```
+
+Esperar ~30 segundos a que Elasticsearch inicialice. Se puede verificar con:
+
+```bash
+docker compose -f docker-compose-full.yml logs elasticsearch | tail -20
+```
+
+### 4. Levantar la app
+
+```bash
+docker compose -f docker-compose-full.yml up -d app nginx
+```
+
+El entrypoint corre `migrate` y `collectstatic` automáticamente. La app queda disponible en `http://localhost` y el admin en `http://localhost/admin`.
+
+### 5. Crear superusuario
+
+```bash
+docker compose -f docker-compose-full.yml exec app python manage.py createsuperuser
+```
+
+### 6. Levantar workers (para tareas asíncronas)
+
+```bash
+docker compose -f docker-compose-full.yml up -d worker-indexing worker-api-index worker-misc
+```
+
+Los workers disponibles y las colas que escuchan:
+
+| Worker | Colas |
+|---|---|
+| `worker-indexing` | `indexing`, `dj_indexing` |
+| `worker-api-index` | `api_index`, `collection_index` |
+| `worker-misc` | `meta_indexing`, `upkeep`, `default` |
+
+### Operaciones habituales
+
+```bash
+# Logs en tiempo real
+docker compose -f docker-compose-full.yml logs -f app
+
+# Rebuild después de cambios en el código
+docker compose -f docker-compose-full.yml build app
+docker compose -f docker-compose-full.yml up -d app worker-indexing worker-api-index worker-misc
+
+# Correr un management command
+docker compose -f docker-compose-full.yml exec app python manage.py <comando>
+
+# Shell Django
+docker compose -f docker-compose-full.yml exec app python manage.py shell
+
+# Bajar todo sin borrar datos
+docker compose -f docker-compose-full.yml down
+
+# Bajar y borrar volúmenes (borra todos los datos)
+docker compose -f docker-compose-full.yml down -v
+```
+
+---
+
+## Opción B — Infra en Docker, app en crudo
+
+### 1. Levantar servicios de infraestructura
+
+```bash
+docker compose up -d
+```
+
+Esto levanta PostgreSQL (5432), Elasticsearch (9200), Redis (6379) y MinIO (9000) en puertos locales usando `docker-compose.yml`.
+
+### 2. Crear virtualenv e instalar dependencias
+
 ```bash
 pyenv virtualenv 3.6.6 stiempo-api
 pyenv activate stiempo-api
 pip install -r requirements/local.txt
 ```
 
-### Configuración
-Algunas configuraciones locales (como variables de entorno, o la base de datos usada) pueden llegar a diferir de la versión productiva, y deben ser seteadas manualmente. Para ello se provee una configuración de _ejemplo_, que puede ser usada como base. 
+### 3. Configuración
+
 ```bash
 cp conf/settings/local_example.py conf/settings/local.py
-cp conf/settings/.env.default_local conf/settings/.env
-```
-
-A su vez, se debe informar a Django cual es el módulo de configuración a leer. Este módulo debe ser el mismo que fue copiado en el paso anterior (`conf/settings/local.py` en el ejemplo). Esto se hace seteando la variable de entorno `DJANGO_SETTINGS_MODULE`, lo cual se puede hacer persistente entre sesiones de terminal escribiéndolo en `.bashrc` (o similar, dependiendo de la terminal utilizada):
-```bash
 export DJANGO_SETTINGS_MODULE=conf.settings.local
 ```
 
-### Servicios
-Los servicios (PostgreSQL, Elasticsearch, Redis) pueden ser levantados usando Docker y Docker Compose:
-```bash
-docker-compose pull
-docker-compose up -d
-```
+Ajustar `conf/settings/local.py` si algún host o puerto difiere del default.
 
-### Base de datos
-Correr las migraciones de las base de datos:
+### 4. Migraciones
+
 ```bash
 python manage.py migrate
 ```
 
-### Worker
-Por defecto usando la configuración local, todas las tareas asincrónicas se corren de manera sincrónica. Si se desea testear la integración con rq de manera completa, configurar las colas para ser asincrónicas cambiando el código
+### 5. Web server
 
-```python
-for queue in RQ_QUEUES.values():
-    queue['ASYNC'] = False
-```
-
-por 
-
-```
-for queue in RQ_QUEUES.values():
-    queue['ASYNC'] = True
-```
-
-Luego se pueden correr los workers para las colas deseadas con el siguiente comando. Notar que el comando bloqueará la terminal. Los nombres de las colas se encuentran bajo la variable `RQ_QUEUE_NAMES` en el archivo `conf/settings/base.py`
-
-```bash
-python manage.py rqworker <queues>
-```
-
-### Web server
-Este comando levanta la aplicación. 
 ```bash
 python manage.py runserver
 ```
 
-Si está todo en orden se podrá leer algún mensaje como el siguiente:
-```bash
-Django version 1.11.6, using settings 'conf.settings.local'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
+La app queda disponible en `http://127.0.0.1:8000`.
+
+### Workers opcionales
+
+Por defecto en `local.py` las colas tienen `ASYNC=False`, por lo que las tareas corren sincrónicas sin necesidad de workers. Para testear el flujo asíncrono completo, cambiar en `local.py`:
+
+```python
+for queue in RQ_QUEUES.values():
+    queue['ASYNC'] = True
 ```
 
+Y levantar workers en terminales separadas:
+
+```bash
+python manage.py rqworker indexing dj_indexing
+python manage.py rqworker api_index collection_index
+python manage.py rqworker meta_indexing upkeep default
+```
+
+---
+
 ## Tests
-Correr `scripts/tests.sh` desde el directorio raíz. También se proveen scripts que chequean estilos (`scripts/pycodestyle.sh`) y `pýlint` (`scripts/pylint.sh`)
+
+```bash
+scripts/tests.sh
+```
+
+También hay scripts para estilos (`scripts/pycodestyle.sh`) y pylint (`scripts/pylint.sh`).

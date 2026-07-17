@@ -59,6 +59,8 @@ En http://www.datos.gob.ar podés encontrar la [base completa de series de tiemp
 
 También podés descargarte de ahí [todos los valores de la base completa](http://infra.datos.gob.ar/catalog/modernizacion/dataset/1/distribution/1.3/download/series-tiempo-valores.csv), en lugar de usar la API.
 
+La API también expone el módulo de **Colecciones** (`/collections/`), que permite encontrar series de tiempo de forma paramétrica a partir de sus atributos conceptuales: colección, concepto y dimensiones (por ejemplo, región, categoría, etc.). En lugar de conocer el `id` exacto de una serie, se puede consultar `GET /collections/get_series/?collection_id=ipc&concept_id=indic:ipc-indice&dimensiones[region_estadistica]=Nacional` para obtener todas las series que correspondan a esos atributos. Se irán incorporando más colecciones y series a medida que se amplíe la cobertura temática.
+
 ## Términos y condiciones de uso
 
 La aplicación se publica actualmente como una versión `beta`. Ver detalle del [acuerdo de nivel de servicio]() (*TODO: escribir versión inicial de SLA*).

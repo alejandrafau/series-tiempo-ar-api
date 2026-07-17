@@ -1,0 +1,236 @@
+{
+  "collections": [
+    {
+      "id": "ipc",
+      "nombre": "Índice de Precios al Consumidor",
+      "descripcion": "Familia de indicadores del INDEC que miden el nivel y la variación de precios de la canasta de bienes y servicios representativos del gasto de consumo de los hogares residentes en áreas urbanas de Argentina, clasificados según la COICOP Argentina 2019.",
+      "concepts": [
+        {
+          "id": "indic:ipc-indice",
+          "nombre": "IPC Índice",
+          "descripcion": "Número índice base diciembre 2016=100 que mide el nivel de precios de la canasta de bienes y servicios representativos del gasto de consumo de los hogares residentes en áreas urbanas de la Argentina. Se publica para el total nacional y para seis regiones estadísticas: GBA, Pampeana, Noroeste, Noreste, Cuyo y Patagonia.",
+          "variables": [
+            {
+              "id": "region_estadistica",
+              "nombre": "Región estadística",
+              "valores_posibles": ["Nacional", "AMBA", "Pampeana", "NOA", "NEA", "Cuyo", "Patagonia"]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "valores_posibles": [
+                "01-Alimentos y bebidas no alcohólicas",
+                "02-Bebidas alcohólicas y tabaco",
+                "03-Prendas de vestir y calzado",
+                "04-Vivienda, agua, electricidad, gas y otros combustibles",
+                "05-Muebles, artículos para el hogar y conservación ordinaria del hogar",
+                "06-Salud",
+                "07-Transporte",
+                "08-Comunicaciones",
+                "09-Recreación y cultura",
+                "10-Educación",
+                "11-Restaurantes y hoteles",
+                "12-Bienes y servicios varios"
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "valores_posibles": ["Núcleo", "Estacional", "Regulados"]
+            },
+            {
+              "id": "tipo_bien_servicio",
+              "nombre": "Tipo de bien o servicio",
+              "valores_posibles": ["Bienes", "Servicios"]
+            }
+          ],
+          "variables_compatibles": [
+            ["region_estadistica", "clasificacion_coicop"],
+            ["region_estadistica", "categoria_ipc"],
+            ["region_estadistica", "tipo_bien_servicio"]
+          ]
+        },
+        {
+          "id": "indic:ipc-variacion-mensual",
+          "nombre": "IPC Variación mensual",
+          "descripcion": "Variación porcentual del IPC respecto al mes inmediato anterior. Mide la inflación mensual de la canasta de consumo de los hogares urbanos de Argentina, desagregada por región estadística, división COICOP, categoría y tipo de bien o servicio.",
+          "variables": [
+            {
+              "id": "region_estadistica",
+              "nombre": "Región estadística",
+              "valores_posibles": ["Nacional", "AMBA", "Pampeana", "NOA", "NEA", "Cuyo", "Patagonia"]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "valores_posibles": [
+                "01-Alimentos y bebidas no alcohólicas",
+                "02-Bebidas alcohólicas y tabaco",
+                "03-Prendas de vestir y calzado",
+                "04-Vivienda, agua, electricidad, gas y otros combustibles",
+                "05-Muebles, artículos para el hogar y conservación ordinaria del hogar",
+                "06-Salud",
+                "07-Transporte",
+                "08-Comunicaciones",
+                "09-Recreación y cultura",
+                "10-Educación",
+                "11-Restaurantes y hoteles",
+                "12-Bienes y servicios varios"
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "valores_posibles": ["Núcleo", "Estacional", "Regulados"]
+            },
+            {
+              "id": "tipo_bien_servicio",
+              "nombre": "Tipo de bien o servicio",
+              "valores_posibles": ["Bienes", "Servicios"]
+            }
+          ],
+          "variables_compatibles": [
+            ["region_estadistica", "clasificacion_coicop"],
+            ["region_estadistica", "categoria_ipc"],
+            ["region_estadistica", "tipo_bien_servicio"]
+          ]
+        },
+        {
+          "id": "indic:ipc-variacion-interanual",
+          "nombre": "IPC Variación interanual",
+          "descripcion": "Variación porcentual del IPC respecto al mismo mes del año anterior. Mide la inflación interanual de la canasta de consumo de los hogares urbanos de Argentina, desagregada por región estadística, división COICOP, categoría y tipo de bien o servicio.",
+          "variables": [
+            {
+              "id": "region_estadistica",
+              "nombre": "Región estadística",
+              "valores_posibles": ["Nacional", "AMBA", "Pampeana", "NOA", "NEA", "Cuyo", "Patagonia"]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "valores_posibles": [
+                "01-Alimentos y bebidas no alcohólicas",
+                "02-Bebidas alcohólicas y tabaco",
+                "03-Prendas de vestir y calzado",
+                "04-Vivienda, agua, electricidad, gas y otros combustibles",
+                "05-Muebles, artículos para el hogar y conservación ordinaria del hogar",
+                "06-Salud",
+                "07-Transporte",
+                "08-Comunicaciones",
+                "09-Recreación y cultura",
+                "10-Educación",
+                "11-Restaurantes y hoteles",
+                "12-Bienes y servicios varios"
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "valores_posibles": ["Núcleo", "Estacional", "Regulados"]
+            },
+            {
+              "id": "tipo_bien_servicio",
+              "nombre": "Tipo de bien o servicio",
+              "valores_posibles": ["Bienes", "Servicios"]
+            }
+          ],
+          "variables_compatibles": [
+            ["region_estadistica", "clasificacion_coicop"],
+            ["region_estadistica", "categoria_ipc"],
+            ["region_estadistica", "tipo_bien_servicio"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emae",
+      "nombre": "Estimador Mensual de Actividad Económica",
+      "descripcion": "Familia de indicadores del INDEC que estiman provisionalmente la evolución mensual del PIB a precios constantes de 2004, desagregados por sector de actividad económica y por tipo de ajuste estacional.",
+      "concepts": [
+        {
+          "id": "indic:emae-indice-original",
+          "nombre": "EMAE Índice original",
+          "descripcion": "Indicador provisorio de la evolución del PIB a precios constantes de 2004. Índice de Laspeyres base 2004=100 que agrega el valor agregado a precios básicos de cada actividad económica más los impuestos netos de subsidios a los productos. Serie original sin ajuste estacional.",
+          "variables": [
+            {
+              "id": "sector_actividad_ciiu3",
+              "nombre": "Sector de actividad económica (CIIU Rev.3 / CN2004)",
+              "valores_posibles": [
+                "A-B-Agricultura, ganadería, caza, silvicultura y pesca",
+                "C-Explotación de minas y canteras",
+                "D-Industria manufacturera",
+                "E-Electricidad, gas y agua",
+                "F-Construcción",
+                "G-Comercio mayorista y minorista, reparaciones",
+                "H-Hoteles y restaurantes",
+                "I-Transporte, almacenamiento y comunicaciones",
+                "J-Intermediación financiera",
+                "K-Actividades inmobiliarias, empresariales y de alquiler",
+                "L-Administración pública, defensa y seguridad social",
+                "M-Enseñanza",
+                "N-Servicios sociales y de salud",
+                "O-P-Otras actividades de servicios comunitarios, sociales y personales",
+                "Impuestos netos de subsidios a los productos"
+              ]
+            }
+          ],
+          "variables_compatibles": [
+            ["sector_actividad_ciiu3"]
+          ]
+        },
+        {
+          "id": "indic:emae-variacion-porcentual-original",
+          "nombre": "EMAE Variación porcentual (serie original)",
+          "descripcion": "Variación porcentual del índice original del EMAE respecto al mismo mes del año anterior. Indicador provisional de la evolución interanual de la actividad económica, sin ajuste estacional.",
+          "variables": [
+            {
+              "id": "sector_actividad_ciiu3",
+              "nombre": "Sector de actividad económica (CIIU Rev.3 / CN2004)",
+              "valores_posibles": [
+                "A-B-Agricultura, ganadería, caza, silvicultura y pesca",
+                "C-Explotación de minas y canteras",
+                "D-Industria manufacturera",
+                "E-Electricidad, gas y agua",
+                "F-Construcción",
+                "G-Comercio mayorista y minorista, reparaciones",
+                "H-Hoteles y restaurantes",
+                "I-Transporte, almacenamiento y comunicaciones",
+                "J-Intermediación financiera",
+                "K-Actividades inmobiliarias, empresariales y de alquiler",
+                "L-Administración pública, defensa y seguridad social",
+                "M-Enseñanza",
+                "N-Servicios sociales y de salud",
+                "O-P-Otras actividades de servicios comunitarios, sociales y personales",
+                "Impuestos netos de subsidios a los productos"
+              ]
+            }
+          ],
+          "variables_compatibles": [
+            ["sector_actividad_ciiu3"]
+          ]
+        },
+        {
+          "id": "indic:emae-indice-desestacionalizado",
+          "nombre": "EMAE Índice desestacionalizado",
+          "descripcion": "Índice del EMAE base 2004=100 con eliminación del componente estacional mediante el método X-13ARIMA-SEATS. Permite comparaciones mes a mes sin el efecto de las variaciones estacionales regulares. Publicado solo a nivel nacional agregado.",
+          "variables": [],
+          "variables_compatibles": []
+        },
+        {
+          "id": "indic:emae-variacion-porcentual-desestacionalizada",
+          "nombre": "EMAE Variación porcentual desestacionalizada",
+          "descripcion": "Variación porcentual del índice desestacionalizado del EMAE respecto al mes inmediato anterior. Indicador de la dinámica mensual de la actividad económica libre de efectos estacionales. Publicado solo a nivel nacional agregado.",
+          "variables": [],
+          "variables_compatibles": []
+        },
+        {
+          "id": "indic:emae-indice-tendencia-ciclo",
+          "nombre": "EMAE Índice tendencia-ciclo",
+          "descripcion": "Componente tendencia-ciclo del EMAE base 2004=100 extraído mediante el método X-13ARIMA-SEATS. Suaviza las irregularidades de corto plazo conservando el movimiento de fondo de la actividad económica. Publicado solo a nivel nacional agregado.",
+          "variables": [],
+          "variables_compatibles": []
+        }
+      ]
+    }
+  ]
+}
