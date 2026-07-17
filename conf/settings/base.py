@@ -260,6 +260,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'django_datajsonar': {
+            'handlers': ['apps', 'production'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         "rq.worker": {
             "handlers": ["rq_console", ],
             "level": "INFO"
@@ -503,7 +508,7 @@ ADMIN_SHORTCUTS = [
                 'icon': 'list'
             },
             {
-                'title': 'Collections',
+                'title': 'Colecciones',
                 'url_name': 'admin:collections_collection_changelist',
                 'icon': 'layer-group',
             },

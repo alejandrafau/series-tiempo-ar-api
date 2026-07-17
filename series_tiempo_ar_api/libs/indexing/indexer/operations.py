@@ -218,9 +218,7 @@ def elastic_index(row, index, series_id, freq, agg):
     porcentual, etc
     """
 
-    # Borrado de la parte de tiempo del timestamp
-    timestamp = str(row.name)
-    timestamp = timestamp[:timestamp.find('T')]
+    timestamp = row.name.strftime('%Y-%m-%d')
     freq = freq_pandas_to_interval(freq.freqstr)
     action = {
         "_index": index,

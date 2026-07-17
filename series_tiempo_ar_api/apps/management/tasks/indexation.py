@@ -2,6 +2,7 @@
 import logging
 
 from django.conf import settings
+from django.utils import timezone
 from django_rq import job
 
 from django_datajsonar.models import Node
@@ -36,6 +37,7 @@ def schedule_force_api_indexing(node=None):
     schedule_api_indexing(node, force=True)
     logger.info("Entró a schedule api indexing")
 
+
 @job('api_index')
 def read_datajson(task, read_local=False, force=False):
     """Tarea raíz de indexación. Itera sobre todos los nodos indexables (federados) e
@@ -44,6 +46,22 @@ def read_datajson(task, read_local=False, force=False):
     logger.info("Entró directo a read_datajson")
     node = task.node
     nodes = Node.objects.filter(indexable=True) if node is None else [node]
-    task.status = task.RUNNING
-    for node in nodes:
-        index_catalog(node, task, read_local, force)
+    try:
+        for node in nodes:
+            logger.info(f"Iniciando indexación de datos para nodo '{node.catalog_id}'")
+            try:
+                index_catalog(node, task, read_local, force)
+                logger.info(f"Finalizada indexación de datos para nodo '{node.catalog_id}'")
+            except Exception as e:
+                msg = f"Error indexando nodo '{node.catalog_id}': {e}"
+                IndexDataTask.info(task, msg)
+                logger.exception(msg)
+    except Exception as e:
+        msg = f"Error en read_datajson: {e}"
+        IndexDataTask.info(task, msg)
+        logger.exception(msg)
+    finally:
+        task.status = task.FINISHED
+        task.finished = timezone.now()
+        task.save()
+        logger.info(f"Tarea IndexDataTask #{task.id} finalizada")

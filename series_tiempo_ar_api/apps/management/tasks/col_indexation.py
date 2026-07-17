@@ -1,13 +1,11 @@
 import logging
 
-from django.conf import settings
+from django.utils import timezone
 from django_rq import job
 
 from django_datajsonar.models import Node
 from series_tiempo_ar_api.apps.management.models import IndexCollectionTask
-#from series_tiempo_ar_api.libs.indexing.catalog_reader import index_catalog
 from series_tiempo_ar_api.libs.indexing.catalog_reader import process_collections
-#from series_tiempo_ar_api.libs.indexing.report.report_generator import ReportGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -15,19 +13,14 @@ logger = logging.getLogger(__name__)
 @job('collection_index')
 def schedule_collection_indexing(node=None, force=False):
     if IndexCollectionTask.objects.filter(status=IndexCollectionTask.RUNNING):
-        logger.info('Ya está corriendo una indexación')
+        logger.info('Ya está corriendo una indexación de colecciones')
         return
-    logger.info("Se programó la tarea")
     indexing_mode = IndexCollectionTask.ALL if force else IndexCollectionTask.UPDATED_ONLY
     task = IndexCollectionTask(indexing_mode=indexing_mode)
     task.node = node
     task.save()
+    logger.info(f"Tarea IndexCollectionTask #{task.id} programada (mode={indexing_mode})")
     read_collection(task, force=force)
-
-    # Verificar esta funcionalidad
-    if not settings.RQ_QUEUES['indexing'].get('ASYNC', True):
-       task = IndexCollectionTask.objects.get(id=task.id)
-       ReportGenerator(task).generate()
 
 
 @job('collection_index')
@@ -37,13 +30,26 @@ def schedule_force_collection_indexing(node=None):
 
 @job('collection_index')
 def read_collection(task, read_local=False, force=False):
-    """Tarea raíz de indexación. Itera sobre todos los nodos indexables (federados) e
-    inicia la tarea de indexación de colecciones sobre cada uno de ellos
-    """
-    logger.info("Se está ejecutando read_collection")
+    """Itera sobre todos los nodos indexables e inicia la indexación de colecciones."""
+    logger.info(f"Iniciando read_collection para tarea #{task.id}")
     node = task.node
     nodes = Node.objects.filter(indexable=True) if node is None else [node]
-    task.status = task.RUNNING
-    for node in nodes:
-        logger.info(f"Corriendo indexación de colecciones para {node}")
-        process_collections(node, task, read_local, force)
+    try:
+        for node in nodes:
+            logger.info(f"Iniciando indexación de colecciones para nodo '{node.catalog_id}'")
+            try:
+                process_collections(node, task, read_local, force)
+                logger.info(f"Finalizada indexación de colecciones para nodo '{node.catalog_id}'")
+            except Exception as e:
+                msg = f"Error procesando colecciones del nodo '{node.catalog_id}': {e}"
+                IndexCollectionTask.info(task, msg)
+                logger.exception(msg)
+    except Exception as e:
+        msg = f"Error en read_collection: {e}"
+        IndexCollectionTask.info(task, msg)
+        logger.exception(msg)
+    finally:
+        task.status = task.FINISHED
+        task.finished = timezone.now()
+        task.save()
+        logger.info(f"Tarea IndexCollectionTask #{task.id} finalizada")

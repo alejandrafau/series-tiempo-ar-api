@@ -1,35 +1,35 @@
 from elasticsearch_dsl import Search, Q
 
 
-def get_info(collection):
-    dims_dict = {}
+def get_details(ids):
     s = Search(index="collections", doc_type="doc").query(
-        Q("term", collection=collection)
-    ).extra(size=1000)
+        Q("terms", id=ids)
+    ).extra(size=len(ids))
     response = s.execute()
-
-    for hit in response:
-        for dim in hit.dimensions:
-            name = dim['name']
-            value = dim['value']
-            if name not in dims_dict:
-                dims_dict[name] = []
-            if value is not None:
-                dims_dict[name].append(value)
-
-    for k in dims_dict:
-        dims_dict[k] = list(set(dims_dict[k]))
-
-    return dims_dict
+    return [
+        {
+            'id': hit.id,
+            'collection': hit.collection,
+            'concept': hit.concept,
+            'dimensions': [{'name': d.name, 'value': d.value} for d in hit.dimensions],
+        }
+        for hit in response
+    ]
 
 
-def get_series(collection_id, concept_id, dimensiones, valores, mode):
-    queries = [Q("term", collection=collection_id)]
+DEFAULT_SIZE = 100
+
+
+def get_series(collection_id, concept_id, filtros, mode):
+    queries = []
+
+    if collection_id:
+        queries.append(Q("term", collection=collection_id))
 
     if concept_id:
         queries.append(Q("term", concept=concept_id))
 
-    for dim, val in zip(dimensiones, valores):
+    for dim, val in filtros.items():
         if isinstance(val, list):
             nested_q = Q("bool", must=[
                 Q("term", dimensions__name=dim),
@@ -42,6 +42,17 @@ def get_series(collection_id, concept_id, dimensiones, valores, mode):
             ])
         queries.append(Q("nested", path="dimensions", query=nested_q))
 
-    s = Search(index="collections", doc_type="doc").query(Q("bool", must=queries))
+    s = Search(index="collections", doc_type="doc")
+    if queries:
+        s = s.query(Q("bool", must=queries))
+    s = s.extra(size=DEFAULT_SIZE)
     response = s.execute()
-    return [hit.id for hit in response]
+    return [
+        {
+            'id': hit.id,
+            'collection': hit.collection,
+            'concept': hit.concept,
+            'dimensions': [{'name': d.name, 'value': d.value} for d in hit.dimensions],
+        }
+        for hit in response
+    ]

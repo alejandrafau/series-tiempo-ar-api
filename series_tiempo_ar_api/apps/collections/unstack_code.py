@@ -14,7 +14,7 @@ def parse_date(date_str):
     ISO8601. De no ser, intenta algunas transformaciones para forzar compatibilidad
     (solo para años)"""
     try:
-        return pd.to_datetime(date_str, format='ISO8601')
+        return pd.to_datetime(date_str)
     except ValueError:
         date_str = str(date_str)
         if date_str.isdigit() and len(date_str) == 4:
@@ -28,7 +28,8 @@ def validate_date(df, date_col,col_dict):
     tiempo son regulares y todas las fechas son válidas y compatibles con ISO8601
     (llama a parse_date)"""
     try:
-        date_col =date_col[0]
+        if isinstance(date_col, list):
+            date_col = date_col[0]
         df[date_col] = df[date_col].apply(parse_date)
         unique_dates = df[date_col].dropna().sort_values().unique()
         inferred_freq = pd.infer_freq(unique_dates)
@@ -73,11 +74,9 @@ def validate_descri(df, descri_cols, div_col, col_dict):
         col_dict['div_col'] = None
         return col_dict
     else:
-        div_col = div_col[0]
+        if isinstance(div_col, list):
+            div_col = div_col[0]
         if div_col != 'ninguno':
-            if div_col not in valid_descri_cols:
-                 col_dict['div_col'] = None
-                 print(f"La variable '{div_col}' no está entre las columnas descriptivas válidas: {valid_descri_cols}")
             col_dict['div_col'] = div_col
         else:
             col_dict['div_col'] = None
@@ -96,11 +95,9 @@ def get_numeric(df,num_cols,col_dict):
 
 
 def independence_check(df, div_col, cols_to_check, threshold=0.1):
-    """Función para verificar que una variable es independiente: engloba a otras que no la engloban a ella. De esta forma es apta para
-       dividir el dataset. Devuelve True en caso de ser efectivamente independiente, False en caso de depender de otras"""
-
+    """Verifica que div_col sea independiente de las otras columnas descriptivas.
+    Devuelve la lista de columnas de las que depende (vacía = es independiente)."""
     dependencies = {}
-
     for col in cols_to_check:
         if col == div_col:
             continue
@@ -109,39 +106,24 @@ def independence_check(df, div_col, cols_to_check, threshold=0.1):
         dependencies[col] = dep
 
     dep_series = pd.Series(dependencies)
-    high_deps = dep_series[dep_series>threshold]
-    vincu =[]
-    for item,value in high_deps.items():
-      if df[item].nunique()==1:
-        high_deps.drop(item,inplace=True)
-        continue
-      vincu.append(item)
-    if len(vincu)>0:
-        print (f"{div_col} depende de {vincu}, no es independiente")
-        return False
-    else:
-        print(f"{div_col} no depende de ninguna columna, es independiente")
-        return True
+    high_deps = dep_series[dep_series > threshold]
+    vincu = []
+    for item in list(high_deps.index):
+        if df[item].nunique() == 1:
+            continue
+        vincu.append(item)
+    return vincu
 
-def divisor_valid(df, col_dict,div_col):
-    """Función que verifica que la variable divisora sea válida: tenga más de un valor, no tenga valores indefinidos y sea independiente. Si se
-    aprueban estas condiciones devuelve True, sino False"""
-    # 1. Chequear cantidad de valores únicos
+def divisor_valid(df, col_dict, div_col):
+    """Verifica que div_col sea válida como divisora. Agrega warnings a col_dict si no lo es."""
     n_unicos = df[div_col].nunique()
-    print(f"hay {n_unicos}en{div_col}")
     if n_unicos <= 1:
-        print(f"No hay suficientes valores únicos en{div_col}")
+        col_dict.setdefault('warnings', []).append(
+            f"'{div_col}' tiene {n_unicos} valor único, se necesitan al menos 2 para dividir. "
+            f"Se genera un solo dataset."
+        )
         return False
 
-    # 3. Verificar independencia con otras variables
-    if independence_check(df, div_col,col_dict['descri_cols'], threshold=0.1) is False:
-      return False
-
-    if "indefinido" in df[div_col].tolist():
-      print(f"{div_col} tiene valores indefinidos")
-      return False
-
-    print(f"{div_col} es apta para ser divisora")
     return True
 
 def name_normalization(col_name):
@@ -179,6 +161,7 @@ def dataframes_creator(df, col_dict):
     return result_dict
   else:
     print(f"Creando un dataframe por valor de {div_col}")
+    df[div_col] = df[div_col].fillna(f"sin_{div_col}")
     result_dict = {}
     #descri_cols = [col for col in descri_cols if col != div_col]
     for value in df[div_col].unique().tolist():
@@ -205,60 +188,93 @@ def dataframes_creator(df, col_dict):
 
 
 
-def gen_collection_meta(df,col_dict):
-  collection_metadata = {
-        "general_emeta":{},"distri_emeta":{}}
-  for col in col_dict['descri_cols']:
-      valores_disp = df[col].unique().tolist()
-      collection_metadata["general_emeta"][col] = valores_disp
-  return collection_metadata
+def gen_collection_json(df, col_dict, config):
+    variables = [
+        {
+            "id": col,
+            "nombre": col,
+            "valores_posibles": [
+                v for v in df[col].unique().tolist()
+                if v != 'indefinido' and pd.notna(v)
+            ],
+        }
+        for col in col_dict['descri_cols']
+    ]
+    concepts_json = [
+        {
+            "id": c.get('id', ''),
+            "nombre": c.get('name', ''),
+            "descripcion": c.get('description', ''),
+            "variables": variables,
+            "variables_compatibles": config.get('variables_compatibles', []),
+        }
+        for c in config.get('concepts', [])
+    ]
+    result = {
+        "collections": [{
+            "id": config.get('collection_id', ''),
+            "nombre": config.get('collection_name', ''),
+            "descripcion": config.get('collection_description', ''),
+            "concepts": concepts_json,
+        }]
+    }
+    if col_dict.get('warnings'):
+        result['warnings'] = col_dict['warnings']
+    return result
 
 
-def tidy_index(df_index, df, col_dict):
-    """
-    Aplana los nombres de columnas en los dataframes generados,
-    actualiza el diccionario de atributos, exporta todo a CSV y JSON temporalmente,
-    y devuelve la ruta a un ZIP con todos los archivos.
-    """
-    collection_metadata = gen_collection_meta(df, col_dict)
+def tidy_index(df_index, df, col_dict, config=None):
+    config = config or {}
+    collection_id = config.get('collection_id', 'serie')
+    num_col_to_concept = {c['num_col']: c['id'] for c in config.get('concepts', [])}
+
+    collection_json = gen_collection_json(df, col_dict, config)
+    series_concept = {}
+    id_counter = 1
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        # Guardar CSVs y preparar metadata
         for key, data_dict in df_index.items():
-            df = data_dict['data']
-            metadata = data_dict['enhanced_metadata']
+            df_wide = data_dict['data']
 
+            date_col = col_dict['date_col']
             new_columns = []
-            for i, col in enumerate(df.columns):
-                flat_col_name = '_'.join(map(str, col if isinstance(col, tuple) else [col])).strip()
-                flat_col_name = name_normalization(flat_col_name)
+            for col in df_wide.columns:
+                is_index_col = isinstance(col, tuple) and all(str(v) == '' for v in col[1:])
+                if not isinstance(col, tuple) or is_index_col:
+                    new_columns.append(date_col)
+                else:
+                    series_id = f"{collection_id}_{id_counter:05d}"
+                    id_counter += 1
+                    concept_id = num_col_to_concept.get(col[0], '')
+                    dimensions = [
+                        {"name": dim_name, "value": str(col[j + 1])}
+                        for j, dim_name in enumerate(col_dict['descri_cols'])
+                        if j + 1 < len(col)
+                    ]
+                    series_concept[series_id] = {
+                        "collection": collection_id,
+                        "concept": concept_id,
+                        "dimensions": dimensions,
+                    }
+                    new_columns.append(series_id)
 
-                if i in metadata:
-                    metadata[flat_col_name] = metadata.pop(i)
-                    if None in metadata[flat_col_name]:
-                        metadata[flat_col_name]['medida'] = metadata[flat_col_name].pop(None)
-
-                new_columns.append(flat_col_name)
-
-            df.columns = new_columns
-            data_dict['data'] = df
-            file_name = key.lower().replace(" ", "_")
-            # Guardar CSV temporal
+            df_wide.columns = new_columns
+            data_dict['data'] = df_wide
             csv_path = os.path.join(temp_dir, f"{key}.csv")
-            df.to_csv(csv_path, index=False)
-            collection_metadata["distri_emeta"][key] = metadata
+            df_wide.to_csv(csv_path, index=False)
 
-        # Guardar JSON de metadata
-        json_path = os.path.join(temp_dir, "collection_metadata.json")
-        with open(json_path, 'w', encoding='utf-8') as f:
-            json.dump(collection_metadata, f, ensure_ascii=False, indent=2)
+        # collection.json
+        with open(os.path.join(temp_dir, "collection.json"), 'w', encoding='utf-8') as f:
+            json.dump(collection_json, f, ensure_ascii=False, indent=2)
 
-        # Crear ZIP
+        # series_concept.json
+        with open(os.path.join(temp_dir, "series_concept.json"), 'w', encoding='utf-8') as f:
+            json.dump(series_concept, f, ensure_ascii=False, indent=2)
+
         zip_buffer = io.BytesIO()
-        with zipfile.ZipFile(zip_buffer, 'w',zipfile.ZIP_DEFLATED) as zipf:
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zipf:
             for filename in os.listdir(temp_dir):
-                file_path = os.path.join(temp_dir, filename)
-                zipf.write(file_path, arcname=filename)
+                zipf.write(os.path.join(temp_dir, filename), arcname=filename)
         zip_buffer.seek(0)
         response = HttpResponse(zip_buffer.getvalue(), content_type='application/zip')
         response['Content-Disposition'] = 'attachment; filename="collection_output.zip"'

@@ -49,6 +49,12 @@ def process_collections(node: Node, task, read_local=False, force=False):
                 field_id = field.get('id')
                 if not series_concept or not field_id:
                     continue
+                if isinstance(series_concept, str):
+                    try:
+                        series_concept = json.loads(series_concept)
+                    except (json.JSONDecodeError, ValueError) as e:
+                        logger.warning("Field '%s' skipped: specialTypeDetail no es JSON válido: %s", field_id, e)
+                        continue
 
                 errors = validator.validate(field_id, series_concept)
                 if errors:
