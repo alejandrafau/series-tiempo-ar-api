@@ -1,0 +1,94 @@
+version: "3.7"
+
+x-app-base: &app-base
+  build: .
+  image: series-tiempo-ar-api
+  entrypoint: ["./entrypoint.sh"]
+  depends_on:
+    - postgres
+    - redis
+    - elasticsearch
+    - minio
+  restart: unless-stopped
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
+    ports:
+      - "9200:9200"
+    environment:
+      - "http.host=0.0.0.0"
+      - "transport.host=127.0.0.1"
+      - "xpack.security.enabled=false"
+      - "xpack.monitoring.enabled=false"
+      - "xpack.watcher.enabled"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  postgres:
+    image: postgres:9.5.12
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+  redis:
+    image: redis:3.2-alpine
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    entrypoint: minio server /data
+    volumes:
+      - /mnt/data:/data
+      - /mnt/config:/root/.minio
+    environment:
+      - "MINIO_ACCESS_KEY=development"
+      - "MINIO_SECRET_KEY=development"
+
+  app:
+    <<: *app-base
+    environment:
+      CONTAINER_ROLE: web
+    volumes:
+      - static_files:/app/staticfiles
+      - media_files:/app/media
+
+  worker-indexing:
+    <<: *app-base
+    environment:
+      CONTAINER_ROLE: worker
+      WORKER_QUEUES: "indexing dj_indexing"
+
+  worker-api-index:
+    <<: *app-base
+    environment:
+      CONTAINER_ROLE: worker
+      WORKER_QUEUES: "api_index collection_index"
+
+  worker-misc:
+    <<: *app-base
+    environment:
+      CONTAINER_ROLE: worker
+      WORKER_QUEUES: "meta_indexing upkeep default"
+
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - static_files:/app/staticfiles:ro
+      - media_files:/app/media:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
+volumes:
+  static_files:
+  media_files:
