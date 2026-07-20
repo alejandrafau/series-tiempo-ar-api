@@ -4,6 +4,7 @@ x-app-base: &app-base
   build: .
   image: series-tiempo-ar-api
   entrypoint: ["./entrypoint.sh"]
+  env_file: conf/settings/.env
   depends_on:
     - postgres
     - redis
