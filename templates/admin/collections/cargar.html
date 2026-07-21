@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>Cargar colecciones desde JSON</h1>
+
+<p>El archivo debe tener la estructura:</p>
+<pre>
+{
+  "collections": [
+    {
+      "id": "ipc",
+      "nombre": "Índice de Precios al Consumidor",
+      "descripcion": "...",
+      "concepts": [
+        {
+          "id": "indic:ipc-indice",
+          "nombre": "IPC Índice",
+          "descripcion": "...",
+          "variables": [
+            {
+              "id": "region_estadistica",
+              "nombre": "Región",
+              "valores_posibles": ["NOA", "NEA", "Nacional"]
+            }
+          ],
+          "variables_compatibles": [
+            ["region_estadistica", "clasificacion_coicop"]
+          ]
+        }
+      ]
+    }
+  ]
+}
+</pre>
+
+<p>Si una colección o concepto ya existe, sus datos serán actualizados.</p>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>{{ form.as_table }}</table>
+  <input type="submit" value="Cargar" class="default">
+</form>
+{% endblock %}
