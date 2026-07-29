@@ -64,19 +64,25 @@ services:
     <<: *app-base
     environment:
       CONTAINER_ROLE: worker
-      WORKER_QUEUES: "indexing dj_indexing"
+      WORKER_QUEUES: "indexing dj_indexing collection_index meta_indexing"
 
   worker-api-index:
     <<: *app-base
     environment:
       CONTAINER_ROLE: worker
-      WORKER_QUEUES: "api_index collection_index"
+      WORKER_QUEUES: "api_index"
+
+  worker-api-index-bis:
+    <<: *app-base
+    environment:
+      CONTAINER_ROLE: worker
+      WORKER_QUEUES: "api_index"
 
   worker-misc:
     <<: *app-base
     environment:
       CONTAINER_ROLE: worker
-      WORKER_QUEUES: "meta_indexing upkeep default"
+      WORKER_QUEUES: "upkeep default"
 
   nginx:
     image: nginx:1.25-alpine
