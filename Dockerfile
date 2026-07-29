@@ -18,7 +18,6 @@ COPY . .
 
 # Directorios de trabajo y docker.env vacío para que django-environ no falle
 # (las vars reales vienen por env_file en docker-compose)
-RUN mkdir -p staticfiles media logs \
-    && touch conf/settings/docker.env
+RUN mkdir -p staticfiles media logs
 
 EXPOSE 8000
