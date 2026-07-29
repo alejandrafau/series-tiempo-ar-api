@@ -34,8 +34,8 @@ def index_catalog(node: Node, task, read_local=False, force=False):
                                                 dataset__indexable=True,
                                                 dataset__catalog__identifier=node.catalog_id)
     for distribution in distributions:
-        #api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
-        index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
+        api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
+        #index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
 
 def process_collections(node: Node, task, read_local=False, force=False):
     catalog = json.loads(node.catalog)
