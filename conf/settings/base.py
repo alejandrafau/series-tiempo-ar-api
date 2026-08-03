@@ -356,7 +356,7 @@ DATAJSONAR_STAGES = {
     },
     STAGES_TITLES['API_INDEX']: {
         'callable_str': 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_api_indexing',
-        'queue': 'api_index',
+        'queue': 'indexing',
         'task': 'series_tiempo_ar_api.apps.management.models.IndexDataTask',
     },
     STAGES_TITLES['COLLECTION_INDEX']: {
@@ -371,7 +371,7 @@ DATAJSONAR_STAGES = {
     },
     STAGES_TITLES['API_INDEX_FORCE']: {
         'callable_str': 'series_tiempo_ar_api.apps.management.tasks.indexation.schedule_force_api_indexing',
-        'queue': 'api_index',
+        'queue': 'indexing',
         'task': 'series_tiempo_ar_api.apps.management.models.IndexDataTask',
     },
     STAGES_TITLES['DUMPS_CSV']: {
