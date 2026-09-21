@@ -1,0 +1,59 @@
+{
+  "collections": [
+    {
+      "id": "ipc_san_juan_2018",
+      "nombre": "IPC Provincia de San Juan - Base Enero 2018",
+      "descripcion": "Índice de Precios al Consumidor de la Provincia de San Juan, elaborado por la Dirección Provincial de Estadística y Censos de San Juan. Base Enero 2018 = 100. Solo nivel general. No es el IPC nacional del INDEC.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Al momento de la última verificación (2026-09) la serie no tiene datos accesibles en el portal de datos abiertos. Última observación registrada en el catálogo: 2020-12."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Base Enero 2018 = 100. Solo nivel general: no hay apertura por rubro, división ni categoría COICOP."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Esta colección NO es del INDEC. La publica la Dirección Provincial de Estadística y Censos de San Juan (DPEC San Juan). Es un índice provincial, no comparable directamente con el IPC nacional (colección 'ipc') ni con otras colecciones provinciales."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Alcance geográfico exclusivo: Provincia de San Juan. No representa al resto de la región Cuyo ni al total nacional."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "ipc-indice-mensual",
+          "nombre": "IPC San Juan - Índice mensual",
+          "descripcion": "Número índice mensual del IPC de la Provincia de San Juan. Nivel general, base Enero 2018 = 100. Fuente: Dirección Provincial de Estadística y Censos de San Juan.",
+          "frecuencia": "monthly",
+          "unidad": "index_2018_100",
+          "sample_questions": [
+            "¿Cuál era el IPC de San Juan en diciembre de 2020?",
+            "¿Cómo evolucionó el nivel general del IPC de San Juan entre 2018 y 2020?",
+            "¿Qué valor tenía el índice de precios al consumidor de San Juan en su último dato disponible?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Al momento de la última verificación (2026-09) no hay datos accesibles en el portal de datos abiertos. Última observación registrada en el catálogo: 2020-12. Las consultas pueden no devolver valores."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "valores_posibles": [
+                { "id": "general", "label": "Nivel general", "synonyms": ["total", "IPC general", "nivel general"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["categoria_ipc"]
+          ]
+        }
+      ]
+    }
+  ]
+}

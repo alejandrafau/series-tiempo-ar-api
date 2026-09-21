@@ -1,0 +1,78 @@
+{
+  "collections": [
+    {
+      "id": "ipc_chaco_actual",
+      "nombre": "Índice de Precios al Consumidor del Gran Resistencia (Chaco). Divisiones",
+      "descripcion": "IPC mensual del Gran Resistencia publicado por la Dirección de Estadística y Censos de la Provincia del Chaco. Cubre el nivel general y las 9 divisiones COICOP de la canasta tradicional argentina. Esta colección NO es del INDEC: la elabora y publica la dirección provincial del Chaco.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Colección VIGENTE. Fuente: Dirección de Estadística y Censos de la Provincia del Chaco. NO es publicada por el INDEC — es un índice de precios provincial independiente."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Alcance geográfico exclusivo: Gran Resistencia (capital del Chaco). No representa a toda la provincia del Chaco ni al resto del país."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Coexiste con 'ipc_chaco_historico', que cubre el nivel general con datos históricos desde 1960 pero sin desagregación por divisiones COICOP. Esta colección ('ipc_chaco_actual') es la única que ofrece la apertura por las 9 divisiones."
+        },
+        {
+          "code": "gen_lim",
+          "message": "No es comparable directamente con el IPC nacional ('ipc') del INDEC: metodología, canasta y cobertura geográfica son distintas. El IPC del INDEC cubre regiones estadísticas de todo el país; este índice cubre exclusivamente el Gran Resistencia (Chaco) y es elaborado por la dirección provincial."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "ipc-indice-mensual",
+          "nombre": "IPC Índice mensual",
+          "descripcion": "Número índice mensual del IPC del Gran Resistencia (Chaco), elaborado por la Dirección de Estadística y Censos provincial. Disponible para el nivel general y para cada una de las 9 divisiones COICOP de la canasta tradicional argentina.",
+          "frecuencia": "monthly",
+          "unidad": "index",
+          "sample_questions": [
+            "¿Cuál fue el índice de precios del Gran Resistencia en diciembre de 2023?",
+            "¿Cómo evolucionó el IPC de alimentos y bebidas en el Chaco?",
+            "¿Qué división COICOP tuvo mayor variación en el Gran Resistencia el último año?",
+            "¿Cuánto subió el IPC de transporte y comunicaciones en Resistencia?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Sin desagregación por categorías dentro de cada división (ej: no hay apertura por grupos o subgrupos COICOP). La única apertura disponible es a nivel de las 9 divisiones o el nivel general."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": ["categoría", "tipo", "nivel"],
+              "valores_posibles": [
+                { "id": "general", "label": "Nivel general", "synonyms": ["total", "general", "ipc general"] }
+              ]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "synonyms": ["división", "rubro", "sector", "división coicop"],
+              "valores_posibles": [
+                { "id": "coicop:alimentos-bebidas", "label": "Alimentos y bebidas", "synonyms": ["alimentos", "comida", "bebidas"] },
+                { "id": "coicop:indumentaria", "label": "Indumentaria", "synonyms": ["ropa", "vestimenta", "calzado"] },
+                { "id": "coicop:vivienda", "label": "Vivienda", "synonyms": ["alquiler", "casa", "habitación"] },
+                { "id": "coicop:equipamiento-hogar", "label": "Equipamiento y mantenimiento del hogar", "synonyms": ["electrodomésticos", "muebles", "hogar"] },
+                { "id": "coicop:salud", "label": "Salud", "synonyms": ["salud", "medicamentos", "medicina"] },
+                { "id": "coicop:transporte-comunicaciones", "label": "Transporte y comunicaciones", "synonyms": ["transporte", "comunicaciones", "celular", "colectivo"] },
+                { "id": "coicop:esparcimiento", "label": "Esparcimiento y cultura", "synonyms": ["recreación", "ocio", "turismo", "cultura"] },
+                { "id": "coicop:educacion", "label": "Educación", "synonyms": ["educación", "enseñanza", "escuela"] },
+                { "id": "coicop:bienes-servicios-varios", "label": "Bienes y servicios varios", "synonyms": ["otros bienes", "otros servicios", "miscelánea"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["categoria_ipc"],
+            ["clasificacion_coicop"]
+          ]
+        }
+      ]
+    }
+  ]
+}

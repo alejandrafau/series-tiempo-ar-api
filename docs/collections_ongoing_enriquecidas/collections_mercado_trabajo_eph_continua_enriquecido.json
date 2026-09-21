@@ -1,0 +1,1254 @@
+{
+  "collections": [
+    {
+      "id": "mercado_trabajo_eph",
+      "nombre": "Mercado de Trabajo (EPH continua)",
+      "descripcion": "Principales indicadores del mercado de trabajo en Argentina (tasas de actividad, empleo, desocupación, subocupación y sobreocupación) elaborados por INDEC a partir de la Encuesta Permanente de Hogares (EPH) continua. Cubre los 31 principales aglomerados urbanos del país; se publica trimestralmente desde 2003.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Cubre desde 2003, cuando la EPH pasó de modalidad puntual a continua (relevamiento trimestral). Fuente: INDEC en el informe 'Mercado de trabajo. Tasas e indicadores socioeconómicos (EPH)', publicado trimestralmente."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Alcance geográfico: 31 aglomerados urbanos principales del país. No cubre la población rural ni las localidades pequeñas."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Colecciones hermanas: para períodos previos a 2003 → 'mercado_trabajo_eph_puntual' (discontinuada); serie empalmada de largo plazo → 'mercado_trabajo_eph_empalmada' (empalme calculado por SSPM); ampliación anual (2003-2014) → 'mercado_trabajo_eahu' (discontinuada); complemento sobre empleo formal privado → 'empleo_eil' (fuente STESS/Ministerio de Capital Humano)."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:tasa-de-actividad",
+          "nombre": "Tasa de actividad",
+          "descripcion": "Porcentaje de personas que trabajan o buscan trabajo activamente (Población Económicamente Activa, PEA) sobre la población total. Puede filtrarse por región, aglomerado o grupos poblacionales (sexo, edad, jefes de hogar).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuál es la tasa de actividad femenina en Argentina?",
+            "¿Cómo evolucionó la participación laboral de las mujeres jóvenes en el AMBA?",
+            "¿Qué región tiene la mayor tasa de actividad?",
+            "¿Cuál fue la tasa de actividad de los jefes de hogar en 2023?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (población específica, región, tipo de aglomerado o aglomerado) devuelve una serie independiente. No hay combinaciones (por ejemplo, no existe la serie 'mujeres jóvenes en NOA')."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "poblacion_especifica",
+              "nombre": "Población específica",
+              "synonyms": ["población", "grupo poblacional", "corte poblacional"],
+              "valores_posibles": [
+                { "id": "poblacion_total", "label": "Población total" },
+                { "id": "poblacion_14_y_mas", "label": "Población de 14 años y más" },
+                "mujeres",
+                "varones",
+                { "id": "jefes_de_hogar", "label": "Jefes de hogar" },
+                { "id": "mujeres_14_29", "label": "Mujeres de 14 a 29 años" },
+                { "id": "mujeres_30_64", "label": "Mujeres de 30 a 64 años" },
+                { "id": "varones_14_29", "label": "Varones de 14 a 29 años" },
+                { "id": "varones_30_64", "label": "Varones de 30 a 64 años" }
+              ]
+            },
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado según tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["poblacion_especifica"],
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-empleo",
+          "nombre": "Tasa de empleo",
+          "descripcion": "Porcentaje de personas ocupadas sobre la población total. Se considera ocupada a toda persona que trabajó al menos una hora en la semana de referencia. Puede desagregarse por región y aglomerado, por características de la persona (sexo, edad, nivel educativo, relación de parentesco) o del trabajo (categoría ocupacional, tipo de establecimiento, intensidad horaria, calificación y rama de actividad).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántas personas están empleadas en relación a la población total?",
+            "¿Cómo varía la tasa de empleo entre hombres y mujeres jóvenes?",
+            "¿Cuál es la tasa de empleo para trabajadores con nivel universitario completo?",
+            "¿En qué rama de actividad trabaja más gente?"
+          ],
+          "dimensiones": [
+            {
+              "id": "poblacion_especifica",
+              "nombre": "Población específica",
+              "synonyms": ["población", "grupo poblacional", "corte poblacional"],
+              "valores_posibles": [
+                { "id": "poblacion_total", "label": "Población total" },
+                { "id": "poblacion_14_y_mas", "label": "Población de 14 años y más" },
+                "mujeres",
+                "varones",
+                { "id": "jefes_de_hogar", "label": "Jefes de hogar" },
+                { "id": "mujeres_14_29", "label": "Mujeres de 14 a 29 años" },
+                { "id": "mujeres_30_64", "label": "Mujeres de 30 a 64 años" },
+                { "id": "varones_14_29", "label": "Varones de 14 a 29 años" },
+                { "id": "varones_30_64", "label": "Varones de 30 a 64 años" }
+              ]
+            },
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado por tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            },
+            {
+              "id": "genero",
+              "nombre": "Género",
+              "synonyms": ["sexo"],
+              "valores_posibles": [
+                "mujeres",
+                "varones"
+              ]
+            },
+            {
+              "id": "rango_edad",
+              "nombre": "Rango de edad",
+              "synonyms": ["edad", "franja etaria"],
+              "valores_posibles": [
+                { "id": "hasta_29", "label": "Hasta 29 años" },
+                { "id": "30_64", "label": "De 30 a 64 años" },
+                { "id": "65_y_mas", "label": "65 años y más" }
+              ]
+            },
+            {
+              "id": "rol_en_hogar",
+              "nombre": "Rol en Hogar (Relación de parentesco)",
+              "valores_posibles": [
+                { "id": "jefe_de_hogar", "label": "Jefe de hogar" },
+                { "id": "conyuge", "label": "Cónyuge" },
+                "hijos",
+                { "id": "otros", "label": "Otros componentes del hogar" }
+              ]
+            },
+            {
+              "id": "nivel_educativo",
+              "nombre": "Nivel educativo",
+              "synonyms": ["educación", "nivel de educación"],
+              "valores_posibles": [
+                { "id": "primaria_incompleta", "label": "Primaria incompleta" },
+                { "id": "primaria_completa", "label": "Primaria completa" },
+                { "id": "secundaria_incompleta", "label": "Secundaria incompleta" },
+                { "id": "secundaria_completa", "label": "Secundaria completa" },
+                { "id": "superior_universitaria_incompleta", "label": "Superior o universitaria incompleta" },
+                { "id": "superior_universitaria_completa", "label": "Superior o universitaria completa" },
+                { "id": "sin_instruccion", "label": "Sin instrucción" }
+              ]
+            },
+            {
+              "id": "tipo_trabajador",
+              "nombre": "Tipo de trabajador (Categoría ocupacional)",
+              "valores_posibles": [
+                { "id": "asalariado_con_descuento_jubilatorio", "label": "Asalariado con descuento jubilatorio", "synonyms": ["asalariado registrado", "en blanco", "relación de dependencia"] },
+                { "id": "asalariado_sin_descuento_jubilatorio", "label": "Asalariado sin descuento jubilatorio", "synonyms": ["asalariado no registrado", "en negro", "informal"] },
+                { "id": "patron", "label": "Patrón", "synonyms": ["empleador", "dueño"] },
+                { "id": "cuenta_propia", "label": "Cuenta propia", "synonyms": ["independiente", "autónomo", "cuentapropista"] },
+                { "id": "trabajador_familiar_sin_remuneracion", "label": "Trabajador familiar sin remuneración" }
+              ]
+            },
+            {
+              "id": "tipo_establecimiento",
+              "nombre": "Tipo de establecimiento",
+              "valores_posibles": [
+                "estatal",
+                "privado",
+                { "id": "de_otro_tipo", "label": "De otro tipo" },
+                { "id": "ns_nr", "label": "NS/NR" }
+              ]
+            },
+            {
+              "id": "intensidad_ocupacion",
+              "nombre": "Intensidad de la ocupación",
+              "valores_posibles": [
+                { "id": "subocupado", "label": "Subocupado", "synonyms": ["trabaja menos horas"] },
+                { "id": "ocupado_pleno", "label": "Ocupado pleno" },
+                { "id": "sobreocupado", "label": "Sobreocupado", "synonyms": ["trabaja más de 45 horas"] },
+                { "id": "no_trabajo_semana_referencia", "label": "No trabajó en la semana de referencia" }
+              ]
+            },
+            {
+              "id": "calificacion_ocupacion",
+              "nombre": "Calificación de la ocupación",
+              "valores_posibles": [
+                "profesional",
+                { "id": "tecnico", "label": "Técnico" },
+                "operativo",
+                { "id": "no_calificado", "label": "No calificado" },
+                { "id": "no_definido", "label": "No definido" }
+              ]
+            },
+            {
+              "id": "rama_actividad",
+              "nombre": "Rama de actividad",
+              "valores_posibles": [
+                { "id": "actividades_primarias", "label": "Actividades primarias", "synonyms": ["agricultura", "minería", "agro"] },
+                { "id": "clanae:industria-manufacturera", "label": "Industria manufacturera", "synonyms": ["industria", "manufactura"] },
+                { "id": "clanae:construccion", "label": "Construcción" },
+                { "id": "clanae:comercio", "label": "Comercio" },
+                { "id": "clanae:hoteles-restaurantes", "label": "Hoteles y restaurantes", "synonyms": ["turismo", "gastronomía"] },
+                { "id": "clanae:transporte-comunicaciones", "label": "Transporte y comunicaciones" },
+                { "id": "servicios_financieros_alquiler_empresariales", "label": "Servicios financieros y empresariales", "synonyms": ["finanzas", "banca"] },
+                { "id": "clanae:administracion-publica", "label": "Administración pública", "synonyms": ["sector público", "estado"] },
+                { "id": "clanae:ensenanza", "label": "Enseñanza", "synonyms": ["educación", "docencia"] },
+                { "id": "clanae:servicios-sociales", "label": "Servicios sociales y de salud", "synonyms": ["salud"] },
+                { "id": "servicio_domestico", "label": "Servicio doméstico" },
+                { "id": "clanae:otros", "label": "Otros servicios" },
+                { "id": "otras_ramas", "label": "Otras ramas" },
+                { "id": "actividades_no_bien_especificadas", "label": "Actividades no bien especificadas" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["genero", "rango_edad"],
+            ["poblacion_especifica"],
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"],
+            ["genero"],
+            ["rango_edad"],
+            ["rol_en_hogar"],
+            ["nivel_educativo"],
+            ["tipo_trabajador"],
+            ["tipo_establecimiento"],
+            ["intensidad_ocupacion"],
+            ["calificacion_ocupacion"],
+            ["rama_actividad"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-desocupacion",
+          "nombre": "Tasa de desocupación",
+          "descripcion": "Porcentaje de personas desocupadas sobre la Población Económicamente Activa (PEA: ocupados más desocupados). Mide la desocupación abierta: personas sin trabajo que lo buscan activamente y están disponibles para trabajar. Puede desagregarse por región, aglomerado, características de la persona (sexo, edad, nivel educativo), tiempo de búsqueda de empleo o atributos de la última ocupación.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuál es la tasa de desempleo actual en Argentina?",
+            "¿Cómo varía la desocupación entre jóvenes y adultos?",
+            "¿En qué región es más alta la desocupación?",
+            "¿Cuánto tiempo llevan buscando empleo los desocupados?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "tiempo_de_busqueda_de_empleo",
+              "message": "El desglose por tiempo de búsqueda de empleo no siempre está disponible para todos los aglomerados individuales; la cobertura es más completa para el total nacional y las regiones."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "poblacion_especifica",
+              "nombre": "Población específica",
+              "synonyms": ["población", "grupo poblacional", "corte poblacional"],
+              "valores_posibles": [
+                { "id": "poblacion_total", "label": "Población total" },
+                { "id": "poblacion_14_y_mas", "label": "Población de 14 años y más" },
+                "mujeres",
+                "varones",
+                { "id": "jefes_de_hogar", "label": "Jefes de hogar" },
+                { "id": "mujeres_14_29", "label": "Mujeres de 14 a 29 años" },
+                { "id": "mujeres_30_64", "label": "Mujeres de 30 a 64 años" },
+                { "id": "varones_14_29", "label": "Varones de 14 a 29 años" },
+                { "id": "varones_30_64", "label": "Varones de 30 a 64 años" }
+              ]
+            },
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado según tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            },
+            {
+              "id": "genero",
+              "nombre": "Género",
+              "synonyms": ["sexo"],
+              "valores_posibles": [
+                "mujeres",
+                "varones"
+              ]
+            },
+            {
+              "id": "rango_edad",
+              "nombre": "Rango de edad",
+              "synonyms": ["edad", "franja etaria"],
+              "valores_posibles": [
+                { "id": "hasta_29", "label": "Hasta 29 años" },
+                { "id": "30_64", "label": "De 30 a 64 años" },
+                { "id": "65_y_mas", "label": "65 años y más" }
+              ]
+            },
+            {
+              "id": "rol_en_hogar",
+              "nombre": "Rol en Hogar (Relación de parentesco)",
+              "valores_posibles": [
+                { "id": "jefe_de_hogar", "label": "Jefe de hogar" },
+                { "id": "conyuge", "label": "Cónyuge" },
+                "hijos",
+                { "id": "otros_componentes", "label": "Otros componentes del hogar" }
+              ]
+            },
+            {
+              "id": "nivel_educativo",
+              "nombre": "Nivel educativo",
+              "synonyms": ["educación", "nivel de educación"],
+              "valores_posibles": [
+                { "id": "primaria_incompleta", "label": "Primaria incompleta" },
+                { "id": "primaria_completa", "label": "Primaria completa" },
+                { "id": "secundaria_incompleta", "label": "Secundaria incompleta" },
+                { "id": "secundaria_completa", "label": "Secundaria completa" },
+                { "id": "superior_universitaria_incompleta", "label": "Superior o universitaria incompleta" },
+                { "id": "superior_universitaria_completa", "label": "Superior o universitaria completa" },
+                { "id": "sin_instruccion", "label": "Sin instrucción" }
+              ]
+            },
+            {
+              "id": "tiempo_busqueda_empleo",
+              "nombre": "Tiempo de búsqueda de empleo",
+              "valores_posibles": [
+                { "id": "menos_de_1_mes", "label": "Menos de 1 mes" },
+                { "id": "de_1_a_3_meses", "label": "De 1 a 3 meses" },
+                { "id": "mas_de_3_a_6_meses", "label": "Más de 3 a 6 meses" },
+                { "id": "mas_de_6_a_12_meses", "label": "Más de 6 a 12 meses" },
+                { "id": "mas_de_1_anio", "label": "Más de 1 año" },
+                { "id": "ns_nr", "label": "NS/NR" }
+              ]
+            },
+            {
+              "id": "tipo_desocupado",
+              "nombre": "Tipo de desocupado",
+              "valores_posibles": [
+                { "id": "con_ocupacion_anterior", "label": "Con ocupación anterior" },
+                { "id": "sin_ocupacion_anterior", "label": "Sin ocupación anterior" },
+                { "id": "ns_nr", "label": "NS/NR" }
+              ]
+            },
+            {
+              "id": "tipo_ultimo_trabajo",
+              "nombre": "Categoría ocupacional en la última ocupación",
+              "valores_posibles": [
+                "asalariado",
+                { "id": "no_asalariado", "label": "No asalariado" },
+                { "id": "ns_nr", "label": "NS/NR" },
+                { "id": "desocupado_sin_ocupacion_anterior", "label": "Desocupado sin ocupación anterior" }
+              ]
+            },
+            {
+              "id": "tipo_establecimiento",
+              "nombre": "Tipo de establecimiento (última ocupación)",
+              "valores_posibles": [
+                "estatal",
+                "privado",
+                { "id": "de_otro_tipo", "label": "De otro tipo" },
+                { "id": "ns_nr", "label": "NS/NR" }
+              ]
+            },
+            {
+              "id": "calificacion_ocupacion",
+              "nombre": "Calificación de la última ocupación",
+              "valores_posibles": [
+                "profesional",
+                { "id": "tecnico", "label": "Técnico" },
+                "operativo",
+                { "id": "no_calificado", "label": "No calificado" },
+                { "id": "no_definido", "label": "No definido" }
+              ]
+            },
+            {
+              "id": "rama_actividad",
+              "nombre": "Rama de actividad (última ocupación)",
+              "valores_posibles": [
+                { "id": "actividades_primarias", "label": "Actividades primarias", "synonyms": ["agricultura", "minería", "agro"] },
+                { "id": "clanae:industria-manufacturera", "label": "Industria manufacturera", "synonyms": ["industria", "manufactura"] },
+                { "id": "clanae:construccion", "label": "Construcción" },
+                { "id": "clanae:comercio", "label": "Comercio" },
+                { "id": "clanae:hoteles-restaurantes", "label": "Hoteles y restaurantes", "synonyms": ["turismo", "gastronomía"] },
+                { "id": "clanae:transporte-comunicaciones", "label": "Transporte y comunicaciones" },
+                { "id": "servicios_financieros_alquiler_empresariales", "label": "Servicios financieros y empresariales", "synonyms": ["finanzas", "banca"] },
+                { "id": "clanae:administracion-publica", "label": "Administración pública", "synonyms": ["sector público", "estado"] },
+                { "id": "clanae:ensenanza", "label": "Enseñanza", "synonyms": ["educación", "docencia"] },
+                { "id": "clanae:servicios-sociales", "label": "Servicios sociales y de salud", "synonyms": ["salud"] },
+                { "id": "servicio_domestico", "label": "Servicio doméstico" },
+                { "id": "clanae:otros", "label": "Otros servicios" },
+                { "id": "otras_ramas", "label": "Otras ramas" },
+                { "id": "actividades_no_bien_especificadas", "label": "Actividades no bien especificadas" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["genero", "rango_edad"],
+            ["poblacion_especifica"],
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"],
+            ["genero"],
+            ["rango_edad"],
+            ["rol_en_hogar"],
+            ["nivel_educativo"],
+            ["tiempo_busqueda_empleo"],
+            ["tipo_desocupado"],
+            ["tipo_ultimo_trabajo"],
+            ["tipo_establecimiento"],
+            ["calificacion_ocupacion"],
+            ["rama_actividad"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-demandantes",
+          "nombre": "Tasa de demandantes de empleo",
+          "descripcion": "Porcentaje de personas que buscan trabajo sobre la Población Económicamente Activa (PEA). Incluye tanto a los desocupados como a los ocupados que buscan activamente otro empleo. Refleja la presión total sobre el mercado laboral.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué proporción de la PEA está buscando trabajo?",
+            "¿Cuántos ocupados además buscan otro empleo?",
+            "¿Cómo varía la presión laboral por región?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Este concepto sólo tiene desagregación por región estadística. No se publica desagregado por tipo de aglomerado, aglomerado individual ni características poblacionales."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-ocupados-demandantes",
+          "nombre": "Tasa de ocupados demandantes de empleo",
+          "descripcion": "Porcentaje de personas que ya están trabajando pero buscan activamente otro empleo, sobre la Población Económicamente Activa (PEA). Sirve para dimensionar la insatisfacción laboral (por horas, ingresos u otras razones).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los ocupados busca otro trabajo?",
+            "¿Cómo evolucionó la insatisfacción laboral en el AMBA?",
+            "¿En qué aglomerado hay más ocupados buscando otro empleo?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado según tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-horaria",
+          "nombre": "Tasa de subocupación horaria",
+          "descripcion": "Porcentaje de personas ocupadas que trabajan menos de 35 horas semanales por causas involuntarias y están disponibles para trabajar más, sobre la Población Económicamente Activa (PEA). Es un indicador de subutilización de la fuerza laboral.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los trabajadores está subocupado?",
+            "¿Cómo evolucionó la subocupación en el último año?",
+            "¿En qué región hay más trabajadores subocupados?",
+            "¿Cuál es la tasa de subocupación en aglomerados grandes?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado por tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-sobreocupacion-horaria",
+          "nombre": "Tasa de sobreocupación horaria",
+          "descripcion": "Porcentaje de personas ocupadas que trabajan más de 45 horas semanales sobre la Población Económicamente Activa (PEA). Se utiliza como indicador de sobrecarga laboral y extensión de la jornada de trabajo.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los trabajadores trabaja más de 45 horas por semana?",
+            "¿Cómo evolucionó la sobreocupación en Argentina?",
+            "¿En qué región trabajan más horas los ocupados?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Este concepto sólo tiene desagregación por región estadística. No se publica desagregado por tipo de aglomerado, aglomerado individual ni características poblacionales."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-demandante",
+          "nombre": "Tasa de subocupación demandante",
+          "descripcion": "Porcentaje de personas subocupadas (trabajan menos horas de las que quisieran) que además buscan activamente otro empleo, sobre la Población Económicamente Activa (PEA).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántos subocupados buscan activamente más trabajo?",
+            "¿Cómo evolucionó la subocupación demandante en el AMBA?",
+            "¿En qué aglomerado hay más subocupados buscando empleo?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado según tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-no-demandante",
+          "nombre": "Tasa de subocupación no demandante",
+          "descripcion": "Porcentaje de personas subocupadas (trabajan menos horas de las que quisieran) que no están buscando activamente otro empleo, sobre la Población Económicamente Activa (PEA).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántos subocupados no buscan más trabajo?",
+            "¿Cómo se compara la subocupación demandante con la no demandante?",
+            "¿En qué aglomerados es mayor la subocupación no demandante?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tipo de aglomerado según tamaño",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": ["aglomerado urbano", "ciudad", "aglomerado"],
+              "valores_posibles": [
+                { "id": "ciudad_autonoma_de_buenos_aires", "label": "Ciudad Autónoma de Buenos Aires", "synonyms": ["CABA", "capital federal"] },
+                { "id": "partidos_del_gran_buenos_aires", "label": "Partidos del Gran Buenos Aires", "synonyms": ["GBA", "gran buenos aires", "conurbano"] },
+                { "id": "gran_mendoza", "label": "Gran Mendoza", "synonyms": ["mendoza"] },
+                { "id": "gran_san_juan", "label": "Gran San Juan", "synonyms": ["san juan"] },
+                { "id": "gran_san_luis", "label": "Gran San Luis", "synonyms": ["san luis"] },
+                "corrientes",
+                "formosa",
+                { "id": "gran_resistencia", "label": "Gran Resistencia", "synonyms": ["resistencia", "chaco"] },
+                "posadas",
+                { "id": "gran_catamarca", "label": "Gran Catamarca", "synonyms": ["catamarca"] },
+                { "id": "gran_tucuman_tafi_viejo", "label": "Gran Tucumán - Tafí Viejo", "synonyms": ["tucumán", "tucuman"] },
+                { "id": "jujuy_palpala", "label": "Jujuy - Palpalá", "synonyms": ["jujuy"] },
+                { "id": "la_rioja", "label": "La Rioja" },
+                "salta",
+                { "id": "santiago_del_estero_la_banda", "label": "Santiago del Estero - La Banda", "synonyms": ["santiago del estero"] },
+                { "id": "bahia_blanca_cerri", "label": "Bahía Blanca - Cerri", "synonyms": ["bahía blanca", "bahia blanca"] },
+                "concordia",
+                { "id": "gran_cordoba", "label": "Gran Córdoba", "synonyms": ["córdoba", "cordoba"] },
+                { "id": "gran_la_plata", "label": "Gran La Plata", "synonyms": ["la plata"] },
+                { "id": "gran_rosario", "label": "Gran Rosario", "synonyms": ["rosario"] },
+                { "id": "gran_parana", "label": "Gran Paraná", "synonyms": ["paraná", "parana"] },
+                { "id": "gran_santa_fe", "label": "Gran Santa Fe", "synonyms": ["santa fe"] },
+                { "id": "mar_del_plata", "label": "Mar del Plata" },
+                { "id": "rio_cuarto", "label": "Río Cuarto", "synonyms": ["rio cuarto"] },
+                { "id": "santa_rosa_toay", "label": "Santa Rosa - Toay", "synonyms": ["santa rosa", "la pampa"] },
+                { "id": "san_nicolas_villa_constitucion", "label": "San Nicolás - Villa Constitución", "synonyms": ["san nicolás"] },
+                { "id": "comodoro_rivadavia_rada_tilly", "label": "Comodoro Rivadavia - Rada Tilly", "synonyms": ["comodoro rivadavia"] },
+                { "id": "neuquen_plottier", "label": "Neuquén - Plottier", "synonyms": ["neuquén", "neuquen"] },
+                { "id": "rio_gallegos", "label": "Río Gallegos", "synonyms": ["rio gallegos", "santa cruz"] },
+                { "id": "ushuaia_rio_grande", "label": "Ushuaia - Río Grande", "synonyms": ["ushuaia", "tierra del fuego"] },
+                { "id": "rawson_trelew", "label": "Rawson - Trelew", "synonyms": ["trelew", "chubut"] },
+                { "id": "viedma_carmen_de_patagones", "label": "Viedma - Carmen de Patagones", "synonyms": ["viedma", "río negro"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["region"],
+            ["tipo_aglomerado"],
+            ["aglomerado"]
+          ]
+        },
+        {
+          "id": "indec:poblacion-total",
+          "nombre": "Población total",
+          "descripcion": "Estimación de la población total en los 31 aglomerados urbanos relevados por la EPH, expresada en miles de personas. Es el universo poblacional de referencia para las tasas de actividad y empleo.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuál es la población total de los aglomerados urbanos relevados por la EPH?",
+            "¿Cuántas personas viven en los aglomerados urbanos según la EPH?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con PEA, ocupados, desocupados, subocupados, subocupados demandantes y no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-economicamente-activa",
+          "nombre": "Población Económicamente Activa (PEA)",
+          "descripcion": "Población Económicamente Activa (PEA): personas que trabajan o buscan trabajo activamente, expresada en miles, en los 31 aglomerados urbanos relevados por la EPH. Es el universo sobre el que se calculan las tasas de desocupación, subocupación, demandantes y sobreocupación.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántas personas forman la PEA (Población Económicamente Activa)?",
+            "¿Cómo evolucionó la PEA en los últimos años?",
+            "¿Cuánta gente trabaja o busca trabajo en los aglomerados urbanos?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, ocupados, desocupados, subocupados, subocupados demandantes y no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-ocupada",
+          "nombre": "Población ocupada",
+          "descripcion": "Personas ocupadas: quienes trabajaron al menos una hora en la semana de referencia, expresadas en miles, en los 31 aglomerados urbanos relevados por la EPH.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántas personas están ocupadas en Argentina según la EPH?",
+            "¿Cuántos ocupados hay en los aglomerados urbanos?",
+            "¿Cómo evolucionó la cantidad de ocupados en el último año?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, PEA, desocupados, subocupados, subocupados demandantes y no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-desocupada",
+          "nombre": "Población desocupada",
+          "descripcion": "Personas desocupadas: sin trabajo, disponibles y buscando activamente empleo, expresadas en miles, en los 31 aglomerados urbanos relevados por la EPH.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántos desocupados hay en los aglomerados urbanos?",
+            "¿Cuánta gente está desempleada según la EPH?",
+            "¿Cómo evolucionó la cantidad de desocupados?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, PEA, ocupados, subocupados, subocupados demandantes y no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-subocupada",
+          "nombre": "Población subocupada",
+          "descripcion": "Personas subocupadas: ocupados que trabajan menos de 35 horas semanales por causas involuntarias y están disponibles para trabajar más, expresadas en miles, en los 31 aglomerados urbanos relevados por la EPH.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántos subocupados hay en Argentina según la EPH?",
+            "¿Cómo evolucionó la cantidad de subocupados?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, PEA, ocupados, desocupados, subocupados demandantes y no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-subocupada-demandante",
+          "nombre": "Población subocupada demandante",
+          "descripcion": "Personas subocupadas que además buscan activamente otro empleo, expresadas en miles, en los 31 aglomerados urbanos relevados por la EPH.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántos subocupados demandantes hay en total?",
+            "¿Cuántos subocupados están buscando más trabajo?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, PEA, ocupados, desocupados, subocupados y subocupados no demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:poblacion-subocupada-no-demandante",
+          "nombre": "Población subocupada no demandante",
+          "descripcion": "Personas subocupadas que no buscan activamente otro empleo, expresadas en miles, en los 31 aglomerados urbanos relevados por la EPH.",
+          "frecuencia": "quarterly",
+          "unidad": "thousands_of_persons",
+          "sample_questions": [
+            "¿Cuántos subocupados no demandantes hay?",
+            "¿Cuántos subocupados no están buscando otro empleo?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "INDEC publica esta magnitud como parte del cuadro 'Población por condición de actividad' (indec:poblacion-por-condicion-de-actividad-eph-continua), junto con población total, PEA, ocupados, desocupados, subocupados y subocupados demandantes. En este catálogo se desagregó en conceptos individuales para facilitar la búsqueda."
+            }
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:tasa-de-asalarizacion",
+          "nombre": "Tasa de asalarización",
+          "descripcion": "Porcentaje de la población asalariada sobre el total de ocupados. Permite medir qué proporción de los trabajadores son empleados (en relación de dependencia) versus cuentapropistas o empleadores. Se puede filtrar por región estadística o por tamaño de aglomerado.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué proporción de los trabajadores son asalariados?",
+            "¿Cómo varía la asalarización entre regiones?",
+            "¿Hay más asalariados en los grandes aglomerados?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "No confundir con indec:tasa-de-empleo filtrada por tipo_trabajador='asalariado_con_descuento_jubilatorio'. Los denominadores son distintos: acá el denominador es el total de ocupados (mide qué proporción de los ocupados son asalariados), mientras que en tasa-de-empleo el denominador es la población total (mide qué proporción de la población está ocupada como asalariado registrado)."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tamaño de aglomerado",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-asalariados-sin-descuento-jubilatorio",
+          "nombre": "Tasa de asalariados sin descuento jubilatorio",
+          "descripcion": "Porcentaje de asalariados sin descuento jubilatorio sobre el total de asalariados. Aproxima la proporción de trabajo no registrado (empleo informal) entre los asalariados. Se puede filtrar por región estadística o por tamaño de aglomerado.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los asalariados trabaja en negro?",
+            "¿Cómo varía el trabajo no registrado por región?",
+            "¿Hay más informalidad en los aglomerados pequeños?",
+            "¿Cómo evolucionó la informalidad laboral en los últimos años?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "Esta tasa mide únicamente la informalidad entre asalariados (ausencia de descuento jubilatorio). No capta la informalidad de cuentapropistas ni patrones. Para una medición más amplia del empleo no registrado conviene complementar con otros indicadores del INDEC o del Ministerio de Capital Humano."
+            },
+            {
+              "code": "gen_lim",
+              "message": "No confundir con indec:tasa-de-empleo filtrada por tipo_trabajador='asalariado_sin_descuento_jubilatorio'. Los denominadores son distintos: acá el denominador es el total de asalariados (mide la informalidad dentro del segmento asalariado), mientras que en tasa-de-empleo el denominador es la población total (mide qué proporción de la población está ocupada como asalariado no registrado)."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": ["región", "zona", "área"],
+              "valores_posibles": [
+                "nacional",
+                { "id": "AMBA", "label": "AMBA", "synonyms": ["gran buenos aires", "gba", "capital", "buenos aires"] },
+                { "id": "pampeana", "label": "Pampeana", "synonyms": ["región pampeana"] },
+                { "id": "NOA", "label": "Noroeste (NOA)", "synonyms": ["noroeste", "noa", "norte"] },
+                { "id": "NEA", "label": "Noreste (NEA)", "synonyms": ["noreste", "nea"] },
+                { "id": "cuyo", "label": "Cuyo", "synonyms": ["mendoza", "san juan", "san luis"] },
+                { "id": "patagonia", "label": "Patagonia", "synonyms": ["sur"] },
+                { "id": "aglomerados_del_interior", "label": "Aglomerados del interior" }
+              ]
+            },
+            {
+              "id": "tamano_aglomerado",
+              "nombre": "Tamaño de aglomerado",
+              "synonyms": ["tamaño de aglomerado", "tamaño"],
+              "valores_posibles": [
+                { "id": "500000_y_mas", "label": "500.000 y más habitantes" },
+                { "id": "menos_de_500000", "label": "Menos de 500.000 habitantes" }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tamano_aglomerado"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -31,3 +31,5 @@ services:
     environment:
       - "MINIO_ACCESS_KEY=development"
       - "MINIO_SECRET_KEY=development"
+
+

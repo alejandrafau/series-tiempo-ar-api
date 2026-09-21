@@ -1,0 +1,79 @@
+{
+  "collections": [
+    {
+      "id": "ipc_caba_2021",
+      "nombre": "Índice de Precios al Consumidor de la Ciudad de Buenos Aires. Base 2021 = 100",
+      "descripcion": "Precios al consumidor en la Ciudad Autónoma de Buenos Aires (CABA), con base 2021 = 100. Publicado mensualmente por la Dirección General de Estadística y Censos del Gobierno de la Ciudad de Buenos Aires (GCBA). Usa clasificación COICOP 2018 con 13 divisiones. Incluye apertura por categoría analítica (nivel general, estacionales, regulados y resto).",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Colección VIGENTE. Base 2021 = 100. NO es una estadística del INDEC: la publica la Dirección General de Estadística y Censos del Gobierno de la Ciudad de Buenos Aires (GCBA). Es una estadística oficial de CABA, independiente del IPC nacional."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Cobertura geográfica exclusiva: Ciudad Autónoma de Buenos Aires. No cubre el resto del país ni el AMBA. Para el índice nacional (que cubre todo el país) usar la colección 'ipc' del INDEC."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Usa la clasificación COICOP 2018 con 13 divisiones, a diferencia del IPC nacional del INDEC que históricamente empleó la clasificación COICOP argentina tradicional de 12 divisiones (al menos hasta enero de 2026)."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Predecesora: colección 'ipc_caba_2011' (base 2011-2012), discontinuada en 2022. Para períodos anteriores a la base 2021, referirse a esa colección."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "ipc-indice-mensual",
+          "nombre": "IPC CABA Índice mensual",
+          "descripcion": "Número índice mensual del IPC de la Ciudad de Buenos Aires (IPCBA) con base 2021 = 100. Permite filtrar por categoría analítica (nivel general, estacionales, regulados, resto) o por división COICOP 2018.",
+          "frecuencia": "monthly",
+          "unidad": "index_2021_100",
+          "sample_questions": [
+            "¿Cuál fue el índice de precios en CABA el último mes?",
+            "¿Cómo evolucionó el IPC de la Ciudad de Buenos Aires en 2024?",
+            "¿Cuánto aumentaron los regulados en CABA este año?",
+            "¿Qué división COICOP tuvo el mayor nivel de precios en CABA?"
+          ],
+          "dimensiones": [
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": ["categoría"],
+              "valores_posibles": [
+                { "id": "general", "label": "Nivel general" },
+                { "id": "estacional", "label": "Estacionales" },
+                { "id": "regulados", "label": "Regulados" },
+                { "id": "resto", "label": "Resto" }
+              ]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "División COICOP 2018",
+              "synonyms": ["división", "rubro", "categoría"],
+              "valores_posibles": [
+                { "id": "coicop:alimentos", "label": "Alimentos y bebidas no alcohólicas", "synonyms": ["alimentos", "comida"] },
+                { "id": "coicop:alcohol-tabaco", "label": "Bebidas alcohólicas, tabaco y estupefacientes", "synonyms": ["alcohol y tabaco", "bebidas alcohólicas"] },
+                { "id": "coicop:vestimenta-calzado", "label": "Prendas de vestir y calzado", "synonyms": ["ropa", "indumentaria", "calzado"] },
+                { "id": "coicop:vivienda-servicios-combustible", "label": "Vivienda, agua, electricidad, gas y otros combustibles", "synonyms": ["vivienda", "servicios públicos", "luz y gas", "alquiler"] },
+                { "id": "coicop:muebles-conservacion-hogar", "label": "Muebles, artículos para el hogar y para la conservación ordinaria del hogar", "synonyms": ["muebles", "equipamiento del hogar", "electrodomésticos"] },
+                "coicop:salud",
+                "coicop:transporte",
+                { "id": "coicop:comunicaciones", "label": "Información y comunicaciones", "synonyms": ["comunicaciones", "telefonía", "internet", "celular"] },
+                { "id": "coicop:recreacion-cultura", "label": "Recreación, deporte y cultura", "synonyms": ["recreación", "cultura", "ocio", "esparcimiento"] },
+                { "id": "coicop:educacion", "label": "Educación", "synonyms": ["enseñanza", "colegios", "universidades"] },
+                { "id": "coicop:restaurantes-hoteles", "label": "Restaurantes y servicios de alojamiento", "synonyms": ["restaurantes", "hoteles", "comer afuera"] },
+                { "id": "coicop:cuidado-personal", "label": "Servicios de cuidados personales, protección social y bienes diversos", "synonyms": ["cuidado personal", "higiene", "perfumería"] },
+                { "id": "coicop:seguros-servicios-financieros", "label": "Seguros y servicios financieros", "synonyms": ["seguros", "servicios financieros"] }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["categoria_ipc"],
+            ["clasificacion_coicop"]
+          ]
+        }
+      ]
+    }
+  ]
+}

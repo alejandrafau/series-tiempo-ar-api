@@ -1,0 +1,1240 @@
+{
+  "collections": [
+    {
+      "id": "ipc_productos",
+      "nombre": "IPC - Precios al consumidor de productos específicos",
+      "descripcion": "Precios al consumidor relevados por el INDEC para un conjunto de productos específicos de la canasta del IPC (pan francés, asado, leche, banana, etc.) y sus principales aperturas / grupos de productos. Incluye la serie mensual de fuente INDEC y la serie trimestral calculada por la SSPM, con desagregación por región cuando está disponible.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Colección basada en el IPC con base diciembre 2016=100 publicado por INDEC. Cubre el conjunto de productos específicos y aperturas de la canasta relevados en la publicación 'Índice de Precios al Consumidor'. Para períodos previos a 2017 usar 'ipc_2013_2014' (base octubre 2013) o 'ipc_2008' (base abril 2008). Para el índice general (rubros COICOP) usar la colección 'ipc'."
+        },
+        {
+          "code": "gen_lim",
+          "message": "La serie mensual la publica INDEC directamente; la serie trimestral es un cálculo derivado que realiza la SSPM sobre las mismas fuentes."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:ipc-productos-variacion-mensual",
+          "nombre": "IPC Productos Variación mensual",
+          "descripcion": "Serie mensual de precios al consumidor para productos específicos de la canasta del IPC, publicada por el INDEC. Se puede filtrar por producto específico o por grupo/apertura de productos, y por región.",
+          "frecuencia": "monthly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿Cuánto aumentó el precio de la nalga en el último año?",
+            "¿Qué producto de la canasta fue el que más subió en 2024?",
+            "¿En qué región aumentó más el pan?",
+            "¿Qué familia de productos tuvo la mayor variación mensual?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "Solo AMBA tiene cobertura completa. Para las regiones pampeana, NOA, NEA, cuyo y patagonia, INDEC releva únicamente un subconjunto reducido de productos (pan francés, harina de trigo, arroz, fideos, carne picada, pollo, aceite de girasol, leche fresca en sachet, huevos, papa, azúcar, detergente líquido, lavandina y jabón de tocador)."
+            },
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "La dimensión 'grupos_productos' (aperturas / familias) solo está disponible para AMBA. Fuera de AMBA no se publica la variación por grupo."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "productos_coicop",
+              "nombre": "Producto específico de la canasta",
+              "synonyms": [
+                "producto",
+                "artículo",
+                "ítem"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:pan_frances_flauta",
+                  "label": "Pan francés (tipo flauta)",
+                  "synonyms": [
+                    "pan francés",
+                    "flauta",
+                    "pan"
+                  ]
+                },
+                {
+                  "id": "coicop:pan_mesa",
+                  "label": "Pan de mesa"
+                },
+                {
+                  "id": "coicop:galletitas_dulces_envasadas",
+                  "label": "Galletitas dulces envasadas",
+                  "synonyms": [
+                    "galletitas dulces"
+                  ]
+                },
+                {
+                  "id": "coicop:galletitas_agua_envasadas",
+                  "label": "Galletitas de agua envasadas",
+                  "synonyms": [
+                    "galletitas de agua"
+                  ]
+                },
+                {
+                  "id": "coicop:harina_trigo_comun",
+                  "label": "Harina de trigo común",
+                  "synonyms": [
+                    "harina",
+                    "harina de trigo"
+                  ]
+                },
+                {
+                  "id": "coicop:arroz_blanco_simple",
+                  "label": "Arroz blanco simple",
+                  "synonyms": [
+                    "arroz"
+                  ]
+                },
+                {
+                  "id": "coicop:fideos_secos",
+                  "label": "Fideos secos",
+                  "synonyms": [
+                    "fideos",
+                    "pasta seca"
+                  ]
+                },
+                "coicop:asado",
+                {
+                  "id": "coicop:carne_picada_comun",
+                  "label": "Carne picada común",
+                  "synonyms": [
+                    "carne picada",
+                    "picada"
+                  ]
+                },
+                "coicop:paleta",
+                "coicop:cuadril",
+                "coicop:nalga",
+                {
+                  "id": "coicop:hamburguesas_congeladas",
+                  "label": "Hamburguesas congeladas",
+                  "synonyms": [
+                    "hamburguesas"
+                  ]
+                },
+                {
+                  "id": "coicop:pollo_entero",
+                  "label": "Pollo entero",
+                  "synonyms": [
+                    "pollo"
+                  ]
+                },
+                {
+                  "id": "coicop:filet_merluza_fresco",
+                  "label": "Filet de merluza fresco",
+                  "synonyms": [
+                    "merluza",
+                    "pescado"
+                  ]
+                },
+                {
+                  "id": "coicop:salchicha_viena",
+                  "label": "Salchicha tipo viena",
+                  "synonyms": [
+                    "salchichas",
+                    "viena"
+                  ]
+                },
+                {
+                  "id": "coicop:jamon_cocido",
+                  "label": "Jamón cocido",
+                  "synonyms": [
+                    "jamón"
+                  ]
+                },
+                {
+                  "id": "coicop:salchichon",
+                  "label": "Salchichón"
+                },
+                "coicop:salame",
+                {
+                  "id": "coicop:aceite_girasol",
+                  "label": "Aceite de girasol",
+                  "synonyms": [
+                    "aceite"
+                  ]
+                },
+                {
+                  "id": "coicop:aceite_mezcla",
+                  "label": "Aceite de mezcla"
+                },
+                {
+                  "id": "coicop:leche_fresca_entera_sachet",
+                  "label": "Leche fresca entera en sachet",
+                  "synonyms": [
+                    "leche en sachet",
+                    "leche fresca",
+                    "leche"
+                  ]
+                },
+                {
+                  "id": "coicop:leche_polvo_entera",
+                  "label": "Leche en polvo entera",
+                  "synonyms": [
+                    "leche en polvo"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_cremoso",
+                  "label": "Queso cremoso",
+                  "synonyms": [
+                    "queso"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_pate_grass",
+                  "label": "Queso pategrás",
+                  "synonyms": [
+                    "pategrás"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_sardo",
+                  "label": "Queso sardo"
+                },
+                "coicop:manteca",
+                {
+                  "id": "coicop:yogur_firme",
+                  "label": "Yogur firme",
+                  "synonyms": [
+                    "yogur"
+                  ]
+                },
+                {
+                  "id": "coicop:dulce_leche",
+                  "label": "Dulce de leche"
+                },
+                {
+                  "id": "coicop:huevos_gallina",
+                  "label": "Huevos de gallina",
+                  "synonyms": [
+                    "huevos"
+                  ]
+                },
+                {
+                  "id": "coicop:manzana_deliciosa",
+                  "label": "Manzana deliciosa",
+                  "synonyms": [
+                    "manzana"
+                  ]
+                },
+                {
+                  "id": "coicop:limon",
+                  "label": "Limón"
+                },
+                "coicop:naranja",
+                "coicop:banana",
+                "coicop:batata",
+                "coicop:papa",
+                "coicop:cebolla",
+                "coicop:lechuga",
+                {
+                  "id": "coicop:tomate_redondo",
+                  "label": "Tomate redondo",
+                  "synonyms": [
+                    "tomate"
+                  ]
+                },
+                "coicop:zapallo",
+                {
+                  "id": "coicop:tomate_entero_conserva",
+                  "label": "Tomate entero en conserva",
+                  "synonyms": [
+                    "tomate en lata",
+                    "conserva de tomate"
+                  ]
+                },
+                {
+                  "id": "coicop:arvejas_secas_remojadas",
+                  "label": "Arvejas secas remojadas",
+                  "synonyms": [
+                    "arvejas"
+                  ]
+                },
+                {
+                  "id": "coicop:azucar",
+                  "label": "Azúcar"
+                },
+                {
+                  "id": "coicop:sal_fina",
+                  "label": "Sal fina",
+                  "synonyms": [
+                    "sal"
+                  ]
+                },
+                {
+                  "id": "coicop:polvo_flan",
+                  "label": "Polvo para flan",
+                  "synonyms": [
+                    "flan"
+                  ]
+                },
+                {
+                  "id": "coicop:gaseosa_base_cola",
+                  "label": "Gaseosa base cola",
+                  "synonyms": [
+                    "gaseosa cola",
+                    "coca",
+                    "cola"
+                  ]
+                },
+                {
+                  "id": "coicop:agua_sin_gas",
+                  "label": "Agua sin gas",
+                  "synonyms": [
+                    "agua mineral",
+                    "agua"
+                  ]
+                },
+                {
+                  "id": "coicop:cerveza_botella",
+                  "label": "Cerveza en botella",
+                  "synonyms": [
+                    "cerveza"
+                  ]
+                },
+                {
+                  "id": "coicop:vino_comun",
+                  "label": "Vino común",
+                  "synonyms": [
+                    "vino"
+                  ]
+                },
+                {
+                  "id": "coicop:cafe_molido",
+                  "label": "Café molido",
+                  "synonyms": [
+                    "café"
+                  ]
+                },
+                {
+                  "id": "coicop:yerba_mate",
+                  "label": "Yerba mate",
+                  "synonyms": [
+                    "yerba"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_polvo_ropa",
+                  "label": "Jabón en polvo para ropa",
+                  "synonyms": [
+                    "jabón en polvo"
+                  ]
+                },
+                {
+                  "id": "coicop:detergente_liquido",
+                  "label": "Detergente líquido",
+                  "synonyms": [
+                    "detergente"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_pan",
+                  "label": "Jabón en pan",
+                  "synonyms": [
+                    "jabón blanco"
+                  ]
+                },
+                "coicop:lavandina",
+                {
+                  "id": "coicop:algodon",
+                  "label": "Algodón"
+                },
+                {
+                  "id": "coicop:champu",
+                  "label": "Champú",
+                  "synonyms": [
+                    "shampoo"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_tocador",
+                  "label": "Jabón de tocador",
+                  "synonyms": [
+                    "jabón para las manos",
+                    "jabón de mano"
+                  ]
+                },
+                "coicop:desodorante",
+                {
+                  "id": "coicop:paniales_descartables",
+                  "label": "Pañales descartables",
+                  "synonyms": [
+                    "pañales"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "grupos_productos",
+              "nombre": "Grupo / apertura de productos",
+              "synonyms": [
+                "grupo",
+                "familia",
+                "apertura",
+                "familia de productos"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:alimentos-consumir-hogar",
+                  "label": "Alimentos para consumir en el hogar"
+                },
+                {
+                  "id": "coicop:panificacion-cereales-pastas",
+                  "label": "Panificación, cereales y pastas",
+                  "synonyms": [
+                    "panificados",
+                    "cereales"
+                  ]
+                },
+                {
+                  "id": "coicop:carnes-derivados",
+                  "label": "Carnes y derivados",
+                  "synonyms": [
+                    "carnes",
+                    "carne"
+                  ]
+                },
+                {
+                  "id": "coicop:productos-lacteos-huevos",
+                  "label": "Productos lácteos y huevos",
+                  "synonyms": [
+                    "lácteos"
+                  ]
+                },
+                {
+                  "id": "coicop:aceites-grasas-manteca",
+                  "label": "Aceites, grasas y manteca",
+                  "synonyms": [
+                    "aceites"
+                  ]
+                },
+                "coicop:frutas",
+                {
+                  "id": "coicop:verduras-tuberculos-legumbres",
+                  "label": "Verduras, tubérculos y legumbres",
+                  "synonyms": [
+                    "verduras"
+                  ]
+                },
+                {
+                  "id": "coicop:azucar-dulces-chocolate-golosinas",
+                  "label": "Azúcar, dulces, chocolate y golosinas",
+                  "synonyms": [
+                    "dulces",
+                    "golosinas"
+                  ]
+                },
+                {
+                  "id": "coicop:bebidas-no-alcoholicas",
+                  "label": "Bebidas no alcohólicas",
+                  "synonyms": [
+                    "bebidas sin alcohol",
+                    "gaseosas"
+                  ]
+                },
+                {
+                  "id": "coicop:cafe-te-yerba-cacao",
+                  "label": "Café, té, yerba y cacao",
+                  "synonyms": [
+                    "infusiones"
+                  ]
+                },
+                {
+                  "id": "coicop:bebidas-alcoholicas",
+                  "label": "Bebidas alcohólicas",
+                  "synonyms": [
+                    "alcohol"
+                  ]
+                },
+                "coicop:tabaco",
+                {
+                  "id": "coicop:prendas-vestir-materiales",
+                  "label": "Prendas de vestir y materiales",
+                  "synonyms": [
+                    "indumentaria"
+                  ]
+                },
+                "coicop:calzado",
+                {
+                  "id": "coicop:alquiler-vivienda",
+                  "label": "Alquiler de vivienda",
+                  "synonyms": [
+                    "alquiler",
+                    "alquileres"
+                  ]
+                },
+                {
+                  "id": "coicop:mantenimiento-reparacion-vivienda",
+                  "label": "Mantenimiento y reparación de vivienda",
+                  "synonyms": [
+                    "mantenimiento de vivienda"
+                  ]
+                },
+                {
+                  "id": "coicop:electricidad-gas-otros-combustibles",
+                  "label": "Electricidad, gas y otros combustibles",
+                  "synonyms": [
+                    "luz y gas",
+                    "servicios públicos",
+                    "tarifas"
+                  ]
+                },
+                {
+                  "id": "coicop:bienes-servicios-conservacion-hogar",
+                  "label": "Bienes y servicios para la conservación del hogar",
+                  "synonyms": [
+                    "artículos de limpieza"
+                  ]
+                },
+                {
+                  "id": "coicop:productos-medicinales-artefactos-equipos-salud",
+                  "label": "Productos medicinales, artefactos y equipos para la salud",
+                  "synonyms": [
+                    "medicamentos",
+                    "remedios"
+                  ]
+                },
+                {
+                  "id": "coicop:adquisicion-vehiculos",
+                  "label": "Adquisición de vehículos",
+                  "synonyms": [
+                    "autos"
+                  ]
+                },
+                {
+                  "id": "coicop:funcionamiento-equipos-transporte-personal",
+                  "label": "Funcionamiento de equipos de transporte personal",
+                  "synonyms": [
+                    "nafta",
+                    "combustible"
+                  ]
+                },
+                {
+                  "id": "coicop:transporte-publico",
+                  "label": "Transporte público",
+                  "synonyms": [
+                    "colectivo",
+                    "subte",
+                    "tren"
+                  ]
+                },
+                {
+                  "id": "coicop:equipos-audiovisuales-fotograficos-procesamiento-info",
+                  "label": "Equipos audiovisuales, fotográficos y de procesamiento de información",
+                  "synonyms": [
+                    "electrónica"
+                  ]
+                },
+                {
+                  "id": "coicop:periodicos-diarios-revistas-libros-articulos-papeleria",
+                  "label": "Periódicos, diarios, revistas, libros y artículos de papelería",
+                  "synonyms": [
+                    "libros",
+                    "diarios"
+                  ]
+                },
+                {
+                  "id": "coicop:cuidado-persona",
+                  "label": "Cuidado personal",
+                  "synonyms": [
+                    "higiene personal",
+                    "perfumería"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires",
+                    "ciudad"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "productos_coicop",
+              "region"
+            ],
+            [
+              "grupos_productos",
+              "region"
+            ]
+          ]
+        },
+        {
+          "id": "sspm:ipc-productos-variacion-trimestral",
+          "nombre": "IPC Productos Variación trimestral",
+          "descripcion": "Serie trimestral de precios al consumidor para productos específicos de la canasta del IPC, calculada por la SSPM en base a las series mensuales publicadas por el INDEC. Se puede filtrar por producto específico o por grupo/apertura de productos, y por región.",
+          "frecuencia": "quarterly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿Cuánto aumentó el asado en el último trimestre?",
+            "¿Qué grupo de productos tuvo la mayor variación trimestral en 2024?",
+            "¿Cómo evolucionó el precio de la leche trimestre a trimestre?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "Solo AMBA tiene cobertura completa. Para las regiones pampeana, NOA, NEA, cuyo y patagonia, INDEC releva únicamente un subconjunto reducido de productos (pan francés, harina de trigo, arroz, fideos, carne picada, pollo, aceite de girasol, leche fresca en sachet, huevos, papa, azúcar, detergente líquido, lavandina y jabón de tocador). Hereda de la serie mensual."
+            },
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "La dimensión 'grupos_productos' (aperturas / familias) solo está disponible para AMBA. Fuera de AMBA no se publica la variación trimestral por grupo."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "productos_coicop",
+              "nombre": "Producto específico de la canasta",
+              "synonyms": [
+                "producto",
+                "artículo",
+                "ítem"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:pan_frances_flauta",
+                  "label": "Pan francés (tipo flauta)",
+                  "synonyms": [
+                    "pan francés",
+                    "flauta",
+                    "pan"
+                  ]
+                },
+                {
+                  "id": "coicop:pan_mesa",
+                  "label": "Pan de mesa"
+                },
+                {
+                  "id": "coicop:galletitas_dulces_envasadas",
+                  "label": "Galletitas dulces envasadas",
+                  "synonyms": [
+                    "galletitas dulces"
+                  ]
+                },
+                {
+                  "id": "coicop:galletitas_agua_envasadas",
+                  "label": "Galletitas de agua envasadas",
+                  "synonyms": [
+                    "galletitas de agua"
+                  ]
+                },
+                {
+                  "id": "coicop:harina_trigo_comun",
+                  "label": "Harina de trigo común",
+                  "synonyms": [
+                    "harina",
+                    "harina de trigo"
+                  ]
+                },
+                {
+                  "id": "coicop:arroz_blanco_simple",
+                  "label": "Arroz blanco simple",
+                  "synonyms": [
+                    "arroz"
+                  ]
+                },
+                {
+                  "id": "coicop:fideos_secos",
+                  "label": "Fideos secos",
+                  "synonyms": [
+                    "fideos",
+                    "pasta seca"
+                  ]
+                },
+                "coicop:asado",
+                {
+                  "id": "coicop:carne_picada_comun",
+                  "label": "Carne picada común",
+                  "synonyms": [
+                    "carne picada",
+                    "picada"
+                  ]
+                },
+                "coicop:paleta",
+                "coicop:cuadril",
+                "coicop:nalga",
+                {
+                  "id": "coicop:hamburguesas_congeladas",
+                  "label": "Hamburguesas congeladas",
+                  "synonyms": [
+                    "hamburguesas"
+                  ]
+                },
+                {
+                  "id": "coicop:pollo_entero",
+                  "label": "Pollo entero",
+                  "synonyms": [
+                    "pollo"
+                  ]
+                },
+                {
+                  "id": "coicop:filet_merluza_fresco",
+                  "label": "Filet de merluza fresco",
+                  "synonyms": [
+                    "merluza",
+                    "pescado"
+                  ]
+                },
+                {
+                  "id": "coicop:salchicha_viena",
+                  "label": "Salchicha tipo viena",
+                  "synonyms": [
+                    "salchichas",
+                    "viena"
+                  ]
+                },
+                {
+                  "id": "coicop:jamon_cocido",
+                  "label": "Jamón cocido",
+                  "synonyms": [
+                    "jamón"
+                  ]
+                },
+                {
+                  "id": "coicop:salchichon",
+                  "label": "Salchichón"
+                },
+                "coicop:salame",
+                {
+                  "id": "coicop:aceite_girasol",
+                  "label": "Aceite de girasol",
+                  "synonyms": [
+                    "aceite"
+                  ]
+                },
+                {
+                  "id": "coicop:aceite_mezcla",
+                  "label": "Aceite de mezcla"
+                },
+                {
+                  "id": "coicop:leche_fresca_entera_sachet",
+                  "label": "Leche fresca entera en sachet",
+                  "synonyms": [
+                    "leche en sachet",
+                    "leche fresca",
+                    "leche"
+                  ]
+                },
+                {
+                  "id": "coicop:leche_polvo_entera",
+                  "label": "Leche en polvo entera",
+                  "synonyms": [
+                    "leche en polvo"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_cremoso",
+                  "label": "Queso cremoso",
+                  "synonyms": [
+                    "queso"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_pate_grass",
+                  "label": "Queso pategrás",
+                  "synonyms": [
+                    "pategrás"
+                  ]
+                },
+                {
+                  "id": "coicop:queso_sardo",
+                  "label": "Queso sardo"
+                },
+                "coicop:manteca",
+                {
+                  "id": "coicop:yogur_firme",
+                  "label": "Yogur firme",
+                  "synonyms": [
+                    "yogur"
+                  ]
+                },
+                {
+                  "id": "coicop:dulce_leche",
+                  "label": "Dulce de leche"
+                },
+                {
+                  "id": "coicop:huevos_gallina",
+                  "label": "Huevos de gallina",
+                  "synonyms": [
+                    "huevos"
+                  ]
+                },
+                {
+                  "id": "coicop:manzana_deliciosa",
+                  "label": "Manzana deliciosa",
+                  "synonyms": [
+                    "manzana"
+                  ]
+                },
+                {
+                  "id": "coicop:limon",
+                  "label": "Limón"
+                },
+                "coicop:naranja",
+                "coicop:banana",
+                "coicop:batata",
+                "coicop:papa",
+                "coicop:cebolla",
+                "coicop:lechuga",
+                {
+                  "id": "coicop:tomate_redondo",
+                  "label": "Tomate redondo",
+                  "synonyms": [
+                    "tomate"
+                  ]
+                },
+                "coicop:zapallo",
+                {
+                  "id": "coicop:tomate_entero_conserva",
+                  "label": "Tomate entero en conserva",
+                  "synonyms": [
+                    "tomate en lata",
+                    "conserva de tomate"
+                  ]
+                },
+                {
+                  "id": "coicop:arvejas_secas_remojadas",
+                  "label": "Arvejas secas remojadas",
+                  "synonyms": [
+                    "arvejas"
+                  ]
+                },
+                {
+                  "id": "coicop:azucar",
+                  "label": "Azúcar"
+                },
+                {
+                  "id": "coicop:sal_fina",
+                  "label": "Sal fina",
+                  "synonyms": [
+                    "sal"
+                  ]
+                },
+                {
+                  "id": "coicop:polvo_flan",
+                  "label": "Polvo para flan",
+                  "synonyms": [
+                    "flan"
+                  ]
+                },
+                {
+                  "id": "coicop:gaseosa_base_cola",
+                  "label": "Gaseosa base cola",
+                  "synonyms": [
+                    "gaseosa cola",
+                    "coca",
+                    "cola"
+                  ]
+                },
+                {
+                  "id": "coicop:agua_sin_gas",
+                  "label": "Agua sin gas",
+                  "synonyms": [
+                    "agua mineral",
+                    "agua"
+                  ]
+                },
+                {
+                  "id": "coicop:cerveza_botella",
+                  "label": "Cerveza en botella",
+                  "synonyms": [
+                    "cerveza"
+                  ]
+                },
+                {
+                  "id": "coicop:vino_comun",
+                  "label": "Vino común",
+                  "synonyms": [
+                    "vino"
+                  ]
+                },
+                {
+                  "id": "coicop:cafe_molido",
+                  "label": "Café molido",
+                  "synonyms": [
+                    "café"
+                  ]
+                },
+                {
+                  "id": "coicop:yerba_mate",
+                  "label": "Yerba mate",
+                  "synonyms": [
+                    "yerba"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_polvo_ropa",
+                  "label": "Jabón en polvo para ropa",
+                  "synonyms": [
+                    "jabón en polvo"
+                  ]
+                },
+                {
+                  "id": "coicop:detergente_liquido",
+                  "label": "Detergente líquido",
+                  "synonyms": [
+                    "detergente"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_pan",
+                  "label": "Jabón en pan",
+                  "synonyms": [
+                    "jabón blanco"
+                  ]
+                },
+                "coicop:lavandina",
+                {
+                  "id": "coicop:algodon",
+                  "label": "Algodón"
+                },
+                {
+                  "id": "coicop:champu",
+                  "label": "Champú",
+                  "synonyms": [
+                    "shampoo"
+                  ]
+                },
+                {
+                  "id": "coicop:jabon_tocador",
+                  "label": "Jabón de tocador",
+                  "synonyms": [
+                    "jabón para las manos",
+                    "jabón de mano"
+                  ]
+                },
+                "coicop:desodorante",
+                {
+                  "id": "coicop:paniales_descartables",
+                  "label": "Pañales descartables",
+                  "synonyms": [
+                    "pañales"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "grupos_productos",
+              "nombre": "Grupo / apertura de productos",
+              "synonyms": [
+                "grupo",
+                "familia",
+                "apertura",
+                "familia de productos"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:alimentos-consumir-hogar",
+                  "label": "Alimentos para consumir en el hogar"
+                },
+                {
+                  "id": "coicop:panificacion-cereales-pastas",
+                  "label": "Panificación, cereales y pastas",
+                  "synonyms": [
+                    "panificados",
+                    "cereales"
+                  ]
+                },
+                {
+                  "id": "coicop:carnes-derivados",
+                  "label": "Carnes y derivados",
+                  "synonyms": [
+                    "carnes",
+                    "carne"
+                  ]
+                },
+                {
+                  "id": "coicop:productos-lacteos-huevos",
+                  "label": "Productos lácteos y huevos",
+                  "synonyms": [
+                    "lácteos"
+                  ]
+                },
+                {
+                  "id": "coicop:aceites-grasas-manteca",
+                  "label": "Aceites, grasas y manteca",
+                  "synonyms": [
+                    "aceites"
+                  ]
+                },
+                "coicop:frutas",
+                {
+                  "id": "coicop:verduras-tuberculos-legumbres",
+                  "label": "Verduras, tubérculos y legumbres",
+                  "synonyms": [
+                    "verduras"
+                  ]
+                },
+                {
+                  "id": "coicop:azucar-dulces-chocolate-golosinas",
+                  "label": "Azúcar, dulces, chocolate y golosinas",
+                  "synonyms": [
+                    "dulces",
+                    "golosinas"
+                  ]
+                },
+                {
+                  "id": "coicop:bebidas-no-alcoholicas",
+                  "label": "Bebidas no alcohólicas",
+                  "synonyms": [
+                    "bebidas sin alcohol",
+                    "gaseosas"
+                  ]
+                },
+                {
+                  "id": "coicop:cafe-te-yerba-cacao",
+                  "label": "Café, té, yerba y cacao",
+                  "synonyms": [
+                    "infusiones"
+                  ]
+                },
+                {
+                  "id": "coicop:bebidas-alcoholicas",
+                  "label": "Bebidas alcohólicas",
+                  "synonyms": [
+                    "alcohol"
+                  ]
+                },
+                "coicop:tabaco",
+                {
+                  "id": "coicop:prendas-vestir-materiales",
+                  "label": "Prendas de vestir y materiales",
+                  "synonyms": [
+                    "indumentaria"
+                  ]
+                },
+                "coicop:calzado",
+                {
+                  "id": "coicop:alquiler-vivienda",
+                  "label": "Alquiler de vivienda",
+                  "synonyms": [
+                    "alquiler",
+                    "alquileres"
+                  ]
+                },
+                {
+                  "id": "coicop:mantenimiento-reparacion-vivienda",
+                  "label": "Mantenimiento y reparación de vivienda",
+                  "synonyms": [
+                    "mantenimiento de vivienda"
+                  ]
+                },
+                {
+                  "id": "coicop:electricidad-gas-otros-combustibles",
+                  "label": "Electricidad, gas y otros combustibles",
+                  "synonyms": [
+                    "luz y gas",
+                    "servicios públicos",
+                    "tarifas"
+                  ]
+                },
+                {
+                  "id": "coicop:bienes-servicios-conservacion-hogar",
+                  "label": "Bienes y servicios para la conservación del hogar",
+                  "synonyms": [
+                    "artículos de limpieza"
+                  ]
+                },
+                {
+                  "id": "coicop:productos-medicinales-artefactos-equipos-salud",
+                  "label": "Productos medicinales, artefactos y equipos para la salud",
+                  "synonyms": [
+                    "medicamentos",
+                    "remedios"
+                  ]
+                },
+                {
+                  "id": "coicop:adquisicion-vehiculos",
+                  "label": "Adquisición de vehículos",
+                  "synonyms": [
+                    "autos"
+                  ]
+                },
+                {
+                  "id": "coicop:funcionamiento-equipos-transporte-personal",
+                  "label": "Funcionamiento de equipos de transporte personal",
+                  "synonyms": [
+                    "nafta",
+                    "combustible"
+                  ]
+                },
+                {
+                  "id": "coicop:transporte-publico",
+                  "label": "Transporte público",
+                  "synonyms": [
+                    "colectivo",
+                    "subte",
+                    "tren"
+                  ]
+                },
+                {
+                  "id": "coicop:equipos-audiovisuales-fotograficos-procesamiento-info",
+                  "label": "Equipos audiovisuales, fotográficos y de procesamiento de información",
+                  "synonyms": [
+                    "electrónica"
+                  ]
+                },
+                {
+                  "id": "coicop:periodicos-diarios-revistas-libros-articulos-papeleria",
+                  "label": "Periódicos, diarios, revistas, libros y artículos de papelería",
+                  "synonyms": [
+                    "libros",
+                    "diarios"
+                  ]
+                },
+                {
+                  "id": "coicop:cuidado-persona",
+                  "label": "Cuidado personal",
+                  "synonyms": [
+                    "higiene personal",
+                    "perfumería"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires",
+                    "ciudad"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "productos_coicop",
+              "region"
+            ],
+            [
+              "grupos_productos",
+              "region"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

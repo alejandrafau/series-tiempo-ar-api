@@ -1,0 +1,502 @@
+{
+  "collections": [
+    {
+      "id": "emae",
+      "nombre": "Estimador Mensual de Actividad Económica (EMAE)",
+      "descripcion": "Estimación mensual de cómo evoluciona la actividad económica de Argentina. Aproxima cómo crece o cae la economía mes a mes, mucho antes de que se publique el dato oficial del PBI (Producto Bruto Interno). Se publica desagregado por sector económico según la Clasificación Nacional de Actividades Económicas (CLANAE). La colección también incluye agregaciones trimestrales y anuales del índice, derivadas del EMAE mensual (no son series publicadas oficialmente por INDEC con esa frecuencia).",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Índice con base 2004=100; cubre desde enero de 2004 en adelante. Publicado mensualmente por INDEC en el informe 'Estimador mensual de actividad económica (EMAE)'."
+        },
+        {
+          "code": "gen_lim",
+          "message": "El EMAE es un indicador provisorio: mide la misma actividad que el PBI pero se publica antes y puede sufrir revisiones. Los sectores (CLANAE) solo están disponibles en la serie original; las series desestacionalizada y tendencia-ciclo se publican únicamente a nivel nacional agregado, sin apertura por sector."
+        },
+        {
+          "code": "series_lim",
+          "message": "Las series trimestrales y anuales de la colección son agregaciones derivadas del EMAE mensual; INDEC no publica el EMAE con periodicidad trimestral ni anual. La serie oficial trimestral de actividad económica es el 'adelanto del PBI' y la anual es el PBI, ambas producidas también por INDEC. Por eso los concepts de frecuencia trimestral y anual llevan id sin prefijo 'indec:'."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:emae-indice-mensual",
+          "nombre": "EMAE Índice original",
+          "descripcion": "Nivel mensual del EMAE base 2004=100, sin ningún ajuste. Refleja la actividad económica tal como se registra cada mes, incluyendo variaciones estacionales (ej: mayor actividad en diciembre por las fiestas). Disponible por sector económico.",
+          "frecuencia": "monthly",
+          "unidad": "index_2004_100",
+          "sample_questions": [
+            "¿Cuál es el nivel de actividad económica de Argentina en el último mes disponible?",
+            "¿Cómo evolucionó el sector de la construcción en los últimos años?",
+            "¿Qué sector económico tuvo el índice más alto en 2023?",
+            "¿Cuánto creció la industria manufacturera desde 2004?"
+          ],
+          "dimensiones": [
+            {
+              "id": "sector_clanae",
+              "nombre": "Sector de actividad económica (CLANAE)",
+              "synonyms": ["sector", "sector económico", "rama de actividad", "actividad económica", "sector productivo"],
+              "valores_posibles": [
+                {
+                  "id": "total-nacional",
+                  "label": "Nivel general nacional",
+                  "synonyms": ["total", "nivel general", "nacional", "agregado nacional", "total país"]
+                },
+                {
+                  "id": "clanae:agricultura-ganaderia",
+                  "label": "Agricultura, ganadería, caza y silvicultura",
+                  "synonyms": ["agro", "sector primario", "campo", "sector agropecuario"]
+                },
+                {
+                  "id": "clanae:pesca",
+                  "label": "Pesca",
+                  "synonyms": ["pesca marítima", "recursos pesqueros", "actividad pesquera"]
+                },
+                {
+                  "id": "clanae:minas-canteras",
+                  "label": "Minas y canteras",
+                  "synonyms": ["minería", "extracción"]
+                },
+                {
+                  "id": "clanae:industria-manufacturera",
+                  "label": "Industria manufacturera",
+                  "synonyms": ["industria", "manufactura", "sector industrial"]
+                },
+                {
+                  "id": "clanae:electricidad-gas-agua",
+                  "label": "Electricidad, gas y agua",
+                  "synonyms": ["servicios públicos", "utilities", "energía"]
+                },
+                "clanae:construccion",
+                {
+                  "id": "clanae:comercio",
+                  "label": "Comercio",
+                  "synonyms": ["comercio mayorista y minorista", "ventas", "retail"]
+                },
+                {
+                  "id": "clanae:hoteles-restaurantes",
+                  "label": "Hoteles y restaurantes",
+                  "synonyms": ["turismo", "gastronomía", "hotelería"]
+                },
+                {
+                  "id": "clanae:transporte-comunicaciones",
+                  "label": "Transporte y comunicaciones",
+                  "synonyms": ["transporte", "logística", "telecomunicaciones"]
+                },
+                {
+                  "id": "clanae:intermediacion-financiera",
+                  "label": "Intermediación financiera",
+                  "synonyms": ["finanzas", "sector bancario", "sistema financiero", "bancos"]
+                },
+                {
+                  "id": "clanae:actividades-inmobiliarias",
+                  "label": "Actividades inmobiliarias",
+                  "synonyms": ["inmobiliario", "real estate", "propiedades"]
+                },
+                {
+                  "id": "clanae:administracion-publica",
+                  "label": "Administración pública",
+                  "synonyms": ["sector público", "gobierno", "estado"]
+                },
+                {
+                  "id": "clanae:ensenanza",
+                  "label": "Enseñanza",
+                  "synonyms": ["educación", "escuelas", "universidades"]
+                },
+                {
+                  "id": "clanae:servicios-sociales",
+                  "label": "Servicios sociales y de salud",
+                  "synonyms": ["salud", "servicios sociales", "sanidad"]
+                },
+                {
+                  "id": "clanae:otros",
+                  "label": "Otros servicios",
+                  "synonyms": ["otros", "resto de servicios"]
+                },
+                {
+                  "id": "clanae:impuestos-subsidios",
+                  "label": "Impuestos netos de subsidios",
+                  "synonyms": ["impuestos", "IVA", "ajuste fiscal"]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["sector_clanae"]
+          ]
+        },
+        {
+          "id": "indec:emae-variacion-porcentual-interanual",
+          "nombre": "EMAE Variación porcentual interanual (serie original)",
+          "descripcion": "Cuánto cambió la actividad económica en cada mes respecto al mismo mes del año anterior, en porcentaje. Es la forma más directa de responder '¿cuánto creció o cayó la economía en tal mes?'. No tiene ajuste estacional. Disponible por sector económico.",
+          "frecuencia": "monthly",
+          "unidad": "pct_change_yoy",
+          "sample_questions": [
+            "¿Cuánto creció la economía argentina en el último año?",
+            "¿Qué sector económico tuvo la mayor caída interanual en 2023?",
+            "¿Cuál fue la variación de la construcción respecto al año anterior?",
+            "¿En qué mes de 2020 cayó más la actividad económica por la pandemia?"
+          ],
+          "dimensiones": [
+            {
+              "id": "sector_clanae",
+              "nombre": "Sector de actividad económica (CLANAE)",
+              "synonyms": ["sector", "sector económico", "rama de actividad", "actividad económica", "sector productivo"],
+              "valores_posibles": [
+                {
+                  "id": "total-nacional",
+                  "label": "Nivel general nacional",
+                  "synonyms": ["total", "nivel general", "nacional", "agregado nacional", "total país"]
+                },
+                {
+                  "id": "clanae:agricultura-ganaderia",
+                  "label": "Agricultura, ganadería, caza y silvicultura",
+                  "synonyms": ["agro", "sector primario", "campo", "sector agropecuario"]
+                },
+                {
+                  "id": "clanae:pesca",
+                  "label": "Pesca",
+                  "synonyms": ["pesca marítima", "recursos pesqueros", "actividad pesquera"]
+                },
+                {
+                  "id": "clanae:minas-canteras",
+                  "label": "Minas y canteras",
+                  "synonyms": ["minería", "extracción"]
+                },
+                {
+                  "id": "clanae:industria-manufacturera",
+                  "label": "Industria manufacturera",
+                  "synonyms": ["industria", "manufactura", "sector industrial"]
+                },
+                {
+                  "id": "clanae:electricidad-gas-agua",
+                  "label": "Electricidad, gas y agua",
+                  "synonyms": ["servicios públicos", "utilities", "energía"]
+                },
+                "clanae:construccion",
+                {
+                  "id": "clanae:comercio",
+                  "label": "Comercio",
+                  "synonyms": ["comercio mayorista y minorista", "ventas", "retail"]
+                },
+                {
+                  "id": "clanae:hoteles-restaurantes",
+                  "label": "Hoteles y restaurantes",
+                  "synonyms": ["turismo", "gastronomía", "hotelería"]
+                },
+                {
+                  "id": "clanae:transporte-comunicaciones",
+                  "label": "Transporte y comunicaciones",
+                  "synonyms": ["transporte", "logística", "telecomunicaciones"]
+                },
+                {
+                  "id": "clanae:intermediacion-financiera",
+                  "label": "Intermediación financiera",
+                  "synonyms": ["finanzas", "sector bancario", "sistema financiero", "bancos"]
+                },
+                {
+                  "id": "clanae:actividades-inmobiliarias",
+                  "label": "Actividades inmobiliarias",
+                  "synonyms": ["inmobiliario", "real estate", "propiedades"]
+                },
+                {
+                  "id": "clanae:administracion-publica",
+                  "label": "Administración pública",
+                  "synonyms": ["sector público", "gobierno", "estado"]
+                },
+                {
+                  "id": "clanae:ensenanza",
+                  "label": "Enseñanza",
+                  "synonyms": ["educación", "escuelas", "universidades"]
+                },
+                {
+                  "id": "clanae:servicios-sociales",
+                  "label": "Servicios sociales y de salud",
+                  "synonyms": ["salud", "servicios sociales", "sanidad"]
+                },
+                {
+                  "id": "clanae:otros",
+                  "label": "Otros servicios",
+                  "synonyms": ["otros", "resto de servicios"]
+                },
+                {
+                  "id": "clanae:impuestos-subsidios",
+                  "label": "Impuestos netos de subsidios",
+                  "synonyms": ["impuestos", "IVA", "ajuste fiscal"]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["sector_clanae"]
+          ]
+        },
+        {
+          "id": "indec:emae-indice-desestacionalizado",
+          "nombre": "EMAE Índice desestacionalizado",
+          "descripcion": "Nivel mensual del EMAE base 2004=100, al que se le quitaron los efectos estacionales (variaciones que se repiten todos los años en la misma época, como el pico de diciembre). Sirve para comparar un mes con el mes anterior sin que los efectos de temporada distorsionen la comparación. Se publica solo a nivel nacional agregado, sin apertura por sector.",
+          "frecuencia": "monthly",
+          "unidad": "index_2004_100",
+          "sample_questions": [
+            "¿Cómo evolucionó la actividad económica mes a mes en 2024, sin efectos estacionales?",
+            "¿En qué mes de 2023 se registró el pico de actividad desestacionalizada?",
+            "¿La economía creció o cayó respecto al mes anterior?"
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:emae-variacion-porcentual-desestacionalizada",
+          "nombre": "EMAE Variación porcentual mensual desestacionalizada",
+          "descripcion": "Cuánto cambió la actividad económica en cada mes respecto al mes anterior, en porcentaje, después de eliminar los efectos estacionales. Permite detectar si la economía aceleró o frenó mes a mes sin que el resultado esté distorsionado por la época del año. Se publica solo a nivel nacional agregado, sin apertura por sector.",
+          "frecuencia": "monthly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿Cuánto creció la economía en el último mes, sin estacionalidad?",
+            "¿La economía argentina viene acelerando o desacelerando en los últimos meses?",
+            "¿Hubo algún mes de 2024 con caída mensual de actividad?"
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:emae-indice-tendencia-ciclo",
+          "nombre": "EMAE Índice tendencia-ciclo",
+          "descripcion": "Versión del EMAE que suaviza tanto los efectos estacionales como las fluctuaciones irregulares de corto plazo. Muestra el movimiento de fondo de la economía: si está en una tendencia de crecimiento, estancamiento o caída sostenida. Se publica solo a nivel nacional agregado, sin apertura por sector.",
+          "frecuencia": "monthly",
+          "unidad": "index_2004_100",
+          "sample_questions": [
+            "¿La economía argentina muestra una tendencia de crecimiento sostenido?",
+            "¿Cuándo cambió la tendencia de la actividad económica en Argentina?",
+            "¿En qué período la economía tuvo la tendencia más positiva de los últimos años?"
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "indec:emae-variacion-porcentual-tendencia-ciclo",
+          "nombre": "EMAE Variación porcentual mensual de la tendencia-ciclo",
+          "descripcion": "Cuánto cambió el componente tendencia-ciclo del EMAE respecto al mes anterior, en porcentaje. Refleja la dinámica del movimiento de fondo de la economía (una vez descontados estacionalidad e irregularidades). Se publica solo a nivel nacional agregado, sin apertura por sector.",
+          "frecuencia": "monthly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿La tendencia de la economía viene acelerando o desacelerando en los últimos meses?",
+            "¿En qué mes cambió el signo de la tendencia de la actividad económica?"
+          ],
+          "dimensiones": [],
+          "dimensiones_compatibles": []
+        },
+        {
+          "id": "emae-indice-trimestral",
+          "nombre": "EMAE Índice trimestral",
+          "descripcion": "Agregación trimestral del índice EMAE base 2004=100, calculada a partir del EMAE mensual. Refleja el nivel de actividad económica por trimestre, sin ajuste estacional. Disponible por sector económico (CLANAE). INDEC no publica una serie oficial llamada 'EMAE trimestral'; para el dato oficial trimestral de actividad económica corresponde el 'adelanto del PBI'. Por eso el id de este concept no lleva el prefijo 'indec:'.",
+          "frecuencia": "quarterly",
+          "unidad": "index_2004_100",
+          "sample_questions": [
+            "¿Cuál fue el nivel de actividad económica en el último trimestre?",
+            "¿Cómo evolucionó la industria manufacturera trimestre a trimestre?",
+            "¿Qué sector tuvo el mayor nivel de actividad en el primer trimestre de 2023?"
+          ],
+          "dimensiones": [
+            {
+              "id": "sector_clanae",
+              "nombre": "Sector de actividad económica (CLANAE)",
+              "synonyms": ["sector", "sector económico", "rama de actividad", "actividad económica", "sector productivo"],
+              "valores_posibles": [
+                {
+                  "id": "total-nacional",
+                  "label": "Nivel general nacional",
+                  "synonyms": ["total", "nivel general", "nacional", "agregado nacional", "total país"]
+                },
+                {
+                  "id": "clanae:agricultura-ganaderia",
+                  "label": "Agricultura, ganadería, caza y silvicultura",
+                  "synonyms": ["agro", "sector primario", "campo", "sector agropecuario"]
+                },
+                {
+                  "id": "clanae:pesca",
+                  "label": "Pesca",
+                  "synonyms": ["pesca marítima", "recursos pesqueros", "actividad pesquera"]
+                },
+                {
+                  "id": "clanae:minas-canteras",
+                  "label": "Minas y canteras",
+                  "synonyms": ["minería", "extracción"]
+                },
+                {
+                  "id": "clanae:industria-manufacturera",
+                  "label": "Industria manufacturera",
+                  "synonyms": ["industria", "manufactura", "sector industrial"]
+                },
+                {
+                  "id": "clanae:electricidad-gas-agua",
+                  "label": "Electricidad, gas y agua",
+                  "synonyms": ["servicios públicos", "utilities", "energía"]
+                },
+                "clanae:construccion",
+                {
+                  "id": "clanae:comercio",
+                  "label": "Comercio",
+                  "synonyms": ["comercio mayorista y minorista", "ventas", "retail"]
+                },
+                {
+                  "id": "clanae:hoteles-restaurantes",
+                  "label": "Hoteles y restaurantes",
+                  "synonyms": ["turismo", "gastronomía", "hotelería"]
+                },
+                {
+                  "id": "clanae:transporte-comunicaciones",
+                  "label": "Transporte y comunicaciones",
+                  "synonyms": ["transporte", "logística", "telecomunicaciones"]
+                },
+                {
+                  "id": "clanae:intermediacion-financiera",
+                  "label": "Intermediación financiera",
+                  "synonyms": ["finanzas", "sector bancario", "sistema financiero", "bancos"]
+                },
+                {
+                  "id": "clanae:actividades-inmobiliarias",
+                  "label": "Actividades inmobiliarias",
+                  "synonyms": ["inmobiliario", "real estate", "propiedades"]
+                },
+                {
+                  "id": "clanae:administracion-publica",
+                  "label": "Administración pública",
+                  "synonyms": ["sector público", "gobierno", "estado"]
+                },
+                {
+                  "id": "clanae:ensenanza",
+                  "label": "Enseñanza",
+                  "synonyms": ["educación", "escuelas", "universidades"]
+                },
+                {
+                  "id": "clanae:servicios-sociales",
+                  "label": "Servicios sociales y de salud",
+                  "synonyms": ["salud", "servicios sociales", "sanidad"]
+                },
+                {
+                  "id": "clanae:otros",
+                  "label": "Otros servicios",
+                  "synonyms": ["otros", "resto de servicios"]
+                },
+                {
+                  "id": "clanae:impuestos-subsidios",
+                  "label": "Impuestos netos de subsidios",
+                  "synonyms": ["impuestos", "IVA", "ajuste fiscal"]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["sector_clanae"]
+          ]
+        },
+        {
+          "id": "emae-indice-anual",
+          "nombre": "EMAE Índice anual",
+          "descripcion": "Agregación anual del índice EMAE base 2004=100, calculada a partir del EMAE mensual. Refleja el nivel de actividad económica año a año. Disponible por sector económico (CLANAE). INDEC no publica una serie oficial llamada 'EMAE anual'; para el dato oficial de actividad económica anual corresponde el PBI (Producto Bruto Interno). Por eso el id de este concept no lleva el prefijo 'indec:'.",
+          "frecuencia": "yearly",
+          "unidad": "index_2004_100",
+          "sample_questions": [
+            "¿Cuánto creció la economía argentina en 2023?",
+            "¿Qué sector económico tuvo el mayor nivel de actividad el último año?",
+            "¿Cómo evolucionó la actividad económica año a año desde 2004?"
+          ],
+          "dimensiones": [
+            {
+              "id": "sector_clanae",
+              "nombre": "Sector de actividad económica (CLANAE)",
+              "synonyms": ["sector", "sector económico", "rama de actividad", "actividad económica", "sector productivo"],
+              "valores_posibles": [
+                {
+                  "id": "total-nacional",
+                  "label": "Nivel general nacional",
+                  "synonyms": ["total", "nivel general", "nacional", "agregado nacional", "total país"]
+                },
+                {
+                  "id": "clanae:agricultura-ganaderia",
+                  "label": "Agricultura, ganadería, caza y silvicultura",
+                  "synonyms": ["agro", "sector primario", "campo", "sector agropecuario"]
+                },
+                {
+                  "id": "clanae:pesca",
+                  "label": "Pesca",
+                  "synonyms": ["pesca marítima", "recursos pesqueros", "actividad pesquera"]
+                },
+                {
+                  "id": "clanae:minas-canteras",
+                  "label": "Minas y canteras",
+                  "synonyms": ["minería", "extracción"]
+                },
+                {
+                  "id": "clanae:industria-manufacturera",
+                  "label": "Industria manufacturera",
+                  "synonyms": ["industria", "manufactura", "sector industrial"]
+                },
+                {
+                  "id": "clanae:electricidad-gas-agua",
+                  "label": "Electricidad, gas y agua",
+                  "synonyms": ["servicios públicos", "utilities", "energía"]
+                },
+                "clanae:construccion",
+                {
+                  "id": "clanae:comercio",
+                  "label": "Comercio",
+                  "synonyms": ["comercio mayorista y minorista", "ventas", "retail"]
+                },
+                {
+                  "id": "clanae:hoteles-restaurantes",
+                  "label": "Hoteles y restaurantes",
+                  "synonyms": ["turismo", "gastronomía", "hotelería"]
+                },
+                {
+                  "id": "clanae:transporte-comunicaciones",
+                  "label": "Transporte y comunicaciones",
+                  "synonyms": ["transporte", "logística", "telecomunicaciones"]
+                },
+                {
+                  "id": "clanae:intermediacion-financiera",
+                  "label": "Intermediación financiera",
+                  "synonyms": ["finanzas", "sector bancario", "sistema financiero", "bancos"]
+                },
+                {
+                  "id": "clanae:actividades-inmobiliarias",
+                  "label": "Actividades inmobiliarias",
+                  "synonyms": ["inmobiliario", "real estate", "propiedades"]
+                },
+                {
+                  "id": "clanae:administracion-publica",
+                  "label": "Administración pública",
+                  "synonyms": ["sector público", "gobierno", "estado"]
+                },
+                {
+                  "id": "clanae:ensenanza",
+                  "label": "Enseñanza",
+                  "synonyms": ["educación", "escuelas", "universidades"]
+                },
+                {
+                  "id": "clanae:servicios-sociales",
+                  "label": "Servicios sociales y de salud",
+                  "synonyms": ["salud", "servicios sociales", "sanidad"]
+                },
+                {
+                  "id": "clanae:otros",
+                  "label": "Otros servicios",
+                  "synonyms": ["otros", "resto de servicios"]
+                },
+                {
+                  "id": "clanae:impuestos-subsidios",
+                  "label": "Impuestos netos de subsidios",
+                  "synonyms": ["impuestos", "IVA", "ajuste fiscal"]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            ["sector_clanae"]
+          ]
+        }
+      ]
+    }
+  ]
+}
