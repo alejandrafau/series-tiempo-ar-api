@@ -1,0 +1,2342 @@
+{
+  "collections": [
+    {
+      "id": "mercado_trabajo_eph",
+      "nombre": "Mercado de Trabajo (EPH continua)",
+      "descripcion": "Principales indicadores del mercado de trabajo en Argentina (tasas de actividad, empleo, desocupación, subocupación y sobreocupación) elaborados por INDEC a partir de la Encuesta Permanente de Hogares (EPH) continua. Cubre los 31 principales aglomerados urbanos del país; se publica trimestralmente desde 2003.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Cubre desde 2003, cuando la EPH pasó de modalidad puntual a continua (relevamiento trimestral). Fuente: INDEC en el informe 'Mercado de trabajo. Tasas e indicadores socioeconómicos (EPH)', publicado trimestralmente."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Alcance geográfico: 31 aglomerados urbanos principales del país. No cubre la población rural ni las localidades pequeñas."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Colecciones hermanas: para períodos previos a 2003 → 'mercado_trabajo_eph_puntual' (discontinuada); serie empalmada de largo plazo → 'mercado_trabajo_eph_empalmada' (empalme calculado por SSPM); ampliación anual (2003-2014) → 'mercado_trabajo_eahu' (discontinuada); complemento sobre empleo formal privado → 'empleo_eil' (fuente STESS/Ministerio de Capital Humano)."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Tasa de demandantes de empleo, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Tasa de ocupados demandantes de empleo, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Tasa de sobreocupación horaria, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población total, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población Económicamente Activa (PEA), este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población ocupada, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población desocupada, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población subocupada, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población subocupada demandante, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Población subocupada no demandante, este indicador no está disponible en Series de Tiempo SSPM."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:tasa-de-actividad",
+          "nombre": "Tasa de actividad",
+          "descripcion": "Porcentaje de personas que trabajan o buscan trabajo activamente (Población Económicamente Activa, PEA) sobre la población total. Puede filtrarse por región, aglomerado o grupos poblacionales (sexo, edad, jefes de hogar).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuál es la tasa de actividad femenina en Argentina?",
+            "¿Cómo evolucionó la participación laboral de las mujeres jóvenes en el AMBA?",
+            "¿Qué región tiene la mayor tasa de actividad?",
+            "¿Cuál fue la tasa de actividad de los jefes de hogar en 2023?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (población específica, región, tipo de aglomerado o aglomerado) devuelve una serie independiente. No hay combinaciones (por ejemplo, no existe la serie 'mujeres jóvenes en NOA')."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de actividad desagregado por Población específica, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de actividad desagregado por Tipo de aglomerado según tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "poblacion_especifica"
+            ],
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-empleo",
+          "nombre": "Tasa de empleo",
+          "descripcion": "Porcentaje de personas ocupadas sobre la población total. Se considera ocupada a toda persona que trabajó al menos una hora en la semana de referencia. Puede desagregarse por región y aglomerado, por características de la persona (sexo, edad, nivel educativo, relación de parentesco) o del trabajo (categoría ocupacional, tipo de establecimiento, intensidad horaria, calificación y rama de actividad).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántas personas están empleadas en relación a la población total?",
+            "¿Cómo varía la tasa de empleo entre hombres y mujeres jóvenes?",
+            "¿Cuál es la tasa de empleo para trabajadores con nivel universitario completo?",
+            "¿En qué rama de actividad trabaja más gente?"
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "genero",
+              "rango_edad"
+            ],
+            [
+              "poblacion_especifica"
+            ],
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ],
+            [
+              "genero"
+            ],
+            [
+              "rango_edad"
+            ],
+            [
+              "rol_en_hogar"
+            ],
+            [
+              "nivel_educativo"
+            ],
+            [
+              "tipo_trabajador"
+            ],
+            [
+              "tipo_establecimiento"
+            ],
+            [
+              "intensidad_ocupacion"
+            ],
+            [
+              "calificacion_ocupacion"
+            ],
+            [
+              "rama_actividad"
+            ]
+          ],
+          "limitations": [
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Población específica, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Tipo de aglomerado por tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Género, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Rango de edad, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Rol en Hogar (Relación de parentesco), esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Nivel educativo, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Tipo de trabajador (Categoría ocupacional), esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Tipo de establecimiento, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Intensidad de la ocupación, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Calificación de la ocupación, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de empleo desagregado por Rama de actividad, esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ]
+        },
+        {
+          "id": "indec:tasa-de-desocupacion",
+          "nombre": "Tasa de desocupación",
+          "descripcion": "Porcentaje de personas desocupadas sobre la Población Económicamente Activa (PEA: ocupados más desocupados). Mide la desocupación abierta: personas sin trabajo que lo buscan activamente y están disponibles para trabajar. Puede desagregarse por región, aglomerado, características de la persona (sexo, edad, nivel educativo), tiempo de búsqueda de empleo o atributos de la última ocupación.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuál es la tasa de desempleo actual en Argentina?",
+            "¿Cómo varía la desocupación entre jóvenes y adultos?",
+            "¿En qué región es más alta la desocupación?",
+            "¿Cuánto tiempo llevan buscando empleo los desocupados?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "tiempo_de_busqueda_de_empleo",
+              "message": "El desglose por tiempo de búsqueda de empleo no siempre está disponible para todos los aglomerados individuales; la cobertura es más completa para el total nacional y las regiones."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Población específica, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Tipo de aglomerado según tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Género, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Rango de edad, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Rol en Hogar (Relación de parentesco), esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Nivel educativo, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Tiempo de búsqueda de empleo, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Tipo de desocupado, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Categoría ocupacional en la última ocupación, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Tipo de establecimiento (última ocupación), esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Calificación de la última ocupación, esta desagregación no está disponible en Series de Tiempo SSPM."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de desocupación desagregado por Rama de actividad (última ocupación), esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "genero",
+              "rango_edad"
+            ],
+            [
+              "poblacion_especifica"
+            ],
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ],
+            [
+              "genero"
+            ],
+            [
+              "rango_edad"
+            ],
+            [
+              "rol_en_hogar"
+            ],
+            [
+              "nivel_educativo"
+            ],
+            [
+              "tiempo_busqueda_empleo"
+            ],
+            [
+              "tipo_desocupado"
+            ],
+            [
+              "tipo_ultimo_trabajo"
+            ],
+            [
+              "tipo_establecimiento"
+            ],
+            [
+              "calificacion_ocupacion"
+            ],
+            [
+              "rama_actividad"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-horaria",
+          "nombre": "Tasa de subocupación horaria",
+          "descripcion": "Porcentaje de personas ocupadas que trabajan menos de 35 horas semanales por causas involuntarias y están disponibles para trabajar más, sobre la Población Económicamente Activa (PEA). Es un indicador de subutilización de la fuerza laboral.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los trabajadores está subocupado?",
+            "¿Cómo evolucionó la subocupación en el último año?",
+            "¿En qué región hay más trabajadores subocupados?",
+            "¿Cuál es la tasa de subocupación en aglomerados grandes?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de subocupación horaria desagregado por Tipo de aglomerado por tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-demandante",
+          "nombre": "Tasa de subocupación demandante",
+          "descripcion": "Porcentaje de personas subocupadas (trabajan menos horas de las que quisieran) que además buscan activamente otro empleo, sobre la Población Económicamente Activa (PEA).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántos subocupados buscan activamente más trabajo?",
+            "¿Cómo evolucionó la subocupación demandante en el AMBA?",
+            "¿En qué aglomerado hay más subocupados buscando empleo?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de subocupación demandante desagregado por Tipo de aglomerado según tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-subocupacion-no-demandante",
+          "nombre": "Tasa de subocupación no demandante",
+          "descripcion": "Porcentaje de personas subocupadas (trabajan menos horas de las que quisieran) que no están buscando activamente otro empleo, sobre la Población Económicamente Activa (PEA).",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuántos subocupados no buscan más trabajo?",
+            "¿Cómo se compara la subocupación demandante con la no demandante?",
+            "¿En qué aglomerados es mayor la subocupación no demandante?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Las dimensiones no son cruzables entre sí: cada filtro (región, tipo de aglomerado o aglomerado) devuelve una serie independiente, no combinaciones."
+            },
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Tasa de subocupación no demandante desagregado por Tipo de aglomerado según tamaño, esta desagregación no está disponible en Series de Tiempo SSPM."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "aglomerado",
+              "nombre": "Aglomerado",
+              "synonyms": [
+                "aglomerado urbano",
+                "ciudad",
+                "aglomerado"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "CABA",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gran_buenos_aires",
+                  "label": "Partidos del Gran Buenos Aires",
+                  "synonyms": [
+                    "GBA",
+                    "gran buenos aires",
+                    "conurbano"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza",
+                  "synonyms": [
+                    "mendoza"
+                  ]
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan",
+                  "synonyms": [
+                    "san juan"
+                  ]
+                },
+                {
+                  "id": "gran_san_luis",
+                  "label": "Gran San Luis",
+                  "synonyms": [
+                    "san luis"
+                  ]
+                },
+                "corrientes",
+                "formosa",
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia",
+                  "synonyms": [
+                    "resistencia",
+                    "chaco"
+                  ]
+                },
+                "posadas",
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca",
+                  "synonyms": [
+                    "catamarca"
+                  ]
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo",
+                  "synonyms": [
+                    "tucumán",
+                    "tucuman"
+                  ]
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá",
+                  "synonyms": [
+                    "jujuy"
+                  ]
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                "salta",
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda",
+                  "synonyms": [
+                    "santiago del estero"
+                  ]
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri",
+                  "synonyms": [
+                    "bahía blanca",
+                    "bahia blanca"
+                  ]
+                },
+                "concordia",
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba",
+                  "synonyms": [
+                    "córdoba",
+                    "cordoba"
+                  ]
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata",
+                  "synonyms": [
+                    "la plata"
+                  ]
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario",
+                  "synonyms": [
+                    "rosario"
+                  ]
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná",
+                  "synonyms": [
+                    "paraná",
+                    "parana"
+                  ]
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe",
+                  "synonyms": [
+                    "santa fe"
+                  ]
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto",
+                  "synonyms": [
+                    "rio cuarto"
+                  ]
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay",
+                  "synonyms": [
+                    "santa rosa",
+                    "la pampa"
+                  ]
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución",
+                  "synonyms": [
+                    "san nicolás"
+                  ]
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly",
+                  "synonyms": [
+                    "comodoro rivadavia"
+                  ]
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier",
+                  "synonyms": [
+                    "neuquén",
+                    "neuquen"
+                  ]
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos",
+                  "synonyms": [
+                    "rio gallegos",
+                    "santa cruz"
+                  ]
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande",
+                  "synonyms": [
+                    "ushuaia",
+                    "tierra del fuego"
+                  ]
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew",
+                  "synonyms": [
+                    "trelew",
+                    "chubut"
+                  ]
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones",
+                  "synonyms": [
+                    "viedma",
+                    "río negro"
+                  ]
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ],
+            [
+              "aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-asalarizacion",
+          "nombre": "Tasa de asalarización",
+          "descripcion": "Porcentaje de la población asalariada sobre el total de ocupados. Permite medir qué proporción de los trabajadores son empleados (en relación de dependencia) versus cuentapropistas o empleadores. Se puede filtrar por región estadística o por tamaño de aglomerado.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué proporción de los trabajadores son asalariados?",
+            "¿Cómo varía la asalarización entre regiones?",
+            "¿Hay más asalariados en los grandes aglomerados?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "No confundir con indec:tasa-de-empleo filtrada por tipo_trabajador='asalariado_con_descuento_jubilatorio'. Los denominadores son distintos: acá el denominador es el total de ocupados (mide qué proporción de los ocupados son asalariados), mientras que en tasa-de-empleo el denominador es la población total (mide qué proporción de la población está ocupada como asalariado registrado)."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "tipo_aglomerado",
+              "nombre": "Tamaño de aglomerado",
+              "synonyms": [
+                "tamaño de aglomerado",
+                "tamaño"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "500000_y_mas",
+                  "label": "500.000 y más habitantes"
+                },
+                {
+                  "id": "menos_de_500000",
+                  "label": "Menos de 500.000 habitantes"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tipo_aglomerado"
+            ]
+          ]
+        },
+        {
+          "id": "indec:tasa-de-asalariados-sin-descuento-jubilatorio",
+          "nombre": "Tasa de asalariados sin descuento jubilatorio",
+          "descripcion": "Porcentaje de asalariados sin descuento jubilatorio sobre el total de asalariados. Aproxima la proporción de trabajo no registrado (empleo informal) entre los asalariados. Se puede filtrar por región estadística o por tamaño de aglomerado.",
+          "frecuencia": "quarterly",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de los asalariados trabaja en negro?",
+            "¿Cómo varía el trabajo no registrado por región?",
+            "¿Hay más informalidad en los aglomerados pequeños?",
+            "¿Cómo evolucionó la informalidad laboral en los últimos años?"
+          ],
+          "limitations": [
+            {
+              "code": "gaps_indec",
+              "affects_dimension": "region",
+              "message": "Esta tasa mide únicamente la informalidad entre asalariados (ausencia de descuento jubilatorio). No capta la informalidad de cuentapropistas ni patrones. Para una medición más amplia del empleo no registrado conviene complementar con otros indicadores del INDEC o del Ministerio de Capital Humano."
+            },
+            {
+              "code": "gen_lim",
+              "message": "No confundir con indec:tasa-de-empleo filtrada por tipo_trabajador='asalariado_sin_descuento_jubilatorio'. Los denominadores son distintos: acá el denominador es el total de asalariados (mide la informalidad dentro del segmento asalariado), mientras que en tasa-de-empleo el denominador es la población total (mide qué proporción de la población está ocupada como asalariado no registrado)."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana",
+                  "synonyms": [
+                    "región pampeana"
+                  ]
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                }
+              ]
+            },
+            {
+              "id": "tamano_aglomerado",
+              "nombre": "Tamaño de aglomerado",
+              "synonyms": [
+                "tamaño de aglomerado",
+                "tamaño"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "500000_y_mas",
+                  "label": "500.000 y más habitantes"
+                },
+                {
+                  "id": "menos_de_500000",
+                  "label": "Menos de 500.000 habitantes"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region"
+            ],
+            [
+              "tamano_aglomerado"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

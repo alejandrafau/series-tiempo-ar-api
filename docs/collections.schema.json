@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://apis.datos.gob.ar/schemas/collections.schema.json",
+  "title": "Collections file (enriquecido para MCP) — versión magra",
+  "description": "Formato del archivo de ingesta de colecciones. Los campos nuevos discutidos en docs/mcp-server-collections-propuesta.md (label, synonyms, frecuencia, unidad, limitations, sample_questions) son OPCIONALES. Criterio de curaduría: escribir solo lo que el importador no puede autogenerar y lo que el MCP realmente usa. Fuera de este schema (no van en el catálogo): (a) jerarquías (COICOP/CLANAE viven en los TTL SKOS de infra.datos.gob.ar; productos extra-tesauro en un archivo estático del MCP); (b) start_date/primer_periodo (rango real por serie viene en meta.start_date/end_date de la respuesta de /series/); (c) role_aliases (colapsado en Dimension.synonyms).",
+  "type": "object",
+  "required": ["collections"],
+  "additionalProperties": false,
+  "properties": {
+    "collections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Collection" }
+    }
+  },
+
+  "$defs": {
+
+    "Collection": {
+      "type": "object",
+      "required": ["id", "nombre", "concepts"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único de la colección (ej: 'ipc', 'emae').",
+          "pattern": "^[a-z0-9_\\-]+$"
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre humano de la colección."
+        },
+        "descripcion": {
+          "type": "string"
+        },
+        "limitations": {
+          "type": "array",
+          "description": "Opcional. Limitaciones a nivel colección (ej: series discontinuadas, cambio de base). Escribir solo cuando aplica a toda la colección; limitaciones por concept van en Concept.limitations.",
+          "items": { "$ref": "#/$defs/Limitation" }
+        },
+        "concepts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Concept" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "Concept": {
+      "type": "object",
+      "required": ["id", "nombre"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador del concepto (ej: 'indec:ipc-indice-mensual')."
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "descripcion": {
+          "type": "string"
+        },
+        "frecuencia": {
+          "$ref": "#/$defs/Frequency",
+          "description": "RECOMENDADO. Periodicidad de las series del concept. Sin esto, el MCP no puede responder con la unidad temporal correcta."
+        },
+        "unidad": {
+          "$ref": "#/$defs/Unit",
+          "description": "RECOMENDADO. Unidad de medida canónica del concept. Sin esto, el MCP no puede responder con la unidad correcta (%, puntos de índice, personas, etc.)."
+        },
+        "sample_questions": {
+          "type": "array",
+          "description": "Opcional. Preguntas ejemplo cortas (3–5 por concept). Se muestran al usuario y alimentan las instructions del MCP. No exhaustivo.",
+          "items": { "type": "string", "minLength": 1 },
+          "maxItems": 10
+        },
+        "limitations": {
+          "type": "array",
+          "description": "Opcional. Limitaciones específicas de este concept.",
+          "items": { "$ref": "#/$defs/Limitation" }
+        },
+        "dimensiones": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Dimension" }
+        },
+        "dimensiones_compatibles": {
+          "type": "array",
+          "description": "Grupos de dimensiones que pueden combinarse en una misma consulta a get_series. La lista debe ser exhaustiva — un par que no aparece se asume NO combinable (ej: si están [region, producto] y [region, grupo] pero no [producto, grupo], significa que producto y grupo son mutuamente excluyentes). No hace falta declarar esa mutex como Limitation.",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          }
+        }
+      }
+    },
+
+    "Dimension": {
+      "type": "object",
+      "required": ["id", "nombre", "valores_posibles"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id de la dimensión dentro del concept (ej: 'region', 'productos_coicop').",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "nombre": {
+          "type": "string",
+          "description": "Nombre humano de la dimensión (ej: 'Región estadística')."
+        },
+        "synonyms": {
+          "type": "array",
+          "description": "Opcional. Sinónimos por los que el usuario puede referirse a la dimensión. Escribir solo si el 'nombre' no cubre el uso natural. Para 'Región estadística' no hace falta; para dimensiones con nombres técnicos poco intuitivos, sí. Alimenta resolve_dimension_group del MCP.",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "valores_posibles": {
+          "type": "array",
+          "description": "Valores posibles. Cada valor puede ser un string simple (si el id es autogenerable a label razonable) o un objeto con label/synonyms explícitos cuando la autogeneración no alcanza. El importador aplica una función de auto-label a los strings: quita prefijo (coicop:, clanae:, etc.), reemplaza '_' y '-' por espacio, aplica title-case selectivo.",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Formato compacto: el id crudo. El importador genera el label. Usar cuando el auto-label queda bien (ej: 'coicop:nalga' → 'Nalga', 'AMBA' → 'AMBA')."
+              },
+              { "$ref": "#/$defs/DimensionValue" }
+            ]
+          },
+          "minItems": 1
+        }
+      }
+    },
+
+    "DimensionValue": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": false,
+      "description": "Formato extenso de un valor de dimensión. Usar cuando (a) el auto-label del id no queda bien, o (b) hay sinónimos que agregar. Si un valor no necesita nada de eso, alcanza con el string simple.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id del valor (ej: 'coicop:gaseosa_base_cola', 'AMBA', 'mujeres_14_29')."
+        },
+        "label": {
+          "type": "string",
+          "description": "Opcional. Etiqueta humana explícita. Escribir solo cuando el auto-label del importador no genera algo aceptable (ej: 'muebles-conservacion-hogar' → curador escribe 'Muebles y conservación del hogar' con acentos y conjunción)."
+        },
+        "synonyms": {
+          "type": "array",
+          "description": "Opcional. Sinónimos con los que el usuario podría referirse al valor y que el label NO captura. No listar redundancias del label. Ej: para 'coicop:gaseosa_base_cola' → ['gaseosa cola', 'coca']. Para 'coicop:nalga' → [] (el label 'Nalga' ya es coloquial).",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+
+    "Limitation": {
+      "type": "object",
+      "required": ["code", "message"],
+      "additionalProperties": false,
+      "description": "Limitación estructurada. Estructura mínima: 'code' + 'message'; 'affects_dimension' opcional cuando la limitación se origina en una dimensión puntual. Ubicación según naturaleza: (a) 'Collection.limitations' → scope de la colección: base, fuente, publicación, diferenciación con colecciones hermanas (ej: 'esta colección cubre solo base diciembre 2016; para antes usar ipc_2013_2014'). (b) 'Concept.limitations' → detalle fino: gaps de datos, cobertura desigual. Se declaran por concept aunque se repitan entre concepts de la misma colección. Códigos previstos: 'gen_lim' (texto informativo, sin estructura extra), 'gaps_indec' (INDEC no releva/publica el dato — ej: fuera de AMBA no se releva la mayoría de productos), 'gaps_series' (existe en INDEC pero no está indexado en la API — OPCIONAL; alcanza con que el MCP responda 'no tenemos ese corte' cuando la serie no aparece). Se admiten códigos adicionales. NOTA: la mutex entre dimensiones NO se declara acá — se deriva de 'dimensiones_compatibles' (si un par de dimensiones no aparece listado ahí, no son combinables).",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Identificador máquina-legible.",
+          "examples": ["gen_lim", "gaps_indec", "gaps_series"]
+        },
+        "affects_dimension": {
+          "type": "string",
+          "description": "Opcional. Dimensión que origina la limitación (la que 'causa' el gap). Ej: para 'fuera de AMBA no se releva la mayoría de productos' → 'region'. Para 'esta variable solo se releva para mujeres' → 'poblacion_especifica'."
+        },
+        "message": {
+          "type": "string",
+          "description": "Explicación humana en español."
+        }
+      }
+    },
+
+    "Frequency": {
+      "type": "string",
+      "description": "Periodicidad. Se prefieren los valores del examples; strings adicionales son admitidos.",
+      "examples": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "semi_annual",
+        "annual",
+        "irregular"
+      ]
+    },
+
+    "Unit": {
+      "type": "string",
+      "description": "Unidad de medida canónica. Ejemplos frecuentes en la lista; strings adicionales admitidos.",
+      "examples": [
+        "index_2016_100",
+        "index_2004_100",
+        "percent",
+        "pct_change",
+        "pct_change_yoy",
+        "persons",
+        "thousands_of_persons",
+        "ars",
+        "ars_millions",
+        "usd",
+        "ratio",
+        "unitless"
+      ]
+    }
+  }
+}

@@ -1,0 +1,791 @@
+{
+  "collections": [
+    {
+      "id": "ipc",
+      "nombre": "Índice de Precios al Consumidor",
+      "descripcion": "Índice de Precios al Consumidor (IPC) nacional del INDEC: mide cuánto varían mes a mes los precios de una canasta de bienes y servicios representativa del consumo de los hogares urbanos argentinos. Cubre desde enero 2017 con base diciembre 2016 = 100. Incluye el nivel general y desagregaciones por rubro (COICOP), categoría (núcleo, estacional, regulados), tipo de bien o servicio y por seis regiones estadísticas.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Base diciembre 2016 = 100; cubre desde enero de 2017. Publicada por el INDEC en la publicación 'Índice de Precios al Consumidor. Nivel general'. Alcance: nivel general y desagregación por rubro según la Clasificación del Consumo Individual por Finalidades (COICOP), categoría (general, núcleo, estacional y regulados), tipo de bien o servicio, y por seis regiones estadísticas (Nacional, AMBA, Pampeana, NOA, NEA, Cuyo y Patagonia). Para períodos previos usar 'ipc_2013_2014' (base octubre 2013 – septiembre 2014, discontinuada) o 'ipc_2008' (base abril 2008, discontinuada). Para el detalle de productos específicos (nalga, pan francés, leche, etc.) usar 'ipc_productos'. Existen también IPCs de CABA ('ipc_caba_2021' vigente, 'ipc_caba_2011' discontinuado) e IPCs provinciales de Chaco, Córdoba, Mendoza, Neuquén, San Luis, Santa Fe, Tucumán, Jujuy y San Juan."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica IPC Variación interanual, este indicador no está disponible en Series de Tiempo SSPM."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:ipc-indice-mensual",
+          "nombre": "IPC Índice",
+          "descripcion": "Número índice con base diciembre 2016 = 100 que refleja el nivel de precios de la canasta de bienes y servicios representativa del gasto de consumo de los hogares urbanos argentinos. Se publica para el total nacional y para seis regiones estadísticas: AMBA, Pampeana, Noroeste (NOA), Noreste (NEA), Cuyo y Patagonia.",
+          "frecuencia": "monthly",
+          "unidad": "index_2016_100",
+          "sample_questions": [
+            "¿Cuál fue el índice de precios al consumidor en marzo de 2024?",
+            "¿Cuánto vale el IPC para el AMBA en el último mes disponible?",
+            "¿Qué rubro COICOP tiene el índice más alto actualmente?",
+            "¿Cómo evolucionó el IPC de alimentos en los últimos dos años?"
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "synonyms": [
+                "rubro",
+                "división",
+                "categoría"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:alimentos",
+                  "label": "Alimentos y bebidas no alcohólicas",
+                  "synonyms": [
+                    "alimentos"
+                  ]
+                },
+                {
+                  "id": "coicop:alcohol-tabaco",
+                  "label": "Bebidas alcohólicas y tabaco",
+                  "synonyms": [
+                    "alcohol y tabaco"
+                  ]
+                },
+                {
+                  "id": "coicop:vestimenta-calzado",
+                  "label": "Prendas de vestir y calzado",
+                  "synonyms": [
+                    "ropa",
+                    "indumentaria"
+                  ]
+                },
+                {
+                  "id": "coicop:vivienda-servicios-combustible",
+                  "label": "Vivienda, servicios y combustibles",
+                  "synonyms": [
+                    "luz y gas",
+                    "servicios de vivienda"
+                  ]
+                },
+                {
+                  "id": "coicop:muebles-conservacion-hogar",
+                  "label": "Muebles y conservación del hogar",
+                  "synonyms": [
+                    "muebles",
+                    "hogar"
+                  ]
+                },
+                {
+                  "id": "coicop:salud",
+                  "label": "Salud",
+                  "synonyms": [
+                    "medicina",
+                    "medicamentos"
+                  ]
+                },
+                {
+                  "id": "coicop:transporte",
+                  "label": "Transporte",
+                  "synonyms": [
+                    "colectivo",
+                    "nafta"
+                  ]
+                },
+                {
+                  "id": "coicop:comunicaciones",
+                  "label": "Comunicaciones",
+                  "synonyms": [
+                    "telefonía",
+                    "internet",
+                    "celular"
+                  ]
+                },
+                {
+                  "id": "coicop:recreacion-cultura",
+                  "label": "Recreación y cultura",
+                  "synonyms": [
+                    "esparcimiento",
+                    "ocio",
+                    "cultura"
+                  ]
+                },
+                {
+                  "id": "coicop:educacion",
+                  "label": "Educación",
+                  "synonyms": [
+                    "colegio",
+                    "universidad"
+                  ]
+                },
+                {
+                  "id": "coicop:restaurantes-hoteles",
+                  "label": "Restaurantes y hoteles",
+                  "synonyms": [
+                    "comer afuera",
+                    "gastronomía"
+                  ]
+                },
+                {
+                  "id": "coicop:varios",
+                  "label": "Bienes y servicios varios",
+                  "synonyms": []
+                }
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": [
+                "categoría",
+                "clasificación"
+              ],
+              "valores_posibles": [
+                "general",
+                {
+                  "id": "nucleo",
+                  "label": "Núcleo"
+                },
+                {
+                  "id": "estacional",
+                  "label": "Estacional"
+                },
+                {
+                  "id": "regulados",
+                  "label": "Regulados"
+                }
+              ]
+            },
+            {
+              "id": "tipo_bien_servicio",
+              "nombre": "Tipo de bien o servicio",
+              "synonyms": [
+                "tipo",
+                "bien o servicio"
+              ],
+              "valores_posibles": [
+                "bienes",
+                "servicios"
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region",
+              "clasificacion_coicop"
+            ],
+            [
+              "region",
+              "categoria_ipc"
+            ],
+            [
+              "region",
+              "tipo_bien_servicio"
+            ]
+          ]
+        },
+        {
+          "id": "ipc-indice-trimestral",
+          "nombre": "IPC Índice trimestral",
+          "descripcion": "Número índice con base diciembre 2016 = 100 del IPC con periodicidad trimestral. Esta serie es calculada por la SSPM a partir de las cifras mensuales publicadas por el INDEC. Permite filtrar por región, rubro COICOP, categoría IPC (general, regulados, núcleo, estacional) y tipo de bien o servicio, así como por combinaciones de estas variables.",
+          "frecuencia": "quarterly",
+          "unidad": "index_2016_100",
+          "sample_questions": [
+            "¿Cuál fue el índice IPC del primer trimestre de 2024?",
+            "¿Qué rubro tuvo el mayor nivel de precios en el último trimestre?",
+            "¿Cómo varió el IPC de servicios trimestre a trimestre en 2023?",
+            "¿Cuál es el IPC trimestral para el NOA?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Esta serie trimestral es un cálculo derivado realizado por la SSPM sobre las series mensuales del INDEC; no es una publicación directa del INDEC."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "clasificacion_coicop",
+              "nombre": "Clasificación COICOP",
+              "synonyms": [
+                "rubro",
+                "división",
+                "categoría"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "coicop:alimentos",
+                  "label": "Alimentos y bebidas no alcohólicas",
+                  "synonyms": [
+                    "alimentos"
+                  ]
+                },
+                {
+                  "id": "coicop:alcohol-tabaco",
+                  "label": "Bebidas alcohólicas y tabaco",
+                  "synonyms": [
+                    "alcohol y tabaco"
+                  ]
+                },
+                {
+                  "id": "coicop:vestimenta-calzado",
+                  "label": "Prendas de vestir y calzado",
+                  "synonyms": [
+                    "ropa",
+                    "indumentaria"
+                  ]
+                },
+                {
+                  "id": "coicop:vivienda-servicios-combustible",
+                  "label": "Vivienda, servicios y combustibles",
+                  "synonyms": [
+                    "luz y gas",
+                    "servicios de vivienda"
+                  ]
+                },
+                {
+                  "id": "coicop:muebles-conservacion-hogar",
+                  "label": "Muebles y conservación del hogar",
+                  "synonyms": [
+                    "muebles",
+                    "hogar"
+                  ]
+                },
+                {
+                  "id": "coicop:salud",
+                  "label": "Salud",
+                  "synonyms": [
+                    "medicina",
+                    "medicamentos"
+                  ]
+                },
+                {
+                  "id": "coicop:transporte",
+                  "label": "Transporte",
+                  "synonyms": [
+                    "colectivo",
+                    "nafta"
+                  ]
+                },
+                {
+                  "id": "coicop:comunicaciones",
+                  "label": "Comunicaciones",
+                  "synonyms": [
+                    "telefonía",
+                    "internet",
+                    "celular"
+                  ]
+                },
+                {
+                  "id": "coicop:recreacion-cultura",
+                  "label": "Recreación y cultura",
+                  "synonyms": [
+                    "esparcimiento",
+                    "ocio",
+                    "cultura"
+                  ]
+                },
+                {
+                  "id": "coicop:educacion",
+                  "label": "Educación",
+                  "synonyms": [
+                    "colegio",
+                    "universidad"
+                  ]
+                },
+                {
+                  "id": "coicop:restaurantes-hoteles",
+                  "label": "Restaurantes y hoteles",
+                  "synonyms": [
+                    "comer afuera",
+                    "gastronomía"
+                  ]
+                },
+                {
+                  "id": "coicop:varios",
+                  "label": "Bienes y servicios varios",
+                  "synonyms": []
+                }
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": [
+                "categoría",
+                "clasificación"
+              ],
+              "valores_posibles": [
+                "general",
+                {
+                  "id": "nucleo",
+                  "label": "Núcleo"
+                },
+                {
+                  "id": "estacional",
+                  "label": "Estacional"
+                },
+                {
+                  "id": "regulados",
+                  "label": "Regulados"
+                }
+              ]
+            },
+            {
+              "id": "tipo_bien_servicio",
+              "nombre": "Tipo de bien o servicio",
+              "synonyms": [
+                "tipo",
+                "bien o servicio"
+              ],
+              "valores_posibles": [
+                "bienes",
+                "servicios"
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region",
+              "clasificacion_coicop"
+            ],
+            [
+              "region",
+              "categoria_ipc"
+            ],
+            [
+              "region",
+              "tipo_bien_servicio"
+            ]
+          ]
+        },
+        {
+          "id": "indec:ipc-variacion-mensual",
+          "nombre": "IPC Variación mensual",
+          "descripcion": "Variación porcentual mensual del IPC: mide la inflación de un mes respecto al mes anterior para la canasta de bienes y servicios de los hogares urbanos argentinos. Permite filtrar por región y categoría IPC (solo nivel general disponible en esta dimensión).",
+          "frecuencia": "monthly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿Cuánto fue la inflación mensual en junio de 2024?",
+            "¿Qué región tuvo la mayor suba de precios en el último mes?",
+            "¿Cómo evolucionó la inflación mensual en los últimos 12 meses?",
+            "¿En qué mes de 2023 se registró el pico de inflación mensual?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "affects_dimension": "categoria_ipc",
+              "message": "Este concept solo expone la variación mensual para la categoría 'general' combinada con región. No están disponibles los cortes por núcleo, estacional o regulados en esta dimensión."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": [
+                "categoría",
+                "clasificación"
+              ],
+              "valores_posibles": [
+                "general"
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region",
+              "categoria_ipc"
+            ]
+          ]
+        },
+        {
+          "id": "indec:ipc-variacion-acumulada",
+          "nombre": "IPC Variación acumulada",
+          "descripcion": "Variación porcentual acumulada del IPC desde diciembre del año anterior: mide la inflación acumulada en lo que va del año para el total nacional y las seis regiones estadísticas.",
+          "frecuencia": "monthly",
+          "unidad": "pct_change",
+          "sample_questions": [
+            "¿Cuánto acumuló la inflación en lo que va de 2024?",
+            "¿Qué región acumuló más inflación hasta junio?",
+            "¿Cómo fue la inflación acumulada a fin de año en 2022 y 2023?",
+            "¿Cuánto subieron los precios entre enero y septiembre de 2024?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "affects_dimension": "categoria_ipc",
+              "message": "Este concept solo expone la variación acumulada para la categoría 'general' combinada con región. No están disponibles los cortes por núcleo, estacional o regulados en esta dimensión."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                "nacional",
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": [
+                "categoría",
+                "clasificación"
+              ],
+              "valores_posibles": [
+                "general"
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region",
+              "categoria_ipc"
+            ]
+          ]
+        },
+        {
+          "id": "indec:ipc-incidencia-mensual",
+          "nombre": "IPC Incidencia mensual",
+          "descripcion": "Contribución en puntos porcentuales de cada región a la variación mensual del IPC nacional. Mide cuánto aportó cada componente regional al total de la suba de precios del mes.",
+          "frecuencia": "monthly",
+          "unidad": "pct_points",
+          "sample_questions": [
+            "¿Cuánto aportó el AMBA a la inflación de mayo de 2024?",
+            "¿Qué región tuvo mayor incidencia en la inflación mensual?",
+            "¿Cómo se distribuye la incidencia regional en la inflación del último mes?",
+            "¿Cuánto contribuyeron los regulados a la inflación mensual?"
+          ],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "affects_dimension": "region",
+              "message": "La dimensión 'region' en este concept no incluye el valor 'nacional': la incidencia regional es la contribución de cada región al total nacional, por lo que el nivel nacional no tiene sentido como filtro de esta dimensión."
+            }
+          ],
+          "dimensiones": [
+            {
+              "id": "region",
+              "nombre": "Región estadística",
+              "synonyms": [
+                "región",
+                "zona",
+                "área",
+                "provincia"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "AMBA",
+                  "label": "AMBA",
+                  "synonyms": [
+                    "gran buenos aires",
+                    "gba",
+                    "capital",
+                    "buenos aires"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "NOA",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noroeste",
+                    "noa",
+                    "norte"
+                  ]
+                },
+                {
+                  "id": "NEA",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "noreste",
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "cuyo",
+                  "label": "Cuyo",
+                  "synonyms": [
+                    "mendoza",
+                    "san juan",
+                    "san luis"
+                  ]
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "categoria_ipc",
+              "nombre": "Categoría IPC",
+              "synonyms": [
+                "categoría",
+                "clasificación"
+              ],
+              "valores_posibles": [
+                "general",
+                {
+                  "id": "nucleo",
+                  "label": "Núcleo"
+                },
+                {
+                  "id": "estacional",
+                  "label": "Estacional"
+                },
+                {
+                  "id": "regulados",
+                  "label": "Regulados"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "region",
+              "categoria_ipc"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

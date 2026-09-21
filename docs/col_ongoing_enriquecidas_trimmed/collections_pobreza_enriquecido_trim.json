@@ -1,0 +1,937 @@
+{
+  "collections": [
+    {
+      "id": "pobreza-indigencia",
+      "nombre": "Incidencia de la pobreza y de la indigencia",
+      "descripcion": "Indicadores de pobreza e indigencia en Argentina publicados por el INDEC (Instituto Nacional de Estadística y Censos). Miden qué porcentaje de personas y hogares no llegan a cubrir con sus ingresos una canasta básica de alimentos (indigencia) o una canasta básica total de bienes y servicios (pobreza). Se difunde cada semestre, calculados sobre datos de la Encuesta Permanente de Hogares (EPH) en los 31 aglomerados urbanos principales del país.",
+      "limitations": [
+        {
+          "code": "gen_lim",
+          "message": "Publicación semestral: hay dos mediciones por año (semestre 1, que cubre enero–junio, y semestre 2, que cubre julio–diciembre). La serie vigente basada en EPH continua cubre desde 2016 en adelante. Para la serie histórica 1988–2003, basada en EPH puntual (ondas de mayo y octubre), usar la colección 'pobreza-indigencia-eph-puntual'."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Fuente: INDEC, informe 'Incidencia de la pobreza y de la indigencia en 31 aglomerados urbanos'. Método de la línea de ingresos (canasta básica): se compara el ingreso total familiar con el valor de la canasta básica alimentaria (indigencia) o la canasta básica total (pobreza), ajustada a la composición de cada hogar en adultos equivalentes."
+        },
+        {
+          "code": "gen_lim",
+          "message": "Alcance: únicamente los 31 aglomerados urbanos principales relevados por la EPH. No cubre población rural ni localidades no relevadas. El método utilizado es la línea de ingresos; no mide pobreza estructural (NBI) ni pobreza multidimensional."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Personas bajo la línea de pobreza, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Hogares bajo la línea de pobreza, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Personas bajo la línea de indigencia, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Hogares bajo la línea de indigencia, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Brecha monetaria promedio, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Brecha porcentual promedio, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Ingreso total familiar promedio de los hogares bajo la línea, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Canasta promedio de los hogares bajo la línea, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Cantidad promedio de personas por hogar bajo la línea, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Cantidad promedio de adultos equivalentes por hogar bajo la línea, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Composición etaria de la población por condición de pobreza, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Incidencia de la pobreza por grupo de edad, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Composición etaria de la población de 0 a 17 años por condición de pobreza, este indicador no está disponible en Series de Tiempo SSPM."
+        },
+        {
+          "code": "gaps_series",
+          "message": "Aunque INDEC publica Incidencia de la pobreza por grupo de edad en población de 0 a 17 años, este indicador no está disponible en Series de Tiempo SSPM."
+        }
+      ],
+      "concepts": [
+        {
+          "id": "indec:pobreza-incidencia-personas",
+          "nombre": "Incidencia de la pobreza en personas",
+          "descripcion": "Porcentaje de personas que viven en hogares cuyo ingreso total familiar no llega a cubrir el valor de la canasta básica total correspondiente a la composición del hogar. Se puede filtrar por área geográfica: total de los 31 aglomerados, conjunto de aglomerados del interior, seis regiones estadísticas, cada uno de los 31 aglomerados y los dos cortes por tamaño de aglomerado.",
+          "frecuencia": "semi_annual",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Cuál es el porcentaje de personas pobres en Argentina?",
+            "¿Qué región tiene mayor incidencia de la pobreza en personas?",
+            "¿Cómo evolucionó la pobreza en el Gran Buenos Aires en los últimos años?",
+            "¿Cuánto bajó la pobreza entre el primer y segundo semestre del año pasado?"
+          ],
+          "dimensiones": [
+            {
+              "id": "area_geografica",
+              "nombre": "Área geográfica",
+              "synonyms": [
+                "área",
+                "aglomerado",
+                "zona",
+                "región"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "total_31_aglomerados_urbanos",
+                  "label": "Total 31 aglomerados urbanos"
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                },
+                {
+                  "id": "gran_buenos_aires",
+                  "label": "Gran Buenos Aires",
+                  "synonyms": [
+                    "gba",
+                    "amba"
+                  ]
+                },
+                {
+                  "id": "noreste",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "noroeste",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noa"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "caba",
+                    "ciudad de buenos aires",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gba",
+                  "label": "Partidos del GBA",
+                  "synonyms": [
+                    "conurbano bonaerense",
+                    "conurbano",
+                    "partidos del gran buenos aires"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza"
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan"
+                },
+                "gran_san_luis",
+                {
+                  "id": "corrientes",
+                  "label": "Corrientes"
+                },
+                {
+                  "id": "formosa",
+                  "label": "Formosa"
+                },
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia"
+                },
+                {
+                  "id": "posadas",
+                  "label": "Posadas"
+                },
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca"
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo"
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá"
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                {
+                  "id": "salta",
+                  "label": "Salta"
+                },
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda"
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri"
+                },
+                {
+                  "id": "concordia",
+                  "label": "Concordia"
+                },
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba"
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata"
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario"
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná"
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe"
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto"
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay"
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución"
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly"
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier"
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos"
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande"
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew"
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "area_geografica"
+            ]
+          ],
+          "limitations": [
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Incidencia de la pobreza en personas desagregado por Área geográfica para los valores [Cuyo, Aglomerados de 500.000 y más habitantes, Aglomerados de menos de 500.000 habitantes], estos desagregados no están disponibles en Series de Tiempo SSPM."
+            }
+          ]
+        },
+        {
+          "id": "indec:pobreza-incidencia-hogares",
+          "nombre": "Incidencia de la pobreza en hogares",
+          "descripcion": "Porcentaje de hogares cuyo ingreso total familiar no llega a cubrir el valor de la canasta básica total correspondiente a la composición del hogar. Se puede filtrar por área geográfica: total de los 31 aglomerados, conjunto de aglomerados del interior, seis regiones estadísticas, cada uno de los 31 aglomerados y los dos cortes por tamaño de aglomerado.",
+          "frecuencia": "semi_annual",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de hogares son pobres en Argentina?",
+            "¿Cuántos hogares pobres hay en el Gran Rosario?",
+            "¿La incidencia de pobreza en hogares es mayor en NOA o en NEA?",
+            "¿Cómo varió la pobreza en hogares entre 2019 y 2023?"
+          ],
+          "dimensiones": [
+            {
+              "id": "area_geografica",
+              "nombre": "Área geográfica",
+              "synonyms": [
+                "área",
+                "aglomerado",
+                "zona",
+                "región"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "total_31_aglomerados_urbanos",
+                  "label": "Total 31 aglomerados urbanos"
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                },
+                {
+                  "id": "gran_buenos_aires",
+                  "label": "Gran Buenos Aires",
+                  "synonyms": [
+                    "gba",
+                    "amba"
+                  ]
+                },
+                {
+                  "id": "noreste",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "noroeste",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noa"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "caba",
+                    "ciudad de buenos aires",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gba",
+                  "label": "Partidos del GBA",
+                  "synonyms": [
+                    "conurbano bonaerense",
+                    "conurbano",
+                    "partidos del gran buenos aires"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza"
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan"
+                },
+                "gran_san_luis",
+                {
+                  "id": "corrientes",
+                  "label": "Corrientes"
+                },
+                {
+                  "id": "formosa",
+                  "label": "Formosa"
+                },
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia"
+                },
+                {
+                  "id": "posadas",
+                  "label": "Posadas"
+                },
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca"
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo"
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá"
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                {
+                  "id": "salta",
+                  "label": "Salta"
+                },
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda"
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri"
+                },
+                {
+                  "id": "concordia",
+                  "label": "Concordia"
+                },
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba"
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata"
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario"
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná"
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe"
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto"
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay"
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución"
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly"
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier"
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos"
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande"
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew"
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "area_geografica"
+            ]
+          ],
+          "limitations": [
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Incidencia de la pobreza en hogares desagregado por Área geográfica para los valores [Cuyo, Aglomerados de 500.000 y más habitantes, Aglomerados de menos de 500.000 habitantes], estos desagregados no están disponibles en Series de Tiempo SSPM."
+            }
+          ]
+        },
+        {
+          "id": "indec:indigencia-incidencia-personas",
+          "nombre": "Incidencia de la indigencia en personas",
+          "descripcion": "Porcentaje de personas que viven en hogares cuyo ingreso total familiar no llega a cubrir ni siquiera el valor de la canasta básica alimentaria (indigencia). Las personas indigentes son un subconjunto de las pobres. Se puede filtrar por área geográfica: total de los 31 aglomerados, conjunto de aglomerados del interior, seis regiones estadísticas, cada uno de los 31 aglomerados y los dos cortes por tamaño de aglomerado.",
+          "frecuencia": "semi_annual",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de la población es indigente en Argentina?",
+            "¿Cuál es la tasa de indigencia en el NOA?",
+            "¿Cómo evolucionó la indigencia en personas en los últimos 5 años?",
+            "¿Dónde es más alta la indigencia, en el GBA o en el interior?"
+          ],
+          "dimensiones": [
+            {
+              "id": "area_geografica",
+              "nombre": "Área geográfica",
+              "synonyms": [
+                "área",
+                "aglomerado",
+                "zona",
+                "región"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "total_31_aglomerados_urbanos",
+                  "label": "Total 31 aglomerados urbanos"
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                },
+                {
+                  "id": "gran_buenos_aires",
+                  "label": "Gran Buenos Aires",
+                  "synonyms": [
+                    "gba",
+                    "amba"
+                  ]
+                },
+                {
+                  "id": "noreste",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "noroeste",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noa"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "caba",
+                    "ciudad de buenos aires",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gba",
+                  "label": "Partidos del GBA",
+                  "synonyms": [
+                    "conurbano bonaerense",
+                    "conurbano",
+                    "partidos del gran buenos aires"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza"
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan"
+                },
+                "gran_san_luis",
+                {
+                  "id": "corrientes",
+                  "label": "Corrientes"
+                },
+                {
+                  "id": "formosa",
+                  "label": "Formosa"
+                },
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia"
+                },
+                {
+                  "id": "posadas",
+                  "label": "Posadas"
+                },
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca"
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo"
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá"
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                {
+                  "id": "salta",
+                  "label": "Salta"
+                },
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda"
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri"
+                },
+                {
+                  "id": "concordia",
+                  "label": "Concordia"
+                },
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba"
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata"
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario"
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná"
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe"
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto"
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay"
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución"
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly"
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier"
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos"
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande"
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew"
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "area_geografica"
+            ]
+          ],
+          "limitations": [
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Incidencia de la indigencia en personas desagregado por Área geográfica para los valores [Cuyo, Aglomerados de 500.000 y más habitantes, Aglomerados de menos de 500.000 habitantes], estos desagregados no están disponibles en Series de Tiempo SSPM."
+            }
+          ]
+        },
+        {
+          "id": "indec:indigencia-incidencia-hogares",
+          "nombre": "Incidencia de la indigencia en hogares",
+          "descripcion": "Porcentaje de hogares cuyo ingreso total familiar no llega a cubrir ni siquiera el valor de la canasta básica alimentaria (indigencia). Los hogares indigentes son un subconjunto de los pobres. Se puede filtrar por área geográfica: total de los 31 aglomerados, conjunto de aglomerados del interior, seis regiones estadísticas, cada uno de los 31 aglomerados y los dos cortes por tamaño de aglomerado.",
+          "frecuencia": "semi_annual",
+          "unidad": "percent",
+          "sample_questions": [
+            "¿Qué porcentaje de hogares son indigentes en Argentina?",
+            "¿Cuál es la tasa de indigencia en hogares de Formosa?",
+            "¿La indigencia en hogares bajó respecto al año anterior?",
+            "¿Qué región tiene más incidencia de indigencia en hogares?"
+          ],
+          "dimensiones": [
+            {
+              "id": "area_geografica",
+              "nombre": "Área geográfica",
+              "synonyms": [
+                "área",
+                "aglomerado",
+                "zona",
+                "región"
+              ],
+              "valores_posibles": [
+                {
+                  "id": "total_31_aglomerados_urbanos",
+                  "label": "Total 31 aglomerados urbanos"
+                },
+                {
+                  "id": "aglomerados_del_interior",
+                  "label": "Aglomerados del interior"
+                },
+                {
+                  "id": "gran_buenos_aires",
+                  "label": "Gran Buenos Aires",
+                  "synonyms": [
+                    "gba",
+                    "amba"
+                  ]
+                },
+                {
+                  "id": "noreste",
+                  "label": "Noreste (NEA)",
+                  "synonyms": [
+                    "nea"
+                  ]
+                },
+                {
+                  "id": "noroeste",
+                  "label": "Noroeste (NOA)",
+                  "synonyms": [
+                    "noa"
+                  ]
+                },
+                {
+                  "id": "pampeana",
+                  "label": "Pampeana"
+                },
+                {
+                  "id": "patagonia",
+                  "label": "Patagonia",
+                  "synonyms": [
+                    "sur"
+                  ]
+                },
+                {
+                  "id": "ciudad_autonoma_de_buenos_aires",
+                  "label": "Ciudad Autónoma de Buenos Aires",
+                  "synonyms": [
+                    "caba",
+                    "ciudad de buenos aires",
+                    "capital federal"
+                  ]
+                },
+                {
+                  "id": "partidos_del_gba",
+                  "label": "Partidos del GBA",
+                  "synonyms": [
+                    "conurbano bonaerense",
+                    "conurbano",
+                    "partidos del gran buenos aires"
+                  ]
+                },
+                {
+                  "id": "gran_mendoza",
+                  "label": "Gran Mendoza"
+                },
+                {
+                  "id": "gran_san_juan",
+                  "label": "Gran San Juan"
+                },
+                "gran_san_luis",
+                {
+                  "id": "corrientes",
+                  "label": "Corrientes"
+                },
+                {
+                  "id": "formosa",
+                  "label": "Formosa"
+                },
+                {
+                  "id": "gran_resistencia",
+                  "label": "Gran Resistencia"
+                },
+                {
+                  "id": "posadas",
+                  "label": "Posadas"
+                },
+                {
+                  "id": "gran_catamarca",
+                  "label": "Gran Catamarca"
+                },
+                {
+                  "id": "gran_tucuman_tafi_viejo",
+                  "label": "Gran Tucumán - Tafí Viejo"
+                },
+                {
+                  "id": "jujuy_palpala",
+                  "label": "Jujuy - Palpalá"
+                },
+                {
+                  "id": "la_rioja",
+                  "label": "La Rioja"
+                },
+                {
+                  "id": "salta",
+                  "label": "Salta"
+                },
+                {
+                  "id": "santiago_del_estero_la_banda",
+                  "label": "Santiago del Estero - La Banda"
+                },
+                {
+                  "id": "bahia_blanca_cerri",
+                  "label": "Bahía Blanca - Cerri"
+                },
+                {
+                  "id": "concordia",
+                  "label": "Concordia"
+                },
+                {
+                  "id": "gran_cordoba",
+                  "label": "Gran Córdoba"
+                },
+                {
+                  "id": "gran_la_plata",
+                  "label": "Gran La Plata"
+                },
+                {
+                  "id": "gran_rosario",
+                  "label": "Gran Rosario"
+                },
+                {
+                  "id": "gran_parana",
+                  "label": "Gran Paraná"
+                },
+                {
+                  "id": "gran_santa_fe",
+                  "label": "Gran Santa Fe"
+                },
+                {
+                  "id": "mar_del_plata",
+                  "label": "Mar del Plata"
+                },
+                {
+                  "id": "rio_cuarto",
+                  "label": "Río Cuarto"
+                },
+                {
+                  "id": "santa_rosa_toay",
+                  "label": "Santa Rosa - Toay"
+                },
+                {
+                  "id": "san_nicolas_villa_constitucion",
+                  "label": "San Nicolás - Villa Constitución"
+                },
+                {
+                  "id": "comodoro_rivadavia_rada_tilly",
+                  "label": "Comodoro Rivadavia - Rada Tilly"
+                },
+                {
+                  "id": "neuquen_plottier",
+                  "label": "Neuquén - Plottier"
+                },
+                {
+                  "id": "rio_gallegos",
+                  "label": "Río Gallegos"
+                },
+                {
+                  "id": "ushuaia_rio_grande",
+                  "label": "Ushuaia - Río Grande"
+                },
+                {
+                  "id": "rawson_trelew",
+                  "label": "Rawson - Trelew"
+                },
+                {
+                  "id": "viedma_carmen_de_patagones",
+                  "label": "Viedma - Carmen de Patagones"
+                }
+              ]
+            }
+          ],
+          "dimensiones_compatibles": [
+            [
+              "area_geografica"
+            ]
+          ],
+          "limitations": [
+            {
+              "code": "gaps_series",
+              "message": "Aunque INDEC publica Incidencia de la indigencia en hogares desagregado por Área geográfica para los valores [Cuyo, Aglomerados de 500.000 y más habitantes, Aglomerados de menos de 500.000 habitantes], estos desagregados no están disponibles en Series de Tiempo SSPM."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
