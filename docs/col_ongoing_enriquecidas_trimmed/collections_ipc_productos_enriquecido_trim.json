@@ -2,7 +2,7 @@
   "collections": [
     {
       "id": "ipc_productos",
-      "nombre": "IPC - Precios al consumidor de productos específicos",
+      "nombre": "Precios al consumidor de productos específicos",
       "descripcion": "Precios al consumidor relevados por el INDEC para un conjunto de productos específicos de la canasta del IPC (pan francés, asado, leche, banana, etc.) y sus principales aperturas / grupos de productos. Incluye la serie mensual de fuente INDEC y la serie trimestral calculada por la SSPM, con desagregación por región cuando está disponible.",
       "limitations": [
         {
@@ -626,7 +626,7 @@
           ]
         },
         {
-          "id": "sspm:ipc-productos-variacion-trimestral",
+          "id": "ipc-productos-variacion-trimestral",
           "nombre": "IPC Productos Variación trimestral",
           "descripcion": "Serie trimestral de precios al consumidor para productos específicos de la canasta del IPC, calculada por la SSPM en base a las series mensuales publicadas por el INDEC. Se puede filtrar por producto específico o por grupo/apertura de productos, y por región.",
           "frecuencia": "quarterly",

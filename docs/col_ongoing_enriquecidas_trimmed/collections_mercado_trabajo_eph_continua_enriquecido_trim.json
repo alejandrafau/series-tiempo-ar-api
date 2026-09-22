@@ -66,10 +66,10 @@
           "frecuencia": "quarterly",
           "unidad": "percent",
           "sample_questions": [
-            "¿Cuál es la tasa de actividad femenina en Argentina?",
-            "¿Cómo evolucionó la participación laboral de las mujeres jóvenes en el AMBA?",
+            "¿Cuál es la tasa de actividad en el AMBA?",
+            "¿Cómo evolucionó la tasa de actividad en el NOA en los últimos años?",
             "¿Qué región tiene la mayor tasa de actividad?",
-            "¿Cuál fue la tasa de actividad de los jefes de hogar en 2023?"
+            "¿En qué aglomerado es más alta la tasa de actividad?"
           ],
           "limitations": [
             {
@@ -368,13 +368,7 @@
           ],
           "dimensiones_compatibles": [
             [
-              "poblacion_especifica"
-            ],
-            [
               "region"
-            ],
-            [
-              "tipo_aglomerado"
             ],
             [
               "aglomerado"
@@ -389,9 +383,9 @@
           "unidad": "percent",
           "sample_questions": [
             "¿Cuántas personas están empleadas en relación a la población total?",
-            "¿Cómo varía la tasa de empleo entre hombres y mujeres jóvenes?",
-            "¿Cuál es la tasa de empleo para trabajadores con nivel universitario completo?",
-            "¿En qué rama de actividad trabaja más gente?"
+            "¿Cómo varía la tasa de empleo entre regiones?",
+            "¿En qué aglomerado es más alta la tasa de empleo?",
+            "¿Cómo evolucionó la tasa de empleo en el Gran Córdoba?"
           ],
           "dimensiones": [
             {
@@ -676,47 +670,10 @@
           ],
           "dimensiones_compatibles": [
             [
-              "genero",
-              "rango_edad"
-            ],
-            [
-              "poblacion_especifica"
-            ],
-            [
               "region"
             ],
             [
-              "tipo_aglomerado"
-            ],
-            [
               "aglomerado"
-            ],
-            [
-              "genero"
-            ],
-            [
-              "rango_edad"
-            ],
-            [
-              "rol_en_hogar"
-            ],
-            [
-              "nivel_educativo"
-            ],
-            [
-              "tipo_trabajador"
-            ],
-            [
-              "tipo_establecimiento"
-            ],
-            [
-              "intensidad_ocupacion"
-            ],
-            [
-              "calificacion_ocupacion"
-            ],
-            [
-              "rama_actividad"
             ]
           ],
           "limitations": [
@@ -774,9 +731,9 @@
           "unidad": "percent",
           "sample_questions": [
             "¿Cuál es la tasa de desempleo actual en Argentina?",
-            "¿Cómo varía la desocupación entre jóvenes y adultos?",
+            "¿Cómo evolucionó la desocupación en el Gran Buenos Aires?",
             "¿En qué región es más alta la desocupación?",
-            "¿Cuánto tiempo llevan buscando empleo los desocupados?"
+            "¿En qué aglomerado es mayor la tasa de desocupación?"
           ],
           "limitations": [
             {
@@ -1116,50 +1073,10 @@
           ],
           "dimensiones_compatibles": [
             [
-              "genero",
-              "rango_edad"
-            ],
-            [
-              "poblacion_especifica"
-            ],
-            [
               "region"
             ],
             [
-              "tipo_aglomerado"
-            ],
-            [
               "aglomerado"
-            ],
-            [
-              "genero"
-            ],
-            [
-              "rango_edad"
-            ],
-            [
-              "rol_en_hogar"
-            ],
-            [
-              "nivel_educativo"
-            ],
-            [
-              "tiempo_busqueda_empleo"
-            ],
-            [
-              "tipo_desocupado"
-            ],
-            [
-              "tipo_ultimo_trabajo"
-            ],
-            [
-              "tipo_establecimiento"
-            ],
-            [
-              "calificacion_ocupacion"
-            ],
-            [
-              "rama_actividad"
             ]
           ]
         },
@@ -1173,7 +1090,7 @@
             "¿Qué porcentaje de los trabajadores está subocupado?",
             "¿Cómo evolucionó la subocupación en el último año?",
             "¿En qué región hay más trabajadores subocupados?",
-            "¿Cuál es la tasa de subocupación en aglomerados grandes?"
+            "¿En qué aglomerado es mayor la subocupación horaria?"
           ],
           "limitations": [
             {
@@ -1469,9 +1386,6 @@
           "dimensiones_compatibles": [
             [
               "region"
-            ],
-            [
-              "tipo_aglomerado"
             ],
             [
               "aglomerado"
@@ -1785,9 +1699,6 @@
               "region"
             ],
             [
-              "tipo_aglomerado"
-            ],
-            [
               "aglomerado"
             ]
           ]
@@ -2097,9 +2008,6 @@
           "dimensiones_compatibles": [
             [
               "region"
-            ],
-            [
-              "tipo_aglomerado"
             ],
             [
               "aglomerado"

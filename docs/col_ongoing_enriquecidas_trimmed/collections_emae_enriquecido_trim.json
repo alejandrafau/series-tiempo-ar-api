@@ -207,9 +207,9 @@
           "unidad": "pct_change_yoy",
           "sample_questions": [
             "¿Cuánto creció la economía argentina en el último año?",
-            "¿Qué sector económico tuvo la mayor caída interanual en 2023?",
-            "¿Cuál fue la variación de la construcción respecto al año anterior?",
-            "¿En qué mes de 2020 cayó más la actividad económica por la pandemia?"
+            "¿En qué trimestre de 2020 fue mayor la caída de la economía por la pandemia?",
+            "¿En qué mes de 2023 tuvo su peor desempeño la economía?",
+            "¿Cómo fue la recuperación económica interanual después de la pandemia?"
           ],
           "dimensiones": [
             {
@@ -261,7 +261,13 @@
             "¿La economía creció o cayó respecto al mes anterior?"
           ],
           "dimensiones": [],
-          "dimensiones_compatibles": []
+          "dimensiones_compatibles": [],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Solo disponible a nivel nacional agregado. La apertura por sector económico (CLANAE) solo existe en las series originales (indec:emae-indice-mensual, indec:emae-variacion-porcentual-interanual)."
+            }
+          ]
         },
         {
           "id": "indec:emae-variacion-porcentual-desestacionalizada",
@@ -275,7 +281,13 @@
             "¿Hubo algún mes de 2024 con caída mensual de actividad?"
           ],
           "dimensiones": [],
-          "dimensiones_compatibles": []
+          "dimensiones_compatibles": [],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Solo disponible a nivel nacional agregado. La apertura por sector económico (CLANAE) solo existe en las series originales (indec:emae-indice-mensual, indec:emae-variacion-porcentual-interanual)."
+            }
+          ]
         },
         {
           "id": "indec:emae-indice-tendencia-ciclo",
@@ -289,7 +301,13 @@
             "¿En qué período la economía tuvo la tendencia más positiva de los últimos años?"
           ],
           "dimensiones": [],
-          "dimensiones_compatibles": []
+          "dimensiones_compatibles": [],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Solo disponible a nivel nacional agregado. La apertura por sector económico (CLANAE) solo existe en las series originales (indec:emae-indice-mensual, indec:emae-variacion-porcentual-interanual)."
+            }
+          ]
         },
         {
           "id": "indec:emae-variacion-porcentual-tendencia-ciclo",
@@ -302,7 +320,13 @@
             "¿En qué mes cambió el signo de la tendencia de la actividad económica?"
           ],
           "dimensiones": [],
-          "dimensiones_compatibles": []
+          "dimensiones_compatibles": [],
+          "limitations": [
+            {
+              "code": "gen_lim",
+              "message": "Solo disponible a nivel nacional agregado. La apertura por sector económico (CLANAE) solo existe en las series originales (indec:emae-indice-mensual, indec:emae-variacion-porcentual-interanual)."
+            }
+          ]
         },
         {
           "id": "emae-indice-trimestral",
