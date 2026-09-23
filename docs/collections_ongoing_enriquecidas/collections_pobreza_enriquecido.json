@@ -1,8 +1,8 @@
 {
   "collections": [
     {
-      "id": "pobreza-indigencia",
-      "nombre": "Incidencia de la pobreza y de la indigencia",
+      "id": "pobreza_indigencia_eph",
+      "nombre": "Incidencia de la pobreza y de la indigencia (EPH continua)",
       "descripcion": "Indicadores de pobreza e indigencia en Argentina publicados por el INDEC (Instituto Nacional de Estadística y Censos). Miden qué porcentaje de personas y hogares no llegan a cubrir con sus ingresos una canasta básica de alimentos (indigencia) o una canasta básica total de bienes y servicios (pobreza). Se difunde cada semestre, calculados sobre datos de la Encuesta Permanente de Hogares (EPH) en los 31 aglomerados urbanos principales del país.",
       "limitations": [
         {

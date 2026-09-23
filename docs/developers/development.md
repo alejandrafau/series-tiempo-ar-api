@@ -2,7 +2,7 @@
 
 Hay dos formas de levantar el entorno local:
 
-- **Opción A — Todo en Docker** (`docker-compose-full.yml`): la más simple, todos los servicios corren en contenedores.
+- **Opción A — Todo en Docker** (`../../docker-compose.yml`): la más simple, todos los servicios corren en contenedores.
 - **Opción B — Infra en Docker, app en crudo**: Elasticsearch, PostgreSQL, Redis y MinIO corren en Docker; la app Django y los workers corren en un virtualenv local. Útil para desarrollo activo con hot-reload.
 
 ## Requerimientos
@@ -32,7 +32,7 @@ Editar `conf/settings/.env` y completar los valores reales:
 ### 2. Construir la imagen
 
 ```bash
-docker compose -f docker-compose-full.yml build
+docker compose -f docker-compose.yml build
 ```
 
 La primera vez tarda algunos minutos porque instala dependencias (incluyendo `django-datajsonar` desde el repo).
@@ -40,19 +40,19 @@ La primera vez tarda algunos minutos porque instala dependencias (incluyendo `dj
 ### 3. Levantar infraestructura
 
 ```bash
-docker compose -f docker-compose-full.yml up -d postgres redis elasticsearch minio
+docker compose -f docker-compose.yml up -d postgres redis elasticsearch minio
 ```
 
 Esperar ~30 segundos a que Elasticsearch inicialice. Se puede verificar con:
 
 ```bash
-docker compose -f docker-compose-full.yml logs elasticsearch | tail -20
+docker compose -f docker-compose.yml logs elasticsearch | tail -20
 ```
 
 ### 4. Levantar la app
 
 ```bash
-docker compose -f docker-compose-full.yml up -d app nginx
+docker compose -f docker-compose.yml up -d app nginx
 ```
 
 El entrypoint corre `migrate` y `collectstatic` automáticamente. La app queda disponible en `http://localhost` y el admin en `http://localhost/admin`.
@@ -60,13 +60,13 @@ El entrypoint corre `migrate` y `collectstatic` automáticamente. La app queda d
 ### 5. Crear superusuario
 
 ```bash
-docker compose -f docker-compose-full.yml exec app python manage.py createsuperuser
+docker compose -f docker-compose.yml exec app python manage.py createsuperuser
 ```
 
 ### 6. Levantar workers (para tareas asíncronas)
 
 ```bash
-docker compose -f docker-compose-full.yml up -d worker-indexing worker-api-index worker-misc
+docker compose -f docker-compose.yml up -d worker-indexing worker-api-index worker-misc
 ```
 
 Los workers disponibles y las colas que escuchan:
@@ -81,23 +81,23 @@ Los workers disponibles y las colas que escuchan:
 
 ```bash
 # Logs en tiempo real
-docker compose -f docker-compose-full.yml logs -f app
+docker compose -f docker-compose.yml logs -f app
 
 # Rebuild después de cambios en el código
-docker compose -f docker-compose-full.yml build app
-docker compose -f docker-compose-full.yml up -d app worker-indexing worker-api-index worker-misc
+docker compose -f docker-compose.yml build app
+docker compose -f docker-compose.yml up -d app worker-indexing worker-api-index worker-misc
 
 # Correr un management command
-docker compose -f docker-compose-full.yml exec app python manage.py <comando>
+docker compose -f docker-compose.yml exec app python manage.py <comando>
 
 # Shell Django
-docker compose -f docker-compose-full.yml exec app python manage.py shell
+docker compose -f docker-compose.yml exec app python manage.py shell
 
 # Bajar todo sin borrar datos
-docker compose -f docker-compose-full.yml down
+docker compose -f docker-compose.yml down
 
 # Bajar y borrar volúmenes (borra todos los datos)
-docker compose -f docker-compose-full.yml down -v
+docker compose -f docker-compose.yml down -v
 ```
 
 ---
@@ -110,7 +110,7 @@ docker compose -f docker-compose-full.yml down -v
 docker compose up -d
 ```
 
-Esto levanta PostgreSQL (5432), Elasticsearch (9200), Redis (6379) y MinIO (9000) en puertos locales usando `docker-compose.yml`.
+Esto levanta PostgreSQL (5432), Elasticsearch (9200), Redis (6379) y MinIO (9000) en puertos locales usando `../../docker-compose.services.yml`.
 
 ### 2. Crear virtualenv e instalar dependencias
 
