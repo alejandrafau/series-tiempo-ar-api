@@ -43,7 +43,11 @@ class SeriesConceptValidator:
                 f"Concept '{concept_id}' belongs to collection '{concept.collection_id}', not '{collection_id}'"
             ]
 
-        valid_variables = {v['id']: v.get('valores_posibles', []) for v in (concept.dimensiones or [])}
+        def _get_id(v):
+            return v['id'] if isinstance(v, dict) else v
+
+        valid_variables = {_get_id(v): [_get_id(p) for p in v.get('valores_posibles', [])]
+                           for v in (concept.dimensiones or [])}
 
         for dim in dimensions:
             name = dim['name']

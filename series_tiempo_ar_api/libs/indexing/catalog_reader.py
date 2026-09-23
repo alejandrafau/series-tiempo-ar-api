@@ -37,13 +37,16 @@ def index_catalog(node: Node, task, read_local=False, force=False):
         api_index_enqueue(index_distribution, distribution.identifier, node.id, task.id, read_local, force=force)
         #index_distribution(distribution.identifier, node.id, task.id, read_local, force=force)
 
+COLLECTION_SPECIAL_TYPES = {'time_series', 'ongoing_time_series', 'terminated_time_series'}
+
+
 def process_collections(node: Node, task, read_local=False, force=False):
     catalog = json.loads(node.catalog)
     validator = SeriesConceptValidator()
     for dataset in catalog.get('dataset', []):
         for dist in dataset.get('distribution', []):
             for field in dist.get('field', []):
-                if field.get('specialType') != 'time_series':
+                if field.get('specialType') not in COLLECTION_SPECIAL_TYPES:
                     continue
                 series_concept = field.get('specialTypeDetail')
                 field_id = field.get('id')

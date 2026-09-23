@@ -82,7 +82,7 @@ def get_series_view(request):
             return JsonResponse(response_data, json_dumps_params=_JSON)
         args = {'ids': ','.join(hit['id'] for hit in result)}
         for param in ['start_date', 'end_date', 'collapse', 'collapse_aggregation',
-                      'representation_mode', 'limit', 'start']:
+                      'representation_mode', 'limit', 'start', 'last', 'sort']:
             val = request.GET.get(param)
             if val is not None:
                 args[param] = val
@@ -95,6 +95,12 @@ def get_series_view(request):
 
     response_data = {'result': result}
     if validator.warnings:
+        incompatible = next(
+            (w for w in validator.warnings if w.get('code') == 'incompatible_dimensions'),
+            None,
+        )
+        if incompatible:
+            response_data['used_dimensions'] = incompatible['dimensiones_usadas']
         response_data['warnings'] = validator.warnings
     return JsonResponse(response_data, json_dumps_params=_JSON)
 
@@ -268,6 +274,7 @@ def get_collection_view(request):
             'id': col.id,
             'nombre': col.nombre,
             'descripcion': col.descripcion,
+            'limitations': col.limitations,
             'concepts': [
                 {
                     'id': c.id,
@@ -294,6 +301,10 @@ def get_concept_view(request):
             'nombre': c.nombre,
             'descripcion': c.descripcion,
             'collection_id': c.collection_id,
+            'frecuencia': c.frecuencia,
+            'unidad': c.unidad,
+            'sample_questions': c.sample_questions,
+            'limitations': c.limitations,
             'dimensiones': c.dimensiones,
             'dimensiones_compatibles': c.dimensiones_compatibles,
         }

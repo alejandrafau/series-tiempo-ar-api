@@ -30,6 +30,8 @@ class UnicodeJSONField(forms.CharField):
 class ConceptForm(forms.ModelForm):
     dimensiones = UnicodeJSONField(widget=forms.Textarea)
     dimensiones_compatibles = UnicodeJSONField(widget=forms.Textarea, required=False, initial=[])
+    sample_questions = UnicodeJSONField(widget=forms.Textarea, required=False, initial=[])
+    limitations = UnicodeJSONField(widget=forms.Textarea, required=False, initial=[])
 
     class Meta:
         model = Concept
@@ -92,6 +94,7 @@ def _procesar_collections(data):
             defaults={
                 'nombre': col_data.get('nombre', ''),
                 'descripcion': col_data.get('descripcion', ''),
+                'limitations': col_data.get('limitations', []),
             }
         )
         n_col += 1
@@ -102,6 +105,10 @@ def _procesar_collections(data):
                     'nombre': concept_data.get('nombre', ''),
                     'descripcion': concept_data.get('descripcion', ''),
                     'collection': collection,
+                    'frecuencia': concept_data.get('frecuencia', ''),
+                    'unidad': concept_data.get('unidad', ''),
+                    'sample_questions': concept_data.get('sample_questions', []),
+                    'limitations': concept_data.get('limitations', []),
                     'dimensiones': concept_data.get('dimensiones', []),
                     'dimensiones_compatibles': concept_data.get('dimensiones_compatibles', []),
                 }

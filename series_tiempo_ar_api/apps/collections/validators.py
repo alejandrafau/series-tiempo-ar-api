@@ -5,8 +5,14 @@ def _dim_id(d):
     return d['id'] if isinstance(d, dict) else d
 
 
+def _dim_valor_id(v):
+    return v['id'] if isinstance(v, dict) else v
+
+
 def _dim_valores_posibles(d):
-    return d.get('valores_posibles', []) if isinstance(d, dict) else []
+    if not isinstance(d, dict):
+        return []
+    return [_dim_valor_id(v) for v in d.get('valores_posibles', [])]
 
 
 class GetSeriesQueryValidator:
