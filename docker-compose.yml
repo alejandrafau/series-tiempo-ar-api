@@ -3,7 +3,7 @@ version: "3.7"
 x-app-base: &app-base
   build: .
   image: series-tiempo-ar-api
-  entrypoint: ["./entrypoint.sh"]
+  entrypoint: ["/usr/local/bin/_entrypoint.sh", "./entrypoint.sh"]
   env_file: conf/settings/.env
   depends_on:
     - postgres
